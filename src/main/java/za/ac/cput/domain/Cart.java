@@ -1,5 +1,6 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -29,15 +30,16 @@ public class Cart {
 
     // Many Carts can belong to one User
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false) // Mapping to the foreign key column in the "cart" table
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     private Double total;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-//    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<CartItem> cartItems;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<CartItem> cartItems;
 
 
     public Cart() {
