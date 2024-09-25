@@ -3,7 +3,6 @@ package za.ac.cput.factory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.Category;
-import za.ac.cput.domain.Product;
 import za.ac.cput.domain.SubCategory;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,19 +14,16 @@ class SubCategoryFactoryTest {
 
     private SubCategory subCategory;
     private Category category;
-    private Product product;
 
     @BeforeEach
     void setup() {
         // Set up a sample Category object
         category = new Category();
-        product = new Product();
 
         // Set up a sample SubCategory object using the factory method
         subCategory = SubCategoryFactory.createSubCategory(
                 1L,
                 category,
-                product,
                 "Sneakers",
                 "Sneakers",
                 LocalDateTime.parse("2024-06-12T07:00:00"),
@@ -50,7 +46,6 @@ class SubCategoryFactoryTest {
                 () -> SubCategoryFactory.createSubCategory(
                         1L,
                         category,
-                        product,
                         null,
                         "Electronics sub-category",
                         LocalDateTime.parse("2024-06-12T07:00:00"),
@@ -67,7 +62,6 @@ class SubCategoryFactoryTest {
                 () -> SubCategoryFactory.createSubCategory(
                         1L,
                         category,
-                        product,
                         "Electronics",
                         null,
                         LocalDateTime.parse("2024-06-12T07:00:00"),

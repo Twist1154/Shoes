@@ -14,6 +14,5 @@ import java.util.List;
 
 public interface ISubCategory extends IService<SubCategory, Long>{
 
-    List<SubCategory> findSubCategoriesByCategory_Id(Long categoryId);
-    List<SubCategory> findSubCategoriesByProduct_Id(Long productId);
+    SubCategory findById(Long id);
 }

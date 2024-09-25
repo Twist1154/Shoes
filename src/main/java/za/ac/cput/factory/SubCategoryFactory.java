@@ -2,11 +2,10 @@ package za.ac.cput.factory;
 
 import za.ac.cput.domain.Category;
 import za.ac.cput.domain.SubCategory;
-import za.ac.cput.domain.ProductSubCategories;
 import za.ac.cput.util.Helper;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * Factory class for creating instances of {@link SubCategory}.
@@ -22,7 +21,6 @@ public class SubCategoryFactory {
      *
      * @param id          the ID of the sub-category
      * @param category    the parent {@link Category} entity associated with this sub-category
-     * @param productSubCategories the list of {@link ProductSubCategories} associated with this sub-category
      * @param name        the name of the sub-category
      * @param description the description of the sub-category
      * @param createdAt   the date the sub-category was created
@@ -31,7 +29,6 @@ public class SubCategoryFactory {
      */
     public static SubCategory createSubCategory(Long id,
                                                 Category category,
-                                                List<ProductSubCategories> productSubCategories,
                                                 String name,
                                                 String description,
                                                 LocalDateTime createdAt,
@@ -40,7 +37,6 @@ public class SubCategoryFactory {
         final int NAME_NULL = 1;
         final int DESCRIPTION_NULL = 2;
         final int CATEGORY_NULL = 4;
-        final int PRODUCT_SUBCATEGORY_NULL = 8;
 
         // Calculate the errorFlags based on null or empty checks
         int errorFlags = 0;
@@ -51,32 +47,35 @@ public class SubCategoryFactory {
         if (Helper.isNullOrEmpty(description)) {
             errorFlags |= DESCRIPTION_NULL;
         }
-        if (category == null) {
+        if (Helper.isNullOrEmpty(category)) {
             errorFlags |= CATEGORY_NULL;
-        }
-        if (productSubCategories == null || productSubCategories.isEmpty()) { // Check if productSubCategories is null or empty
-            errorFlags |= PRODUCT_SUBCATEGORY_NULL;
         }
 
         // Use switch statement to throw exception based on the flags
-        if (errorFlags != 0) {
-            StringBuilder errorMessage = new StringBuilder("The following fields cannot be null: ");
-            if ((errorFlags & NAME_NULL) != 0) errorMessage.append("name, ");
-            if ((errorFlags & DESCRIPTION_NULL) != 0) errorMessage.append("description, ");
-            if ((errorFlags & CATEGORY_NULL) != 0) errorMessage.append("category, ");
-            if ((errorFlags & PRODUCT_SUBCATEGORY_NULL) != 0) errorMessage.append("productSubCategories");
-
-            // Remove trailing comma and space
-            errorMessage.setLength(errorMessage.length() - 2);
-
-            throw new IllegalArgumentException(errorMessage.toString());
+        switch (errorFlags) {
+            case NAME_NULL | DESCRIPTION_NULL | CATEGORY_NULL:
+                throw new IllegalArgumentException("Name, description, and category cannot be null or empty");
+            case NAME_NULL | DESCRIPTION_NULL:
+                throw new IllegalArgumentException("Name and description cannot be null or empty");
+            case NAME_NULL | CATEGORY_NULL:
+                throw new IllegalArgumentException("Name and category cannot be null or empty");
+            case DESCRIPTION_NULL | CATEGORY_NULL:
+                throw new IllegalArgumentException("Description and category cannot be null or empty");
+            case NAME_NULL:
+                throw new IllegalArgumentException("Name cannot be null or empty");
+            case DESCRIPTION_NULL:
+                throw new IllegalArgumentException("Description cannot be null or empty");
+            case CATEGORY_NULL:
+                throw new IllegalArgumentException("Category cannot be null or empty");
+            default:
+                // No null or empty values
+                break;
         }
 
         // Use the Builder pattern to create a new SubCategory object
         return new SubCategory.Builder()
                 .setId(id) // Set the ID of the sub-category
                 .setCategory(category) // Set the parent category associated with the sub-category
-                .setProductSubCategories(productSubCategories) // Set the list of product subcategories associated with the sub-category
                 .setName(name) // Set the name of the sub-category
                 .setDescription(description) // Set the description of the sub-category
                 .setCreatedAt(createdAt) // Set the date the sub-category was created

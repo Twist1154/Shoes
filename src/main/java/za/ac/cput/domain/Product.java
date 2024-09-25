@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * Represents a product within the system.
  * This entity class is mapped to the "products" table in the database.
- *
+ * <p>
  * author: Rethabile Ntsekhe
  * date: 25-Aug-24
  */
@@ -31,9 +31,13 @@ public final class Product {
     @Embedded
     private ImageUrls imageUrls;
 
-    // One-to-Many relationship with ProductSubCategories
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductSubCategories> productSubCategories;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "product_subcategory",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "subcategory_id")
+    )
+    private List<SubCategory> subCategory;
 
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
@@ -48,11 +52,10 @@ public final class Product {
         this.summary = builder.summary;
         this.cover = builder.cover;
         this.imageUrls = builder.imageUrls;
-        this.productSubCategories = builder.productSubCategories;
+        this.subCategory = builder.subCategory;
         this.createdAt = builder.createdAt;
         this.deletedAt = builder.deletedAt;
     }
-
 
     @Override
     public String toString() {
@@ -63,7 +66,7 @@ public final class Product {
                 ", summary='" + summary + '\'' +
                 ", cover='" + cover + '\'' +
                 ", images=" + imageUrls +
-            ", productSubCategories=" + (productSubCategories != null ? productSubCategories.size() : 0) +
+                ", subCategory=" +  (subCategory != null ? subCategory.size() : 0) +
                 ", createdAt=" + createdAt +
                 ", deletedAt=" + deletedAt +
                 '}' + '\n';
@@ -80,15 +83,14 @@ public final class Product {
                 Objects.equals(summary, product.summary) &&
                 Objects.equals(cover, product.cover) &&
                 Objects.equals(imageUrls, product.imageUrls) &&
-                Objects.equals(productSubCategories, product.productSubCategories) &&
+                Objects.equals(subCategory, product.subCategory) &&
                 Objects.equals(createdAt, product.createdAt) &&
                 Objects.equals(deletedAt, product.deletedAt);
     }
 
-
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, summary, cover, imageUrls, productSubCategories, createdAt, deletedAt);
+        return Objects.hash(id, name, description, summary, cover, imageUrls, subCategory, createdAt, deletedAt);
     }
 
     public static class Builder {
@@ -98,7 +100,7 @@ public final class Product {
         private String summary;
         private String cover;
         private ImageUrls imageUrls;
-        private List<ProductSubCategories> productSubCategories;
+        private List<SubCategory> subCategory;
         private LocalDateTime createdAt;
         private LocalDateTime deletedAt;
 
@@ -132,8 +134,8 @@ public final class Product {
             return this;
         }
 
-        public Builder setProductSubCategories(List<ProductSubCategories> productSubCategories) {
-            this.productSubCategories = productSubCategories;
+        public Builder setSubCategory(List<SubCategory> subCategory) {
+            this.subCategory = subCategory;
             return this;
         }
 
@@ -153,7 +155,7 @@ public final class Product {
             this.description = product.getDescription();
             this.summary = product.getSummary();
             this.cover = product.getCover();
-            this.productSubCategories = product.getProductSubCategories();
+            this.subCategory = product.getSubCategory();
             this.createdAt = product.getCreatedAt();
             this.deletedAt = product.getDeletedAt();
             return this;
