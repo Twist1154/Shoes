@@ -10,10 +10,12 @@ import org.springframework.http.ResponseEntity;
 import za.ac.cput.domain.ImageUrls;
 import za.ac.cput.domain.Product;
 import za.ac.cput.domain.SubCategory;
+import za.ac.cput.domain.Category;
 import za.ac.cput.factory.ImageUrlsFactory;
 import za.ac.cput.factory.ProductFactory;
 import za.ac.cput.service.ProductService;
 import za.ac.cput.service.SubCategoryService;
+import za.ac.cput.service.CategoryService;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -34,17 +36,38 @@ class ProductControllerTest {
     @Autowired
     private SubCategoryService subCategoryService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     private Product product;
     private SubCategory subCategory;
+    private Category category;
     private ImageUrls image;
 
-    private final String baseUrl = "http://localhost:8080/products";
+    private final String baseUrl = "http://localhost:8080/store/products";
 
     @BeforeEach
     void setUp() {
-        subCategory = subCategoryService.read(28L);
-        assertNotNull(subCategory, "SubCategory should not be null");
+        // Ensure a category exists for the subcategory
+        category = categoryService.read(1L);  // Assuming category ID 1 exists
+        if (category == null) {
+            category = new Category.Builder()
+                    .setName("Sample Category")
+                    .setDescription("Category Description")
+                    .setCreatedAt(LocalDateTime.now())
+                    .build();
+            category = categoryService.create(category);  // Create and save the category
+        }
 
+        // Create a subcategory linked to the category if it doesn't exist
+        subCategory = new SubCategory.Builder()
+                .setCategory(category)
+                .setName("Test SubCategory")
+                .setDescription("SubCategory for testing")
+                .build();
+        subCategory = subCategoryService.create(subCategory);  // Create and save subcategory
+
+        // Create image URLs for the product
         image = ImageUrlsFactory.createImageUrls(
                 "null",
                 "cover image url",
@@ -52,11 +75,12 @@ class ProductControllerTest {
                 "null"
         );
 
+        // Create a new product linked to the subcategory
         product = ProductFactory.createProduct(
                 null,
-                "product Controller test",
-                "product Controller create test",
-                "product Controller create test",
+                "Product Controller Test",
+                "Product Controller create test",
+                "Product Controller summary",
                 "cover image url",
                 image,
                 Collections.singletonList(subCategory),
@@ -67,8 +91,17 @@ class ProductControllerTest {
 
     @AfterEach
     void tearDown() {
+        // Clean up created entities after each test
         if (product != null && product.getId() != null) {
             productService.delete(product.getId());
+        }
+
+        if (subCategory != null && subCategory.getId() != null) {
+            subCategoryService.delete(subCategory.getId());
+        }
+
+        if (category != null && category.getId() != null) {
+            categoryService.delete(category.getId());
         }
     }
 
@@ -78,9 +111,10 @@ class ProductControllerTest {
         // Create a new Product via the REST API
         ResponseEntity<Product> response = restTemplate.postForEntity(baseUrl + "/create", product, Product.class);
         System.out.println(response.getBody());
-
-        assertNotNull(response.getBody());
-        product = response.getBody(); // Store the created product for future tests
+        System.out.println("created product above:  ------------------------------------");
+        assertNotNull(response.getBody(), "Created product should not be null");
+        product = response.getBody();  // Store the created product for future tests
+        assertNotNull(product.getId(), "Product ID should not be null after creation");
     }
 
     @Test
@@ -90,20 +124,28 @@ class ProductControllerTest {
 
         // Fetch the Product by ID
         ResponseEntity<Product> response = restTemplate.getForEntity(baseUrl + "/read/" + product.getId(), Product.class);
-        System.out.println(response.getBody());
 
-        assertNotNull(response.getBody());
-        assertEquals(product.getId(), response.getBody().getId());
+        assertNotNull(response.getBody(), "Fetched product should not be null");
+        assertEquals(product.getId(), response.getBody().getId(), "Product ID should match");
     }
 
     @Test
     @Order(3)
     void updateProduct() {
+        // Fetch the existing product before updating
+        ResponseEntity<Product> existingResponse = restTemplate.getForEntity(baseUrl + "/read/" + product.getId(), Product.class);
+        Product existingProduct = existingResponse.getBody();
+
+        assertNotNull(existingProduct, "Existing product should not be null before update");
+        System.out.println("Fetched existing product: " + existingProduct);
+
         // Modify the product details
         product = new Product.Builder()
-                .copy(product)
+                .copy(existingProduct)
                 .setName("Updated Product Name")
                 .build();
+
+        System.out.println("Modified product: " + product);
         HttpEntity<Product> requestUpdate = new HttpEntity<>(product);
 
         // Send the PUT request to update the product
@@ -114,22 +156,29 @@ class ProductControllerTest {
                 Product.class
         );
 
-        assertNotNull(response.getBody());
-        assertEquals("Updated Product Name", response.getBody().getName());
+        System.out.println("Sent this to be updated: " + response.getBody());
+        assertNotNull(response.getBody(), "Updated product should not be null");
+        assertEquals("Updated Product Name", response.getBody().getName(), "Product name should be updated");
     }
 
     @Test
     @Order(4)
     void deleteProduct() {
-        assertNotNull(product, "Product must be created before testing delete");
-        assertNotNull(product.getId(), "Product ID must not be null");
+        // Log the product to be deleted
+        System.out.println("Product to be deleted: " + product);
+
+        // Fetch the existing product before deletion
+        ResponseEntity<Product> existingResponse = restTemplate.getForEntity(baseUrl + "/read/" + product.getId(), Product.class);
+        assertNotNull(existingResponse.getBody(), "Product must exist before deletion");
 
         // Delete the product by ID
         restTemplate.delete(baseUrl + "/delete/" + product.getId());
 
-        // Attempt to fetch the deleted product
+        // Check if the product was deleted
         ResponseEntity<Product> deletedProduct = restTemplate.getForEntity(baseUrl + "/read/" + product.getId(), Product.class);
         assertNull(deletedProduct.getBody(), "Deleted product should not be found");
+
+        System.out.println("Product deleted successfully");
     }
 
     @Test
@@ -137,9 +186,11 @@ class ProductControllerTest {
     void getAllProducts() {
         // Fetch all products
         ResponseEntity<Product[]> response = restTemplate.getForEntity(baseUrl + "/all", Product[].class);
-        System.out.println(response.getBody());
 
-        assertNotNull(response.getBody());
+        assertNotNull(response.getBody(), "Products list should not be null");
         assertTrue(response.getBody().length > 0, "Products list should not be empty");
+
+        // Log the products list
+        System.out.println("Fetched products: " + List.of(response.getBody()));
     }
 }

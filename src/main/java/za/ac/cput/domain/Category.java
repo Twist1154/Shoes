@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -30,6 +31,9 @@ public class Category {
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
 
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubCategory> subCategories;
+
     public Category() {}
 
     private Category(Builder builder) {
@@ -38,6 +42,7 @@ public class Category {
         this.description = builder.description;
         this.createdAt = builder.createdAt;
         this.deletedAt = builder.deletedAt;
+        this.subCategories = builder.subCategories;
     }
     @Override
     public String toString() {
@@ -47,6 +52,7 @@ public class Category {
                 ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +
                 ", deletedAt=" + deletedAt +
+                ", subCategories=" + subCategories.get(0).getName() +
                 "}\n ";
     }
 
@@ -59,12 +65,13 @@ public class Category {
                 Objects.equals(name, category.name) &&
                 Objects.equals(description, category.description) &&
                 Objects.equals(createdAt, category.createdAt) &&
-                Objects.equals(deletedAt, category.deletedAt);
+                Objects.equals(deletedAt, category.deletedAt) &&
+                Objects.equals(subCategories, category.subCategories);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, createdAt, deletedAt);
+        return Objects.hash(id, name, description, createdAt, deletedAt, subCategories);
     }
 
     public static class Builder {
@@ -73,6 +80,7 @@ public class Category {
         private String description;
         private LocalDateTime createdAt;
         private LocalDateTime deletedAt;
+        private List<SubCategory> subCategories;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -99,12 +107,18 @@ public class Category {
             return this;
         }
 
+        public Builder setSubCategories(List<SubCategory> subCategories) {
+            this.subCategories = subCategories;
+            return this;
+        }
+
         public Builder copy(Category category) {
             this.id = category.getId();
             this.name = category.getName();
             this.description = category.getDescription();
             this.createdAt = category.getCreatedAt();
             this.deletedAt = category.getDeletedAt();
+            this.subCategories = category.getSubCategories();
             return this;
         }
 

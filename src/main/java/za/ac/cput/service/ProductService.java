@@ -17,8 +17,8 @@ import java.util.List;
  * @date 25-Aug-24
  */
 @Slf4j
-@Service
 @Transactional
+@Service
 public class ProductService implements IProduct {
 
     private final ProductRepository productRepository;
