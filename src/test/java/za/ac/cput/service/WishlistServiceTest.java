@@ -4,8 +4,6 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 import za.ac.cput.domain.*;
 import za.ac.cput.factory.CategoryFactory;
 import za.ac.cput.factory.ImageUrlsFactory;
@@ -20,7 +18,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
@@ -50,7 +47,7 @@ class WishlistServiceTest {
     private Category category;
     private ImageUrls imageUrls;
     private User user;
-    private List<WishListItem> wishListItems;
+    private List<WishlistItem> wishlistItems;
 
     @BeforeEach
     void setup() {
@@ -122,23 +119,23 @@ class WishlistServiceTest {
                 .build();
         wishlist = wishlistRepository.save(wishlist); // Save Wishlist first to get ID
 
-        WishListItem item1 = new WishListItem.Builder()
+        WishlistItem item1 = new WishlistItem.Builder()
                 .setProduct(product)
                 .setDateAdded(LocalDateTime.now())
                 .setWishlist(wishlist) // Reference the saved Wishlist
                 .build();
-        WishListItem item2 = new WishListItem.Builder()
+        WishlistItem item2 = new WishlistItem.Builder()
                 .setProduct(product)
                 .setDateAdded(LocalDateTime.now())
                 .setWishlist(wishlist) // Reference the saved Wishlist
                 .build();
 
-        wishListItems = List.of(item1, item2);
+        wishlistItems = List.of(item1, item2);
 
 
         wishlist = new Wishlist.Builder()
                 .copy(wishlist)
-                .setWishlistItems(wishListItems)
+                .setWishlistItems(wishlistItems)
                 .build();
 
 
@@ -160,7 +157,7 @@ class WishlistServiceTest {
         // Create a new Wishlist using the builder
         Wishlist newWishlist = new Wishlist.Builder()
                 .setUser(user)
-                .setWishlistItems(wishListItems) // Use existing WishlistItems
+                .setWishlistItems(wishlistItems) // Use existing WishlistItems
                 .setCreatedAt(LocalDateTime.now())
                 .build();
         Wishlist createdWishlist = wishlistService.create(newWishlist);
@@ -169,7 +166,7 @@ class WishlistServiceTest {
         assertNotNull(createdWishlist);
         System.out.println("Created Wishlist: " + createdWishlist);
         assertEquals(newWishlist.getUser().getId(), createdWishlist.getUser().getId());
-        assertEquals(newWishlist.getWishListItems().size(), createdWishlist.getWishListItems().size());
+        assertEquals(newWishlist.getWishlistItems().size(), createdWishlist.getWishlistItems().size());
     }
 
     @Test

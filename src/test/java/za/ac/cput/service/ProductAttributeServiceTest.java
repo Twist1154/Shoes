@@ -38,9 +38,12 @@ class ProductAttributeServiceTest {
 
     @AfterEach
     void tearDown() {
-        /*if (productAttribute != null && productAttribute.getId() != null) {
+        if (productAttribute != null && productAttribute.getId() != null) {
             service.delete(productAttribute.getId());
-        }*/
+            for(ProductAttribute attribute : service.findAll()) {
+                System.out.println("Deleted: " + attribute);
+            }
+        }
     }
 
     @Test

@@ -47,7 +47,6 @@ public class ProductAttributeService implements IProductAttribute {
         if (existingProductAttribute != null) {
             ProductAttribute updatedProductAttribute = new ProductAttribute.Builder()
                     .copy(productAttribute)
-                    .setId(existingProductAttribute.getId())
                     .setType(productAttribute.getType())
                     .setValue(productAttribute.getValue())
                     .setCreatedAt(existingProductAttribute.getCreatedAt())

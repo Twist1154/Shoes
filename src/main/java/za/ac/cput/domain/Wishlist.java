@@ -33,7 +33,7 @@ public class Wishlist {
 
     @OneToMany(mappedBy = "wishlist", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<WishListItem> wishListItems;
+    private List<WishlistItem> wishlistItems;
 
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
@@ -44,7 +44,7 @@ public class Wishlist {
     private Wishlist(Builder builder) {
         this.id = builder.id;
         this.user = builder.user;
-        this.wishListItems = builder.wishListItems;
+        this.wishlistItems = builder.wishlistItems;
         this.createdAt = builder.createdAt;
         this.deletedAt = builder.deletedAt;
     }
@@ -54,7 +54,7 @@ public class Wishlist {
         return "Wishlist{" +
                 "id=" + id +
                 ", user=" + user +
-                ", wishListItems=" + wishListItems +
+                ", wishlistItems=" + wishlistItems +
                 ", createdAt=" + createdAt +
                 ", deletedAt=" + deletedAt +
                 "}\n ";
@@ -79,7 +79,7 @@ public class Wishlist {
     public static class Builder {
         private Long id;
         private User user;
-        private List<WishListItem> wishListItems;
+        private List<WishlistItem> wishlistItems;
         private LocalDateTime createdAt;
         private LocalDateTime deletedAt;
 
@@ -93,8 +93,8 @@ public class Wishlist {
             return this;
         }
 
-        public Builder setWishlistItems(List<WishListItem> wishListItems) {
-            this.wishListItems = wishListItems;
+        public Builder setWishlistItems(List<WishlistItem> wishlistItems) {
+            this.wishlistItems = wishlistItems;
             return this;
         }
 
@@ -111,7 +111,7 @@ public class Wishlist {
         public Builder copy(Wishlist wishlist) {
             this.id = wishlist.getId();
             this.user = wishlist.getUser();
-            this.wishListItems = wishlist.getWishListItems();
+            this.wishlistItems = wishlist.getWishlistItems();
             this.createdAt = wishlist.getCreatedAt();
             this.deletedAt = wishlist.getDeletedAt();
             return this;

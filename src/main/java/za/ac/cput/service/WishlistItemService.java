@@ -3,15 +3,15 @@ package za.ac.cput.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import za.ac.cput.domain.WishListItem;
-import za.ac.cput.repository.WishListItemRepository;
+import za.ac.cput.domain.WishlistItem;
+import za.ac.cput.repository.WishlistItemRepository;
 
 import java.util.List;
 
 /**
- * WishListItemService.java
+ * WishlistItemService.java
  *
- * Service class for managing WishListItem operations.
+ * Service class for managing WishlistItem operations.
  *
  * @author Rethabile Ntsekhe
  * Student Num: 220455430
@@ -19,35 +19,35 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class WishListItemService implements IWishListItems {
+public class WishlistItemService implements IWishlistItems {
 
     @Autowired
-    private final WishListItemRepository repository;
+    private final WishlistItemRepository repository;
 
     @Autowired
-    public WishListItemService(WishListItemRepository repository) {
+    public WishlistItemService(WishlistItemRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public WishListItem create(WishListItem wishListItem) {
+    public WishlistItem create(WishlistItem wishListItem) {
         return repository.save(wishListItem);
     }
 
     @Override
-    public WishListItem read(Long id) {
+    public WishlistItem read(Long id) {
         return repository.findById(id).orElse(null);
     }
 
     @Override
-    public WishListItem update(WishListItem wishListItem) {
-        WishListItem existingWishListItem = repository.findById(wishListItem.getId()).orElse(null);
+    public WishlistItem update(WishlistItem wishListItem) {
+        WishlistItem existingWishlistItem = repository.findById(wishListItem.getId()).orElse(null);
 
-        if (existingWishListItem != null) {
+        if (existingWishlistItem != null) {
             // Build the updated item
-            WishListItem updatedItem = new WishListItem.Builder()
+            WishlistItem updatedItem = new WishlistItem.Builder()
                     .copy(wishListItem)
-                    .setId(existingWishListItem.getId()) // Preserve the ID
+                    .setId(existingWishlistItem.getId()) // Preserve the ID
                     .setProduct(wishListItem.getProduct())  // Update other fields
                     .setDateAdded(wishListItem.getDateAdded())
                     .setWishlist(wishListItem.getWishlist())
@@ -60,7 +60,7 @@ public class WishListItemService implements IWishListItems {
     }
 
     @Override
-    public List<WishListItem> findAll() {
+    public List<WishlistItem> findAll() {
         return repository.findAll();
     }
 
@@ -73,6 +73,11 @@ public class WishListItemService implements IWishListItems {
 
         // Return false if entity was deleted successfully, otherwise return true
         return !exists;
+    }
+
+    @Override
+    public List<WishlistItem> findByWishlist_Id(Long wishlistId) {
+        return repository.findByWishlist_Id(wishlistId);
     }
 
     @Override

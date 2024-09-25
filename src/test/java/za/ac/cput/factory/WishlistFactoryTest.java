@@ -16,7 +16,7 @@ class WishlistFactoryTest {
     private User user;
     private Product product;
     private Wishlist wishlist;
-    private List<WishListItem> wishListItems;
+    private List<WishlistItem> wishlistItems;
     private Category category;
     private List<SubCategory> subCategory;
     private ImageUrls imageUrls;
@@ -79,22 +79,22 @@ class WishlistFactoryTest {
                 .setPassword("password123")
                 .build();
 
-        // Create WishListItem objects using the factory method
-        WishListItem wishlistitem1 = WishlistItemFactory.createWishlistItem(
+        // Create WishlistItem objects using the factory method
+        WishlistItem wishlistitem1 = WishlistItemFactory.createWishlistItem(
                 product,
                 wishlist,
                 LocalDateTime.now()
         );
 
-        WishListItem wishlistitem2 = WishlistItemFactory.createWishlistItem(
+        WishlistItem wishlistitem2 = WishlistItemFactory.createWishlistItem(
                 product,
                 wishlist,
                 LocalDateTime.now()
         );
 
-        wishListItems = new ArrayList<>();
-        wishListItems.add(wishlistitem1);
-        wishListItems.add(wishlistitem2);
+        wishlistItems = new ArrayList<>();
+        wishlistItems.add(wishlistitem1);
+        wishlistItems.add(wishlistitem2);
     }
 
     @Test
@@ -103,7 +103,7 @@ class WishlistFactoryTest {
         wishlist = WishlistFactory.createWishlist(
                 1L,
                 user,
-                wishListItems,
+                wishlistItems,
                 LocalDateTime.now(),
                 null);
 
@@ -121,7 +121,7 @@ class WishlistFactoryTest {
                 () -> WishlistFactory.createWishlist(
                         1L,
                         null,
-                        wishListItems,
+                        wishlistItems,
                         LocalDateTime.now(),
                         null)
         );

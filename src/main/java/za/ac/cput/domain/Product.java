@@ -31,7 +31,7 @@ public final class Product {
     @Embedded
     private ImageUrls imageUrls;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "product_subcategory",
             joinColumns = @JoinColumn(name = "product_id"),
