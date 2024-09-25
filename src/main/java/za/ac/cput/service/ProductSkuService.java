@@ -19,7 +19,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-@Transactional
+@Transactional // Default to transactional for write operations
 public class ProductSkuService implements IProductSku {
 
     private final ProductSkuRepository productSkuRepository;
@@ -30,21 +30,24 @@ public class ProductSkuService implements IProductSku {
     }
 
     @Override
-    public za.ac.cput.domain.ProductSku create(za.ac.cput.domain.ProductSku productSku) {
+    @Transactional(readOnly = false) // Ensure session is active for create
+    public ProductSku create(ProductSku productSku) {
         return productSkuRepository.save(productSku);
     }
 
     @Override
+    @Transactional(readOnly = true) // Read operations should not require a write session
     public ProductSku read(Long id) {
         return productSkuRepository.findById(id).orElse(null);
     }
 
     @Override
-    public za.ac.cput.domain.ProductSku update(za.ac.cput.domain.ProductSku productSku) {
-        za.ac.cput.domain.ProductSku existingProductSku = productSkuRepository.findById(productSku.getId()).orElse(null);
+    @Transactional(readOnly = false) // Write operations should require a transactional session
+    public ProductSku update(ProductSku productSku) {
+        ProductSku existingProductSku = productSkuRepository.findById(productSku.getId()).orElse(null);
 
         if (existingProductSku != null) {
-            za.ac.cput.domain.ProductSku updatedProductSku = new za.ac.cput.domain.ProductSku.Builder()
+            ProductSku updatedProductSku = new ProductSku.Builder()
                     .copy(existingProductSku)
                     .setId(existingProductSku.getId())
                     .setProduct(productSku.getProduct())
@@ -59,23 +62,26 @@ public class ProductSkuService implements IProductSku {
                     .build();
             return productSkuRepository.save(updatedProductSku);
         } else {
-            log.warn("Attempt to update a non-existent product sku with ID: " + productSku.getId());
+            log.warn("Attempt to update a non-existent product SKU with ID: " + productSku.getId());
             return null;
         }
     }
 
+    @Override
+    @Transactional // Transactions are needed for delete operations
     public boolean delete(Long id) {
-        productSkuRepository.deleteById(id);
-
-        // Check if the entity still exists after deletion
-        boolean exists = productSkuRepository.existsById(id);
-
-        // Return false if entity was deleted successfully, otherwise return true
-        return !exists;
+        if (productSkuRepository.existsById(id)) {
+            productSkuRepository.deleteById(id);
+            return !productSkuRepository.existsById(id); // Return true if deleted successfully
+        } else {
+            log.warn("Attempt to delete a non-existent product SKU with ID: " + id);
+            return false;
+        }
     }
 
     @Override
-    public List<za.ac.cput.domain.ProductSku> findAll() {
+    @Transactional(readOnly = true) // Read-only for list operations
+    public List<ProductSku> findAll() {
         return productSkuRepository.findAll();
     }
 }

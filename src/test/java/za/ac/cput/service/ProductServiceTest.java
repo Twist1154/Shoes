@@ -29,7 +29,7 @@ class ProductServiceTest {
 
     @BeforeEach
     void setUp() {
-        // Create Category and SubCategory
+        // Create Category and SubCategory with bidirectional relationship
         Category category = CategoryFactory.createCategory(
                 null, // ID should be generated
                 "Sneakers",
@@ -48,6 +48,10 @@ class ProductServiceTest {
                 null
         );
         subCategory = subCategoryService.create(subCategory);
+
+        // Ensure bidirectional relationship is set
+        category.getSubCategories().add(subCategory);
+        categoryService.update(category);
 
         // Set up the Product
         ImageUrls imageUrls = ImageUrlsFactory.createImageUrls(
@@ -72,10 +76,9 @@ class ProductServiceTest {
 
     @AfterEach
     void tearDown() {
-        // Check if the product exists before deleting to avoid exceptions
-        /*if (product != null && product.getId() != null) {
+        if (product != null && product.getId() != null) {
             productService.delete(product.getId());
-        }*/
+        }
     }
 
     @Test
@@ -83,8 +86,9 @@ class ProductServiceTest {
     void create() {
         Product createdProduct = productService.create(product);
         assertNotNull(createdProduct);
-        assertNotNull(createdProduct.getId()); // Ensure ID was generated
+        assertNotNull(createdProduct.getId());
         assertEquals(product.getName(), createdProduct.getName());
+        System.out.println("Created Product: " + createdProduct);
     }
 
     @Test
@@ -115,15 +119,15 @@ class ProductServiceTest {
         Product createdProduct = productService.create(product);
         productService.delete(createdProduct.getId());
         Product deletedProduct = productService.read(createdProduct.getId());
-        assertNull(deletedProduct);  // Ensure product was deleted, should return null
+        assertNull(deletedProduct);
     }
 
     @Test
     @Order(5)
     void findAll() {
-        productService.create(product);  // Ensure Product is created for testing
+        productService.create(product);
         List<Product> products = productService.findAll();
         assertNotNull(products);
-        assertTrue(products.size() > 0);  // Ensure at least one product exists
+        assertTrue(products.size() > 0);
     }
 }

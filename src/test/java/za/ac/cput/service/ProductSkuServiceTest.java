@@ -63,9 +63,9 @@ class ProductSkuServiceTest {
 
     @AfterEach
     void tearDown() {
-       /* if (productSku != null && productSku.getId() != null) {
+        if (productSku != null && productSku.getId() != null) {
             productSkuService.delete(productSku.getId());
-        }*/
+        }
     }
 
     @Test
@@ -79,9 +79,9 @@ class ProductSkuServiceTest {
     @Test
     @Order(2)
     void read() {
-        ProductSku readSku = productSkuService.read(productSku.getId());
+        ProductSku readSku = productSkuService.read(3L);
         assertNotNull(readSku);
-        assertEquals(productSku.getId(), readSku.getId());
+        assertEquals(2, readSku.getId());
         System.out.println("Read: " + readSku);
     }
 

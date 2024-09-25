@@ -1,5 +1,6 @@
 package za.ac.cput.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,10 +12,11 @@ import java.util.List;
 /**
  * SubCategoryService.java
  *
- * @author Rethabile Ntsekhe
+ * Author: Rethabile Ntsekhe
  * Student Num: 220455430
- * @date 25-Aug-24
+ * Date: 25-Aug-24
  */
+@Slf4j
 @Service
 @Transactional
 public class SubCategoryService implements ISubCategory {
@@ -28,21 +30,23 @@ public class SubCategoryService implements ISubCategory {
 
     @Override
     public SubCategory create(SubCategory subCategory) {
+        log.info("Creating a new SubCategory: {}", subCategory);
         return subCategoryRepository.save(subCategory);
     }
 
     @Override
     public SubCategory read(Long id) {
+        log.info("Reading SubCategory with ID: {}", id);
         return subCategoryRepository.findById(id).orElse(null);
     }
 
     @Override
     public SubCategory update(SubCategory subCategory) {
+        log.info("Updating SubCategory: {}", subCategory);
         SubCategory existingSubCategory = subCategoryRepository.findById(subCategory.getId()).orElse(null);
         if (existingSubCategory != null) {
             SubCategory updatedSubCategory = new SubCategory.Builder()
                     .copy(existingSubCategory)
-                    .setId(existingSubCategory.getId())
                     .setCategory(subCategory.getCategory())
                     .setName(subCategory.getName())
                     .setDescription(subCategory.getDescription())
@@ -50,19 +54,15 @@ public class SubCategoryService implements ISubCategory {
                     .setDeletedAt(existingSubCategory.getDeletedAt())
                     .build();
             return subCategoryRepository.save(updatedSubCategory);
-        } else {
-            return null;
         }
+        return null;
     }
 
+    @Override
     public boolean delete(Long id) {
+        log.info("Deleting SubCategory with ID: {}", id);
         subCategoryRepository.deleteById(id);
-
-        // Check if the entity still exists after deletion
-        boolean exists = subCategoryRepository.existsById(id);
-
-        // Return false if entity was deleted successfully, otherwise return true
-        return !exists;
+        return !subCategoryRepository.existsById(id);
     }
 
     @Override
@@ -71,7 +71,12 @@ public class SubCategoryService implements ISubCategory {
     }
 
     @Override
-    public SubCategory findById(Long id) {
-        return subCategoryRepository.findById(id).orElse(null);
+    public List<SubCategory> findSubCategoriesByCategory_Id(Long categoryId) {
+        return subCategoryRepository.findSubCategoriesByCategory_Id(categoryId);
+    }
+
+    @Override
+    public List<SubCategory> findSubCategoriesByProduct_Id(Long productId) {
+        return subCategoryRepository.findSubCategoriesByProduct_Id(productId);
     }
 }

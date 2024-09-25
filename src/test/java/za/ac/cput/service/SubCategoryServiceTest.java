@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import za.ac.cput.domain.Category;
+import za.ac.cput.domain.Product;
 import za.ac.cput.domain.SubCategory;
 import za.ac.cput.factory.CategoryFactory;
 import za.ac.cput.factory.SubCategoryFactory;
@@ -23,13 +24,23 @@ class SubCategoryServiceTest {
     private SubCategoryService service;
 
     @Autowired
-    private CategoryService categoryService; // Assuming you have a CategoryService to manage categories
+    private CategoryService categoryService;
+
+    @Autowired
+    private ProductService productService;
+
+    private List<Product> product;
 
     private SubCategory subCategory;
 
+
     @BeforeEach
     void setUp() {
-        // Create and save a Category first
+        Product product1 = productService.read(30L);
+        Product product2 = productService.read(31L);
+
+        product = List.of(product1, product2);
+        // Create and save a Category with bidirectional relationship
         Category category = CategoryFactory.createCategory(
                 null,
                 "Loafers",
@@ -37,25 +48,29 @@ class SubCategoryServiceTest {
                 LocalDateTime.now(),
                 null
         );
-        category = categoryService.create(category); // Save category to DB
+        category = categoryService.create(category);
 
-        // Now create the SubCategory
         subCategory = SubCategoryFactory.createSubCategory(
                 null,
                 category,
+                product,
                 "Low Tops",
                 "this is subcategory service test",
                 LocalDateTime.now(),
                 null
         );
-        subCategory = service.create(subCategory); // Save subcategory
+        subCategory = service.create(subCategory);
+
+        // Add SubCategory to Category's list
+      //  category.getSubCategories().add(subCategory);
+        categoryService.update(category);
     }
 
     @AfterEach
     void tearDown() {
-       /* if (subCategory != null && subCategory.getId() != null) {
+        if (subCategory != null && subCategory.getId() != null) {
             service.delete(subCategory.getId());
-        }*/
+        }
     }
 
     @Test
@@ -63,6 +78,8 @@ class SubCategoryServiceTest {
     void create() {
         assertNotNull(subCategory);
         assertNotNull(subCategory.getId());
+        assertNotNull(subCategory.getCategory());
+        //assertTrue(subCategory.getCategory().getSubCategories().contains(subCategory));
         System.out.println("Created: " + subCategory);
     }
 
@@ -72,7 +89,6 @@ class SubCategoryServiceTest {
         SubCategory readSubCategory = service.read(subCategory.getId());
         assertNotNull(readSubCategory);
         assertEquals(subCategory.getId(), readSubCategory.getId());
-        System.out.println("Read: " + readSubCategory);
     }
 
     @Test
@@ -85,7 +101,6 @@ class SubCategoryServiceTest {
         SubCategory updatedSubCategory = service.update(subCategory);
         assertNotNull(updatedSubCategory);
         assertEquals("Updated Low Tops", updatedSubCategory.getName());
-        System.out.println("Updated: " + updatedSubCategory);
     }
 
     @Test
@@ -94,16 +109,14 @@ class SubCategoryServiceTest {
         List<SubCategory> subCategories = service.findAll();
         assertNotNull(subCategories);
         assertFalse(subCategories.isEmpty());
-        System.out.println("Found all subcategories: " + subCategories);
     }
 
     @Test
     @Order(5)
     void findById() {
-        SubCategory foundSubCategory = service.findById(subCategory.getId());
+        SubCategory foundSubCategory = service.read(subCategory.getId());
         assertNotNull(foundSubCategory);
         assertEquals(subCategory.getId(), foundSubCategory.getId());
-        System.out.println("Found by ID: " + foundSubCategory);
     }
 
     @Test
@@ -112,6 +125,6 @@ class SubCategoryServiceTest {
         service.delete(subCategory.getId());
         SubCategory deletedSubCategory = service.read(subCategory.getId());
         assertNull(deletedSubCategory);
-        System.out.println("Deleted subcategory with ID: " + subCategory.getId());
+
     }
 }

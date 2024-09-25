@@ -1,9 +1,11 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -26,7 +28,12 @@ public final class SubCategory {
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
+    @JsonIgnore
     private Category category;
+
+    // One-to-Many relationship with ProductSubCategories
+    @OneToMany(mappedBy = "subCategory", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductSubCategories> productSubCategories;
 
     private String name;
     private String description;
@@ -39,6 +46,7 @@ public final class SubCategory {
     private SubCategory(Builder builder) {
         this.id = builder.id;
         this.category = builder.category;
+        this.productSubCategories = builder.productSubCategories;
         this.name = builder.name;
         this.description = builder.description;
         this.createdAt = builder.createdAt;
@@ -51,7 +59,8 @@ public final class SubCategory {
     public String toString() {
         return "\n SubCategory{" +
                 "id=" + id +
-                ", category=" + category+ (category != null ? category.getId() : "null") +
+                ", category=" + (category != null ? category.getId() : "null") +
+                ", productSubCategories=" + (productSubCategories != null ? productSubCategories : "null") +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +
@@ -66,6 +75,7 @@ public final class SubCategory {
         SubCategory that = (SubCategory) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(category, that.category) &&
+                Objects.equals(productSubCategories, that.productSubCategories) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(createdAt, that.createdAt) &&
@@ -74,12 +84,13 @@ public final class SubCategory {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, category, name, description, createdAt, deletedAt);
+        return Objects.hash(id, category, productSubCategories, name, description, createdAt, deletedAt);
     }
 
     public static class Builder {
         private Long id;
         private Category category;
+        private List<ProductSubCategories> productSubCategories;
         private String name;
         private String description;
         private LocalDateTime createdAt;
@@ -92,6 +103,11 @@ public final class SubCategory {
 
         public Builder setCategory(Category category) {
             this.category = category;
+            return this;
+        }
+
+        public Builder setProductSubCategories(List<ProductSubCategories> productSubCategories) {
+            this.productSubCategories = productSubCategories;
             return this;
         }
 
@@ -118,6 +134,7 @@ public final class SubCategory {
         public Builder copy(SubCategory subCategory) {
             this.id = subCategory.getId();
             this.category = subCategory.getCategory();
+            this.productSubCategories = subCategory.getProductSubCategories();
             this.name = subCategory.getName();
             this.description = subCategory.getDescription();
             this.createdAt = subCategory.getCreatedAt();

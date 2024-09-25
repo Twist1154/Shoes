@@ -217,13 +217,13 @@ public abstract class BaseServiceTest {
 
         // Create WishlistItems for Wishlist
         WishListItem item1 = new WishListItem.Builder()
-                .setProduct(product)
+                .setProductSubCategories(product)
                 .setDateAdded(LocalDateTime.now())
                 .setWishlist(wishlist)
                 .build();
 
         WishListItem item2 = new WishListItem.Builder()
-                .setProduct(product)
+                .setProductSubCategories(product)
                 .setDateAdded(LocalDateTime.now())
                 .setWishlist(wishlist)
                 .build();
