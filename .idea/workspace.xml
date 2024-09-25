@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef58de28-6174-419a-8626-436ead673cf8" name="Changes" comment="updated name Conventions now all service interface are ICart instead of ICartService.java">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/controller/ProductControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/controller/ProductControllerTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="ef58de28-6174-419a-8626-436ead673cf8" name="Changes" comment="ProductControllerTest 2 out of 3 methods works" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -374,7 +369,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727197404689</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="ProductControllerTest 2 out of 3 methods works">
+      <option name="closed" value="true" />
+      <created>1727272981294</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1727272981294</updated>
+    </task>
+    <task id="LOCAL-00013" summary="ProductControllerTest 2 out of 3 methods works">
+      <option name="closed" value="true" />
+      <created>1727273018186</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1727273018186</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -389,7 +400,8 @@
     <MESSAGE value="all service tests passed" />
     <MESSAGE value="wishlistControllerTest working" />
     <MESSAGE value="updated name Conventions now all service interface are ICart instead of ICartService.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated name Conventions now all service interface are ICart instead of ICartService.java" />
+    <MESSAGE value="ProductControllerTest 2 out of 3 methods works" />
+    <option name="LAST_COMMIT_MESSAGE" value="ProductControllerTest 2 out of 3 methods works" />
   </component>
   <component name="WfRunsListSearchHistory">{
   &quot;history&quot;: [
