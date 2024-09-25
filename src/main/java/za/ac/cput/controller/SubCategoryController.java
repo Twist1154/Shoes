@@ -19,7 +19,7 @@ import java.util.List;
  * Date: 25-Aug-24
  */
 @RestController
-@RequestMapping("/api/subcategories")
+@RequestMapping("/subcategories")
 public class SubCategoryController {
 
     private final SubCategoryService subCategoryService;
@@ -96,4 +96,6 @@ public class SubCategoryController {
         List<SubCategory> subCategories = subCategoryService.findAll();
         return ResponseEntity.ok(subCategories);
     }
+
+
 }

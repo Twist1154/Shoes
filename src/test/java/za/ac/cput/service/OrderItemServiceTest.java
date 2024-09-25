@@ -133,6 +133,7 @@ class OrderItemServiceTest {
     @Order(2)
     void read() {
         OrderItem readOrderItem = orderItemService.read(orderItem.getId());
+        System.out.println(readOrderItem);
         Assertions.assertNotNull(readOrderItem);
         Assertions.assertEquals(orderItem.getId(), readOrderItem.getId());
     }
