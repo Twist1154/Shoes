@@ -30,7 +30,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -280,6 +279,7 @@
       <workItem from="1727115263238" duration="19832000" />
       <workItem from="1727177295562" duration="2368000" />
       <workItem from="1727181512140" duration="45759000" />
+      <workItem from="1727420414431" duration="762000" />
     </task>
     <task id="LOCAL-00001" summary="intitial commit">
       <option name="closed" value="true" />
@@ -393,7 +393,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727273067368</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="ProductControllerTest 2 out of 3 methods works">
+      <option name="closed" value="true" />
+      <created>1727421443341</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1727421443341</updated>
+    </task>
+    <task id="LOCAL-00016" summary="ProductControllerTest 2 out of 3 methods works">
+      <option name="closed" value="true" />
+      <created>1727421456278</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1727421456278</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
