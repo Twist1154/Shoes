@@ -3,84 +3,65 @@ package za.ac.cput.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import za.ac.cput.service.UserService;
 
-/**
- * SecurityConfig.java
- *
- * This class provides the security configuration for the application.
- * It handles user authentication and authorization, and specifies which endpoints
- * are accessible to specific roles.
- *
- * Author: Rethabile Ntsekhe
- * Date: 24-Aug-24
- */
+
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+
+    public SecurityConfig(UserDetailsService userDetailsService, UserService userService, PasswordEncoder passwordEncoder, JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.userDetailsService = userDetailsService;
+        this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-    /**
-     * Configures the HttpSecurity for authorization and authentication settings.
-     *
-     * - Admin endpoints ("/api/admin/**") are restricted to users with the "ADMIN" role.
-     * - User endpoints ("/api/user/**") are restricted to users with the "USER" role.
-     * - Other endpoints are accessible to all users without authentication.
-     *
-     * It also configures a custom login page and enables logout functionality.
-     *
-     * @param http the HttpSecurity object used for configuring web-based security.
-     * @return the SecurityFilterChain to be used by the security framework.
-     * @throws Exception if an error occurs while configuring HttpSecurity.
-     */
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                       /* .requestMatchers("store/api/users/**").permitAll() // Allow access to product endpoints
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/user/**").hasRole("USER")
-                        .anyRequest().authenticated()*/
-                        .anyRequest().permitAll() //Allow all requests without authentication
+        return http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(req -> req.requestMatchers("/users/login/**", "/users/register/**")
+                        .permitAll()
+                        // .requestMatchers("/demo/admin_only/**","/student/getstudents/**").hasAuthority("ADMIN")
+                        //   .requestMatchers("/demo/user/**","/authenitcation/read/{id}**").hasAuthority("USER")
+                        .anyRequest()
+                        .authenticated()
                 )
-                .formLogin(formLogin -> formLogin
-                        .disable() // Disable form login
-                        /*.loginPage("/login")
-                        .permitAll()*/
-                )
-                .logout(logout -> logout
-                        .disable()
-                        /*.permitAll()*/
-                )
-                .csrf(csrf -> csrf
-                        .disable()  // Disable CSRF for testing; enable and configure properly in production
-                );
-        return http.build();
+                .userDetailsService(userService)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
-    /**
-     * Configures the AuthenticationManagerBuilder for user authentication.
-     * It sets the userDetailsService to the UserService and specifies the password
-     * encoder.
-     *
-     * @param auth the AuthenticationManagerBuilder object used for configuring authentication.
-     * @throws Exception if an error occurs while configuring authentication.
-     */
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder);
     }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
 }
+

@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import za.ac.cput.domain.*;
+import za.ac.cput.enums.Role;
 import za.ac.cput.factory.CategoryFactory;
 import za.ac.cput.factory.ImageUrlsFactory;
 import za.ac.cput.factory.ProductFactory;
@@ -21,6 +22,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS;
+import static za.ac.cput.enums.Role.USER;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
@@ -109,7 +111,7 @@ class WishlistServiceTest {
                 .setLastName("Ntsekhe")
                 .setEmail("rethabile1154@gmail.com") // Ensure email matches used in tests
                 .setPassword("password") // Use encoded password
-                .setRole(Set.of("USER"))
+                .setRole(Set.of(Role.USER, Role.ADMIN))
                 .setBirthDate(LocalDate.of(1990, 1, 1))
                 .setPhoneNumber("1234567890")
                 .build();

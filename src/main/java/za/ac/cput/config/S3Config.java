@@ -11,10 +11,8 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 /**
  * S3Config.java
+ * Configuration class for S3Client and S3Presigner beans
  *
- * @author Rethabile Ntsekhe
- * Student Num: 220455430
- * @date 14-Aug-24
  */
 
 @Configuration

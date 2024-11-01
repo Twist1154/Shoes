@@ -78,10 +78,9 @@ public class UserService implements UserDetailsService, IUser {
     public boolean delete(Long id) {
         userRepository.deleteById(id);
 
-        // Check if the entity still exists after deletion
+
         boolean exists = userRepository.existsById(id);
 
-        // Return false if entity was deleted successfully, otherwise return true
         return !exists;
     }
 
@@ -102,17 +101,19 @@ public class UserService implements UserDetailsService, IUser {
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
 
-        // Convert roles to SimpleGrantedAuthority
+
         List<SimpleGrantedAuthority> authorities = user.getRole().stream()
-                .map(SimpleGrantedAuthority::new)
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
                 .collect(Collectors.toList());
 
+        // Return user details for authentication
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
                 authorities
         );
     }
+
 
     @Override
     public Optional<User> findByEmail(String email) {

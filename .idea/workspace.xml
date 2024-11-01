@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef58de28-6174-419a-8626-436ead673cf8" name="Changes" comment="ProductControllerTest 2 out of 3 methods works">
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/ProductAttributeServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/SubCategoryServiceTest.java" beforeDir="false" />
-    </list>
+    <list default="true" id="ef58de28-6174-419a-8626-436ead673cf8" name="Changes" comment="ProductControllerTest 2 out of 3 methods works" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -279,7 +275,7 @@
       <workItem from="1727115263238" duration="19832000" />
       <workItem from="1727177295562" duration="2368000" />
       <workItem from="1727181512140" duration="45759000" />
-      <workItem from="1727420414431" duration="762000" />
+      <workItem from="1727420414431" duration="934000" />
     </task>
     <task id="LOCAL-00001" summary="intitial commit">
       <option name="closed" value="true" />
@@ -409,7 +405,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727421456278</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="updating workspace.xml">
+      <option name="closed" value="true" />
+      <created>1727421717322</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1727421717322</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -425,7 +429,8 @@
     <MESSAGE value="wishlistControllerTest working" />
     <MESSAGE value="updated name Conventions now all service interface are ICart instead of ICartService.java" />
     <MESSAGE value="ProductControllerTest 2 out of 3 methods works" />
-    <option name="LAST_COMMIT_MESSAGE" value="ProductControllerTest 2 out of 3 methods works" />
+    <MESSAGE value="updating workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="updating workspace.xml" />
   </component>
   <component name="WfRunsListSearchHistory">{
   &quot;history&quot;: [

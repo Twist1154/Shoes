@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.domain.User;
+import za.ac.cput.dto.UserPasswordDTO;
 import za.ac.cput.service.UserService;
 
 import java.util.List;
@@ -81,9 +82,9 @@ public class UserController {
      * @param userPasswordDTO the data transfer object containing the new password details.
      * @return ResponseEntity containing a success message and HTTP OK status.
      */
-   /* @PostMapping("/{id}/password")
+    @PostMapping("/{id}/password")
     public ResponseEntity<String> updateUserPassword(@PathVariable Long id, @RequestBody UserPasswordDTO userPasswordDTO) {
         userService.updateUserPassword(id, userPasswordDTO);
         return ResponseEntity.ok("Password updated successfully");
-    }*/
+    }
 }
