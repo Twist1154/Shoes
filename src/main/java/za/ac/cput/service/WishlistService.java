@@ -4,7 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import za.ac.cput.domain.WishListItem;
+import za.ac.cput.domain.WishlistItem;
 import za.ac.cput.domain.Wishlist;
 import za.ac.cput.repository.WishlistRepository;
 
@@ -26,10 +26,10 @@ import java.util.stream.Collectors;
 public class WishlistService implements iWishlist {
 
     private final WishlistRepository wishlistRepository;
-    private final WishListItemService wishListItemService;
+    private final WishlistItemService wishListItemService;
 
     @Autowired
-    public WishlistService(WishlistRepository wishlistRepository, WishListItemService wishListItemService) {
+    public WishlistService(WishlistRepository wishlistRepository, WishlistItemService wishListItemService) {
         this.wishlistRepository = wishlistRepository;
         this.wishListItemService = wishListItemService;
     }
@@ -60,7 +60,7 @@ public class WishlistService implements iWishlist {
                 .orElseThrow(() -> new EntityNotFoundException("Wishlist not found"));
 
         // Access to initialize lazy-loaded collections (WishlistItems and their Products' SubCategories)
-        for (WishListItem item : wishlist.getWishListItems()) {
+        for (WishlistItem item : wishlist.getWishlistItems()) {
             item.getProduct().getSubCategory().size(); // Ensure subCategory is initialized
         }
         return wishlist;
@@ -82,7 +82,7 @@ public class WishlistService implements iWishlist {
             Wishlist updatedWishlist = new Wishlist.Builder()
                     .copy(existingWishlist)
                     .setUser(wishlist.getUser())
-                    .setWishlistItems(wishlist.getWishListItems())
+                    .setWishlistItems(wishlist.getWishlistItems())
                     .build();
             return wishlistRepository.save(updatedWishlist);
         } else {
@@ -106,6 +106,12 @@ public class WishlistService implements iWishlist {
 
         // Return false if entity was deleted successfully, otherwise return true
         return !exists;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Wishlist> findByUserId(Long userId) {
+        return wishlistRepository.findByUserId(userId);
     }
 
     /**

@@ -2,6 +2,8 @@ package za.ac.cput.service;
 
 import za.ac.cput.domain.Wishlist;
 
+import java.util.List;
+
 /**
  * iWishlistService.java
  *
@@ -11,5 +13,5 @@ import za.ac.cput.domain.Wishlist;
  */
 
 public interface iWishlist extends IService<Wishlist, Long>{
-
+    List<Wishlist> findByUserId(Long userId);
 }

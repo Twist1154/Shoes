@@ -1,6 +1,6 @@
 package za.ac.cput.service;
 
-import za.ac.cput.domain.WishListItem;
+import za.ac.cput.domain.WishlistItem;
 
 import java.util.List;
 
@@ -12,6 +12,8 @@ import java.util.List;
  * @date 22-Sep-24
  */
 
-public interface IWishListItems extends IService<WishListItem, Long> {
+public interface IWishlistItems extends IService<WishlistItem, Long> {
+    List<WishlistItem> findByWishlist_Id(Long wishlistId);
+
     void deleteByWishlistId(Long wishlistId);
 }

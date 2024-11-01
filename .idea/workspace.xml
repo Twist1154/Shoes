@@ -4,17 +4,49 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef58de28-6174-419a-8626-436ead673cf8" name="Changes" comment="ProductControllerTest 2 out of 3 methods works" />
+    <list default="true" id="ef58de28-6174-419a-8626-436ead673cf8" name="Changes" comment="errors help debug">
+      <change afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/controller/WishlistItemController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/controller/ProductAttributeControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/controller/ProductAttributeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/controller/ProductAttributeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/controller/WishlistController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/controller/WishlistController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/ProductSku.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/ProductSku.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/SubCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/SubCategory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/WishListItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/WishlistItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/Wishlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/Wishlist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/factory/WishlistFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/factory/WishlistFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/factory/WishlistItemFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/factory/WishlistItemFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/repository/WishListItemRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/repository/WishlistItemRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/repository/WishlistRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/repository/WishlistRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/CartItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/CartItemService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/IWishListItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/IWishlistItems.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/ProductAttributeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/ProductAttributeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/WishListItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/WishlistItemService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/WishlistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/WishlistService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/iWishlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/iWishlist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/controller/WishlistControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/controller/WishlistControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/WishlistFactoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/WishlistFactoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/BaseServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/BaseServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/ProductAttributeServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/ProductAttributeServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/WishListItemServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/WishlistItemServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/WishlistServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/WishlistServiceTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseLocalColorSettings">
+    <colors>
+      <entry key="daac2efd-58e1-4fa4-8ccc-733b7310e22c" value="Violet" />
+    </colors>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Interface" />
+        <option value="JUnit5 Test Class" />
         <option value="Class" />
       </list>
     </option>
@@ -81,101 +113,107 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;HTTP Request.generated-requests | #2.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #24.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #26.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #3.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #35.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #36.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #37.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #4.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #5.executor&quot;: &quot;Run&quot;,
-    &quot;JPA.DatabaseSchemaImportDialog&quot;: &quot;830fc46b-7b67-4a92-a409-d058e5ec1c1a&quot;,
-    &quot;JUnit.AddressServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AddressServiceTest.testCreateAddress.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AddressServiceTest.testUpdateAddress.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CartItemFactoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CartItemServiceTest.create.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CartItemServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CartItemServiceTest.update.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CartServiceTest.delete.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CartServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CategoryServiceTest.create.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CategoryServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.OrderDetailsServiceTest.create.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.OrderDetailsServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.OrderDetailsServiceTest.findByUpdatedAtBefore.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.OrderDetailsServiceTest.findByUserIdOrderByCreatedAtDesc.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.OrderItemServiceTest.create.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.OrderItemServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.OrderItemServiceTest.read.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentDetailsControllerTest.createPaymentDetails.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentDetailsControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentDetailsControllerTest.getPaymentDetailsByStatus.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentDetailsServiceTest.create.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentDetailsServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProductAttributeFactoryTest and 2 more.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProductAttributeServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProductControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProductFactoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProductServiceTest and 2 more.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProductServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProductSkuControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProductSkuControllerTest.getProductSkuById.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProductSkuFactoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProductSkuServiceTest.create.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProductSkuServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProductSkuServiceTest.read.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReviewServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReviewsFactoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SubCategoryControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SubCategoryServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.testCreateUser.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.testFindAllUsers.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.testFindByEmail.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WishListItemServiceTest,findAll and 1 more.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WishListItemServiceTest.delete.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WishListItemServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WishlistControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WishlistServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WishlistServiceTest.testFindAllWishlists.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.factory in Shoe_Store.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.service in Shoe_Store.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.Application.executor&quot;: &quot;Run&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers&quot;: &quot;true&quot;,
-    &quot;database.data.extractors.current.export.id&quot;: &quot;Pretty-Groovy.txt.groovy&quot;,
-    &quot;database.data.extractors.current.id&quot;: &quot;Pretty-Groovy.txt.groovy&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;C:/Users/retha/Documents/JetBrains Academy/Shoe_Store/src/main/java/za/ac/cput&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/retha/Documents/JetBrains Academy/Shoe_Store/src/test/java&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "HTTP Request.generated-requests | #2.executor": "Run",
+    "HTTP Request.generated-requests | #24.executor": "Run",
+    "HTTP Request.generated-requests | #26.executor": "Run",
+    "HTTP Request.generated-requests | #3.executor": "Run",
+    "HTTP Request.generated-requests | #35.executor": "Run",
+    "HTTP Request.generated-requests | #36.executor": "Run",
+    "HTTP Request.generated-requests | #37.executor": "Run",
+    "HTTP Request.generated-requests | #38.executor": "Run",
+    "HTTP Request.generated-requests | #39.executor": "Run",
+    "HTTP Request.generated-requests | #4.executor": "Run",
+    "HTTP Request.generated-requests | #40.executor": "Run",
+    "HTTP Request.generated-requests | #42.executor": "Run",
+    "HTTP Request.generated-requests | #5.executor": "Run",
+    "JPA.DatabaseSchemaImportDialog": "830fc46b-7b67-4a92-a409-d058e5ec1c1a",
+    "JUnit.AddressServiceTest.executor": "Run",
+    "JUnit.AddressServiceTest.testCreateAddress.executor": "Run",
+    "JUnit.AddressServiceTest.testUpdateAddress.executor": "Run",
+    "JUnit.CartItemFactoryTest.executor": "Run",
+    "JUnit.CartItemServiceTest.create.executor": "Run",
+    "JUnit.CartItemServiceTest.executor": "Run",
+    "JUnit.CartItemServiceTest.update.executor": "Run",
+    "JUnit.CartServiceTest.delete.executor": "Run",
+    "JUnit.CartServiceTest.executor": "Run",
+    "JUnit.CategoryServiceTest.create.executor": "Run",
+    "JUnit.CategoryServiceTest.executor": "Run",
+    "JUnit.OrderDetailsServiceTest.create.executor": "Run",
+    "JUnit.OrderDetailsServiceTest.executor": "Run",
+    "JUnit.OrderDetailsServiceTest.findByUpdatedAtBefore.executor": "Run",
+    "JUnit.OrderDetailsServiceTest.findByUserIdOrderByCreatedAtDesc.executor": "Run",
+    "JUnit.OrderItemServiceTest.create.executor": "Run",
+    "JUnit.OrderItemServiceTest.executor": "Run",
+    "JUnit.OrderItemServiceTest.read.executor": "Run",
+    "JUnit.PaymentDetailsControllerTest and 4 more.executor": "Run",
+    "JUnit.PaymentDetailsControllerTest.createPaymentDetails.executor": "Run",
+    "JUnit.PaymentDetailsControllerTest.executor": "Run",
+    "JUnit.PaymentDetailsControllerTest.getPaymentDetailsByStatus.executor": "Run",
+    "JUnit.PaymentDetailsServiceTest.create.executor": "Run",
+    "JUnit.PaymentDetailsServiceTest.executor": "Run",
+    "JUnit.ProductAttributeControllerTest.executor": "Run",
+    "JUnit.ProductAttributeFactoryTest and 2 more.executor": "Run",
+    "JUnit.ProductAttributeServiceTest.executor": "Run",
+    "JUnit.ProductControllerTest.executor": "Run",
+    "JUnit.ProductFactoryTest.executor": "Run",
+    "JUnit.ProductServiceTest and 2 more.executor": "Run",
+    "JUnit.ProductServiceTest.executor": "Run",
+    "JUnit.ProductSkuControllerTest.executor": "Run",
+    "JUnit.ProductSkuControllerTest.getProductSkuById.executor": "Run",
+    "JUnit.ProductSkuFactoryTest.executor": "Run",
+    "JUnit.ProductSkuServiceTest.create.executor": "Run",
+    "JUnit.ProductSkuServiceTest.executor": "Run",
+    "JUnit.ProductSkuServiceTest.read.executor": "Run",
+    "JUnit.ReviewServiceTest.executor": "Run",
+    "JUnit.ReviewsFactoryTest.executor": "Run",
+    "JUnit.SubCategoryControllerTest.executor": "Run",
+    "JUnit.SubCategoryServiceTest.executor": "Run",
+    "JUnit.UserRepositoryTest.executor": "Run",
+    "JUnit.UserServiceTest.executor": "Run",
+    "JUnit.UserServiceTest.testCreateUser.executor": "Run",
+    "JUnit.UserServiceTest.testFindAllUsers.executor": "Run",
+    "JUnit.UserServiceTest.testFindByEmail.executor": "Run",
+    "JUnit.WishListItemServiceTest,findAll and 1 more.executor": "Run",
+    "JUnit.WishListItemServiceTest.delete.executor": "Run",
+    "JUnit.WishListItemServiceTest.executor": "Run",
+    "JUnit.WishlistControllerTest.executor": "Run",
+    "JUnit.WishlistServiceTest.executor": "Run",
+    "JUnit.WishlistServiceTest.testFindAllWishlists.executor": "Run",
+    "JUnit.factory in Shoe_Store.executor": "Run",
+    "JUnit.service in Shoe_Store.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.Application.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers": "true",
+    "database.data.extractors.current.export.id": "Pretty-Groovy.txt.groovy",
+    "database.data.extractors.current.id": "Pretty-Groovy.txt.groovy",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "C:/Users/retha/Documents/JetBrains Academy/Shoe_Store/src/main/java/za/ac/cput",
+    "last_opened_file_path": "C:/Users/retha/Documents/JetBrains Academy/Shoe_Store/src/test/java",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\retha\Documents\JetBrains Academy\Shoe_Store\src\test\java" />
@@ -199,41 +237,39 @@
       <recent name="za.ac.cput.config" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ProductControllerTest">
-    <configuration name="generated-requests | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="2" requestIdentifier="#2" runType="Run single request">
+  <component name="RunManager" selected="HTTP Request.generated-requests | #40">
+    <configuration name="generated-requests | #38" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="38" requestIdentifier="#38" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="generated-requests | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="3" requestIdentifier="#3" runType="Run single request">
+    <configuration name="generated-requests | #39" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="39" requestIdentifier="#39" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="generated-requests | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="4" requestIdentifier="#4" runType="Run single request">
+    <configuration name="generated-requests | #40" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="40" requestIdentifier="#40" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="generated-requests | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="5" requestIdentifier="#5" runType="Run single request">
+    <configuration name="generated-requests | #42" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="42" requestIdentifier="#42" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="ProductControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="Shoe_Store" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="za.ac.cput.Application" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="za.ac.cput.controller.*" />
+          <option name="PATTERN" value="za.ac.cput.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="za.ac.cput.controller" />
-      <option name="MAIN_CLASS_NAME" value="za.ac.cput.controller.ProductControllerTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProductControllerTest" />
-        <item itemvalue="HTTP Request.generated-requests | #5" />
-        <item itemvalue="HTTP Request.generated-requests | #4" />
-        <item itemvalue="HTTP Request.generated-requests | #3" />
-        <item itemvalue="HTTP Request.generated-requests | #2" />
+        <item itemvalue="HTTP Request.generated-requests | #40" />
+        <item itemvalue="HTTP Request.generated-requests | #42" />
+        <item itemvalue="Spring Boot.Application" />
+        <item itemvalue="HTTP Request.generated-requests | #39" />
+        <item itemvalue="HTTP Request.generated-requests | #38" />
       </list>
     </recent_temporary>
   </component>
@@ -275,7 +311,6 @@
       <workItem from="1727115263238" duration="19832000" />
       <workItem from="1727177295562" duration="2368000" />
       <workItem from="1727181512140" duration="45759000" />
-      <workItem from="1727420414431" duration="934000" />
     </task>
     <task id="LOCAL-00001" summary="intitial commit">
       <option name="closed" value="true" />
@@ -381,43 +416,22 @@
       <option name="project" value="LOCAL" />
       <updated>1727273018186</updated>
     </task>
-    <task id="LOCAL-00014" summary="ProductControllerTest 2 out of 3 methods works">
-      <option name="closed" value="true" />
-      <created>1727273067368</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1727273067368</updated>
-    </task>
-    <task id="LOCAL-00015" summary="ProductControllerTest 2 out of 3 methods works">
-      <option name="closed" value="true" />
-      <created>1727421443341</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1727421443341</updated>
-    </task>
-    <task id="LOCAL-00016" summary="ProductControllerTest 2 out of 3 methods works">
-      <option name="closed" value="true" />
-      <created>1727421456278</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1727421456278</updated>
-    </task>
-    <task id="LOCAL-00017" summary="updating workspace.xml">
-      <option name="closed" value="true" />
-      <created>1727421717322</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1727421717322</updated>
-    </task>
-    <option name="localTasksCounter" value="18" />
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -429,8 +443,8 @@
     <MESSAGE value="wishlistControllerTest working" />
     <MESSAGE value="updated name Conventions now all service interface are ICart instead of ICartService.java" />
     <MESSAGE value="ProductControllerTest 2 out of 3 methods works" />
-    <MESSAGE value="updating workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="updating workspace.xml" />
+    <MESSAGE value="errors help debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="errors help debug" />
   </component>
   <component name="WfRunsListSearchHistory">{
   &quot;history&quot;: [
