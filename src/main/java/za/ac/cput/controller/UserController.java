@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.domain.User;
 import za.ac.cput.dto.UserPasswordDTO;
+import za.ac.cput.factory.UserFactory;
 import za.ac.cput.service.UserService;
 
 import java.util.List;
@@ -34,8 +35,8 @@ public class UserController {
      * @param user the user data transfer object containing user details.\
      * @return ResponseEntity containing the created UserDTO and HTTP status code.
      */
-    @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody User user) {
         User createdUser = userService.create(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
@@ -82,9 +83,10 @@ public class UserController {
      * @param userPasswordDTO the data transfer object containing the new password details.
      * @return ResponseEntity containing a success message and HTTP OK status.
      */
-    @PostMapping("/{id}/password")
+   /* @PostMapping("/{id}/password")
     public ResponseEntity<String> updateUserPassword(@PathVariable Long id, @RequestBody UserPasswordDTO userPasswordDTO) {
-        userService.updateUserPassword(id, userPasswordDTO);
+       User user = UserFactory.createUserForSignIn(userPasswordDTO.getUsername(), userPasswordDTO.getPassword());
+        userService.update( userPasswordDTO);
         return ResponseEntity.ok("Password updated successfully");
-    }
+    }*/
 }

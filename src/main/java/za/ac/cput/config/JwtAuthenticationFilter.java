@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import za.ac.cput.util.JwtUtil;
+import za.ac.cput.service.JwtService;
 import za.ac.cput.service.UserService;
 
 import java.io.IOException;
@@ -20,11 +20,11 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserService userService;
-    private final JwtUtil jwtUtil;
+    private final JwtService jwtService;
 
-    public JwtAuthenticationFilter(UserService userService, JwtUtil jwtUtil) {
+    public JwtAuthenticationFilter(UserService userService, JwtService jwtService) {
         this.userService = userService;
-        this.jwtUtil = jwtUtil;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -41,14 +41,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // Extract the token from the Authorization header
         String token = authHeader.substring(7);
-        String username = jwtUtil.extractUsername(token);
+        String username = jwtService.extractUsername(token);
 
         // Authenticate the user if a username is found and not already authenticated
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userService.loadUserByUsername(username);
 
             // Validate the token and set authentication
-            if (jwtUtil.isValid(token, userDetails)) {
+            if (jwtService.isValid(token, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );

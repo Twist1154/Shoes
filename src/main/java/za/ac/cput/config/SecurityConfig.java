@@ -17,7 +17,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import za.ac.cput.service.UserService;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -28,7 +27,6 @@ public class SecurityConfig {
     private final PasswordEncoder passwordEncoder;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-
     public SecurityConfig(UserDetailsService userDetailsService, UserService userService, PasswordEncoder passwordEncoder, JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.userDetailsService = userDetailsService;
         this.userService = userService;
@@ -36,16 +34,15 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req -> req.requestMatchers("/users/login/**", "/users/register/**")
-                        .permitAll()
-                        // .requestMatchers("/demo/admin_only/**","/student/getstudents/**").hasAuthority("ADMIN")
-                        //   .requestMatchers("/demo/user/**","/authenitcation/read/{id}**").hasAuthority("USER")
-                        .anyRequest()
-                        .authenticated()
+                .authorizeHttpRequests(req -> req
+                        .requestMatchers("/store/login", "/users/register/**","").permitAll()
+                        .requestMatchers("/store/products/all", "/users/register/**").permitAll()
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN") // Define paths for ADMIN
+                        .requestMatchers("/demo/user/**", "/authentication/read/{id}").hasAuthority("USER") // Define paths for USER
+                        .anyRequest().authenticated()
                 )
                 .userDetailsService(userService)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -64,4 +61,3 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 }
-

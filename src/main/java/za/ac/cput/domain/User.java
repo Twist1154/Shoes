@@ -3,12 +3,14 @@ package za.ac.cput.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import za.ac.cput.enums.Role;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Represents a user in the system.
@@ -21,8 +23,9 @@ import java.util.Set;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,14 +40,14 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "username", unique = true, nullable = false) // Added username column
-    private String username;
-
     @Column(name = "email")
     private String email;
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @Column(name = "username", unique = true, nullable = false) // Added username column
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -56,8 +59,9 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
-    @JsonIgnore
     private Set<Role> role = new HashSet<>();
+
+    private boolean enabled = true;
 
     public User() {
     }
@@ -68,13 +72,44 @@ public class User {
         this.avatar = builder.avatar;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
-        this.username = builder.username; // Added username assignment
         this.email = builder.email;
         this.birthDate = builder.birthDate;
+        this.username = builder.username;
         this.password = builder.password;
         this.phoneNumber = builder.phoneNumber;
         this.role.addAll(builder.role);
+        this.enabled = builder.enabled;
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (Role r : role) {
+            authorities.add(new SimpleGrantedAuthority(r.name()));
+        }
+        return authorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
 
     @Override
     public String toString() {
@@ -97,11 +132,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
+        return enabled == user.enabled &&
+                Objects.equals(id, user.id) &&
                 Objects.equals(avatar, user.avatar) &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
-                Objects.equals(username, user.username) &&  // Updated to include username in equality check
                 Objects.equals(email, user.email) &&
                 Objects.equals(birthDate, user.birthDate) &&
                 Objects.equals(password, user.password) &&
@@ -111,7 +146,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, avatar, firstName, lastName, username, email, birthDate, password, phoneNumber, role);  // Updated hashCode with username
+        return Objects.hash(id, avatar, firstName, lastName, email, birthDate, password, phoneNumber, role, enabled);
     }
 
     public static class Builder {
@@ -119,12 +154,13 @@ public class User {
         private String avatar;
         private String firstName;
         private String lastName;
-        private String username;  // Added username to Builder
         private String email;
         private LocalDate birthDate;
+        private String username;
         private String password;
         private String phoneNumber;
         private Set<Role> role = new HashSet<>();
+        private boolean enabled = true;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -146,7 +182,7 @@ public class User {
             return this;
         }
 
-        public Builder setUsername(String username) {  // New setter for username
+        public Builder setUsername(String username) {
             this.username = username;
             return this;
         }
@@ -181,12 +217,13 @@ public class User {
             this.avatar = user.getAvatar();
             this.firstName = user.getFirstName();
             this.lastName = user.getLastName();
-            this.username = user.getUsername();  // Added username in copy method
+            this.username = user.getUsername();
             this.email = user.getEmail();
             this.birthDate = user.getBirthDate();
             this.password = user.getPassword();
             this.phoneNumber = user.getPhoneNumber();
             this.role = new HashSet<>(user.getRole());
+            this.enabled = user.isEnabled();
             return this;
         }
 

@@ -1,5 +1,6 @@
 package za.ac.cput.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
  * </p>
  */
 @Service
+@Slf4j
 @Transactional
 public class UserService implements UserDetailsService, IUser {
 
@@ -33,10 +35,10 @@ public class UserService implements UserDetailsService, IUser {
     private final PasswordEncoder passwordEncoder;
 
     /**
-     * Constructs a UserService with the specified UserRepository, PasswordEncoder, and UserMapper.
+     * Constructs a UserService with the specified UserRepository and PasswordEncoder.
      *
-     * @param userRepository   the UserRepository for interacting with the database
-     * @param passwordEncoder  the PasswordEncoder for encoding passwords
+     * @param userRepository  the UserRepository for interacting with the database
+     * @param passwordEncoder the PasswordEncoder for encoding passwords
      */
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -44,10 +46,24 @@ public class UserService implements UserDetailsService, IUser {
         this.passwordEncoder = passwordEncoder;
     }
 
-
     @Override
     public User create(User user) {
-        return userRepository.save(user);
+        Optional<User> existingUser = userRepository.findById(user.getId());
+        if (existingUser.isEmpty()) {
+            User registeredUser = new User.Builder()
+                    .copy(user) // Initialize using new user data
+                    .setFirstName(user.getFirstName())
+                    .setLastName(user.getLastName())
+                    .setBirthDate(user.getBirthDate())
+                    .setPhoneNumber(passwordEncoder.encode(user.getPhoneNumber()))
+                    .setEmail(user.getEmail())
+                    .setPassword(passwordEncoder.encode(user.getPassword()))
+                    .setRole(user.getRole())
+                    .build();
+            return userRepository.save(registeredUser);
+        }
+        log.info("User with ID {} already exists", user.getId());
+        return existingUser.get();
     }
 
     @Override
@@ -64,9 +80,9 @@ public class UserService implements UserDetailsService, IUser {
                     .setFirstName(user.getFirstName())
                     .setLastName(user.getLastName())
                     .setBirthDate(user.getBirthDate())
-                    .setPhoneNumber(user.getPhoneNumber())
+                    .setPhoneNumber(passwordEncoder.encode(user.getPhoneNumber()))
                     .setEmail(user.getEmail())
-                    .setPassword(user.getPassword())
+                    .setPassword(passwordEncoder.encode(user.getPassword()))
                     .setRole(user.getRole())
                     .build();
             return userRepository.save(updatedUser);
@@ -77,11 +93,7 @@ public class UserService implements UserDetailsService, IUser {
 
     public boolean delete(Long id) {
         userRepository.deleteById(id);
-
-
-        boolean exists = userRepository.existsById(id);
-
-        return !exists;
+        return !userRepository.existsById(id);
     }
 
     @Override
@@ -101,7 +113,6 @@ public class UserService implements UserDetailsService, IUser {
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
 
-
         List<SimpleGrantedAuthority> authorities = user.getRole().stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
                 .collect(Collectors.toList());
@@ -113,7 +124,6 @@ public class UserService implements UserDetailsService, IUser {
                 authorities
         );
     }
-
 
     @Override
     public Optional<User> findByEmail(String email) {
@@ -141,7 +151,8 @@ public class UserService implements UserDetailsService, IUser {
     }
 
     @Override
-    public List<User> findByRole(String role) {
-        return userRepository.findByRole(role);
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
+
 }

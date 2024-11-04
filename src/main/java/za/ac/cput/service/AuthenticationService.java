@@ -6,17 +6,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import za.ac.cput.domain.AuthenticationResponse;
+import za.ac.cput.dto.AuthenticationResponse;
 import za.ac.cput.domain.User;
 import za.ac.cput.repository.UserRepository;
-import za.ac.cput.util.JwtUtil;
+
+import java.util.Optional;
 
 
 @Service
 public class AuthenticationService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
+    private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     /**
@@ -24,16 +25,16 @@ public class AuthenticationService {
      *
      * @param repository             the repository to manage user data
      * @param passwordEncoder        the password encoder to securely encode passwords
-     * @param jwtUtil             the service to handle JWT token operations
+     * @param jwtService             the service to handle JWT token operations
      * @param authenticationManager  the manager responsible for authenticating user credentials
      */
     public AuthenticationService(UserRepository repository,
                                  PasswordEncoder passwordEncoder,
-                                 JwtUtil jwtUtil,
+                                 JwtService jwtService,
                                  AuthenticationManager authenticationManager) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
+        this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
     }
 
@@ -62,7 +63,7 @@ public class AuthenticationService {
         user = repository.save(user);
 
         // Generate JWT token for the registered user
-        String token = jwtUtil.generateToken(user);
+        String token = jwtService.generateToken(Optional.of(user));
 
         return new AuthenticationResponse(token);
     }
@@ -86,10 +87,9 @@ public class AuthenticationService {
                     )
             );
 
-            User user = repository.findByEmail(request.getEmail())
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            Optional<User> user = repository.findByUsername(request.getUsername());
 
-            String token = jwtUtil.generateToken(user);
+            String token = jwtService.generateToken(user);
             System.out.println("Authentication successful for user: " + request.getEmail());
 
             return new AuthenticationResponse(token);
