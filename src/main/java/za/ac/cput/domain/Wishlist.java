@@ -3,6 +3,7 @@ package za.ac.cput.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Objects;
  */
 @Entity
 @Getter
+@ToString
 @Table(name = "wishlist")
 public class Wishlist {
 
@@ -49,7 +51,7 @@ public class Wishlist {
         this.deletedAt = builder.deletedAt;
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return "Wishlist{" +
                 "id=" + id +
@@ -58,7 +60,7 @@ public class Wishlist {
                 ", createdAt=" + createdAt +
                 ", deletedAt=" + deletedAt +
                 "}\n ";
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

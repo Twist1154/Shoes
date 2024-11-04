@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import za.ac.cput.domain.User;
+import za.ac.cput.enums.Role;
 import za.ac.cput.factory.UserFactory;
 
 import java.time.LocalDate;
@@ -25,11 +26,11 @@ public class UserRepositoryTest {
 
 
     private User user;
+    private Set<Role> roles;
 
     @BeforeEach
     void setUp() {
-        Set<String> roles = new HashSet<>();
-        roles.add("USER");
+        roles = new HashSet<>(Set.of(Role.USER, Role.ADMIN));
 
         user = UserFactory.createUser(
                 null,

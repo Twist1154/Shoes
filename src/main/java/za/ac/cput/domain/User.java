@@ -3,6 +3,7 @@ package za.ac.cput.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
+import za.ac.cput.enums.Role;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -14,7 +15,7 @@ import java.util.Set;
  * <p>
  * This entity class is mapped to the "users" table in the database.
  *
- * @author Rethabile Ntsekhe
+ * @author Rethabile
  * @date 25-Aug-24
  */
 
@@ -36,6 +37,9 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "username", unique = true, nullable = false) // Added username column
+    private String username;
+
     @Column(name = "email")
     private String email;
 
@@ -53,7 +57,7 @@ public class User {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @JsonIgnore
-    private Set<String> role = new HashSet<>();
+    private Set<Role> role = new HashSet<>();
 
     public User() {
     }
@@ -64,6 +68,7 @@ public class User {
         this.avatar = builder.avatar;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
+        this.username = builder.username; // Added username assignment
         this.email = builder.email;
         this.birthDate = builder.birthDate;
         this.password = builder.password;
@@ -78,6 +83,7 @@ public class User {
                 ", avatar='" + avatar + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +  // Updated to include username
                 ", email='" + email + '\'' +
                 ", birthDate=" + birthDate +
                 ", password='" + password + '\'' +
@@ -95,6 +101,7 @@ public class User {
                 Objects.equals(avatar, user.avatar) &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
+                Objects.equals(username, user.username) &&  // Updated to include username in equality check
                 Objects.equals(email, user.email) &&
                 Objects.equals(birthDate, user.birthDate) &&
                 Objects.equals(password, user.password) &&
@@ -104,7 +111,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, avatar, firstName, lastName, email, birthDate, password, phoneNumber, role);
+        return Objects.hash(id, avatar, firstName, lastName, username, email, birthDate, password, phoneNumber, role);  // Updated hashCode with username
     }
 
     public static class Builder {
@@ -112,11 +119,12 @@ public class User {
         private String avatar;
         private String firstName;
         private String lastName;
+        private String username;  // Added username to Builder
         private String email;
         private LocalDate birthDate;
         private String password;
         private String phoneNumber;
-        private Set<String> role = new HashSet<>();
+        private Set<Role> role = new HashSet<>();
 
         public Builder setId(Long id) {
             this.id = id;
@@ -135,6 +143,11 @@ public class User {
 
         public Builder setLastName(String lastName) {
             this.lastName = lastName;
+            return this;
+        }
+
+        public Builder setUsername(String username) {  // New setter for username
+            this.username = username;
             return this;
         }
 
@@ -158,7 +171,7 @@ public class User {
             return this;
         }
 
-        public Builder setRole(Set<String> role) {
+        public Builder setRole(Set<Role> role) {
             this.role = role;
             return this;
         }
@@ -168,6 +181,7 @@ public class User {
             this.avatar = user.getAvatar();
             this.firstName = user.getFirstName();
             this.lastName = user.getLastName();
+            this.username = user.getUsername();  // Added username in copy method
             this.email = user.getEmail();
             this.birthDate = user.getBirthDate();
             this.password = user.getPassword();

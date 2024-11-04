@@ -1,6 +1,7 @@
 package za.ac.cput.factory;
 
 import za.ac.cput.domain.User;
+import za.ac.cput.enums.Role;
 import za.ac.cput.util.Helper;
 
 import java.time.LocalDate;
@@ -35,7 +36,7 @@ public class UserFactory {
                                   String lastName,
                                   String email,
                                   LocalDate birthDate,
-                                  Set<String> role,
+                                  Set<Role> role,
                                   String phoneNumber,
                                   String password
     ) {
@@ -52,7 +53,7 @@ public class UserFactory {
                 .setLastName(lastName)
                 .setEmail(email)
                 .setBirthDate(birthDate)
-                .setRole(role) // Set the roles as a Set<String>
+                .setRole(role)
                 .setPhoneNumber(phoneNumber)
                 .setPassword(password)
                 .build();
