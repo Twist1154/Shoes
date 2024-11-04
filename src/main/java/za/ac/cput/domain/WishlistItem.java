@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- * WishListItem.java
+ * WishlistItem.java
  *
  * @author Rethabile Ntsekhe
  * Student Num: 220455430
@@ -17,7 +17,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Table(name = "wish_list_items")
-public class WishListItem {
+public class WishlistItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,10 +33,10 @@ public class WishListItem {
     @JoinColumn(name = "wishlist_id")
     private Wishlist wishlist;
 
-    public WishListItem() {
+    public WishlistItem() {
     }
 
-    public WishListItem(Builder builder) {
+    public WishlistItem(Builder builder) {
         this.id = builder.id;
         this.product = builder.product;
         this.dateAdded = builder.dateAdded;
@@ -46,7 +46,7 @@ public class WishListItem {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof WishListItem that)) return false;
+        if (!(o instanceof WishlistItem that)) return false;
         return Objects.equals(id, that.id) && Objects.equals(product, that.product) && Objects.equals(dateAdded, that.dateAdded) && Objects.equals(wishlist, that.wishlist);
     }
 
@@ -57,7 +57,7 @@ public class WishListItem {
 
     @Override
     public String toString() {
-        return "\n WishListItem{" +
+        return "\n WishlistItem{" +
                 "id=" + id +
                 ", product=" + product.getName() +
                 ", dateAdded=" + dateAdded +
@@ -91,7 +91,7 @@ public class WishListItem {
             return this;
         }
 
-        public Builder copy(WishListItem wishlistItem) {
+        public Builder copy(WishlistItem wishlistItem) {
             this.id = wishlistItem.id;
             this.product = wishlistItem.product;
             this.dateAdded = wishlistItem.dateAdded;
@@ -99,8 +99,8 @@ public class WishListItem {
             return this;
         }
 
-        public WishListItem build() {
-            return new WishListItem(this);
+        public WishlistItem build() {
+            return new WishlistItem(this);
         }
     }
 }

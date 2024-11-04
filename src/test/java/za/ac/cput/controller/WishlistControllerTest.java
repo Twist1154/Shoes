@@ -6,12 +6,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import za.ac.cput.domain.User;
-import za.ac.cput.domain.WishListItem;
+import za.ac.cput.domain.WishlistItem;
 import za.ac.cput.domain.Wishlist;
 import za.ac.cput.factory.WishlistFactory;
 import za.ac.cput.service.UserService;
-import za.ac.cput.service.WishListItemService;
-import za.ac.cput.service.WishlistService;
+import za.ac.cput.service.WishlistItemService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,13 +25,13 @@ class WishlistControllerTest {
     private TestRestTemplate restTemplate;
 
     private Wishlist wishlist;
-    private List<WishListItem> wishListItem;
+    private List<WishlistItem> wishListItem;
     private User user;
 
     private final String baseUrl = "/wishlist"; // Base URL for the controller
 
     @Autowired
-    private WishListItemService wishListItemService;
+    private WishlistItemService wishListItemService;
     @Autowired
     private UserService userService;
 
@@ -40,8 +39,8 @@ class WishlistControllerTest {
     void setUp() {
         user = userService.read(2L); // Fetch a valid user
 
-        WishListItem item1 = wishListItemService.read(15L); // Valid WishListItems
-        WishListItem item2 = wishListItemService.read(16L);
+        WishlistItem item1 = wishListItemService.read(15L); // Valid WishListItems
+        WishlistItem item2 = wishListItemService.read(16L);
 
         wishListItem = List.of(item1, item2);
 
@@ -87,7 +86,7 @@ class WishlistControllerTest {
 
         ResponseEntity<Wishlist> response = restTemplate.getForEntity(baseUrl + "/" + wishlist.getId(), Wishlist.class);
         assertNotNull(response.getBody());
-        assertNotEquals(wishlist.getWishListItems().size(), response.getBody().getWishListItems().size());
+        assertNotEquals(wishlist.getWishlistItems().size(), response.getBody().getWishlistItems().size());
         System.out.println("Updated Wishlist: " + response.getBody());
     }
 

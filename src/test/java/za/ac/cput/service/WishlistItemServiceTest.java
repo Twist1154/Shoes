@@ -4,9 +4,9 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import za.ac.cput.domain.Product;
-import za.ac.cput.domain.WishListItem;
+import za.ac.cput.domain.WishlistItem;
 import za.ac.cput.domain.Wishlist;
-import za.ac.cput.repository.WishListItemRepository;
+import za.ac.cput.repository.WishlistItemRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,17 +15,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class WishListItemServiceTest {
+class WishlistItemServiceTest {
 
     @Autowired
-    private WishListItemService service;
+    private WishlistItemService service;
 
     @Autowired
-    private WishListItemRepository repository;
+    private WishlistItemRepository repository;
 
     private Product product;
     private Wishlist wishlist;
-    private List<WishListItem> wishListItems;
+    private List<WishlistItem> wishlistItems;
 
     @Autowired
     private ProductService productService;
@@ -39,23 +39,23 @@ class WishListItemServiceTest {
         wishlist = wishlistService.read(7L); // Fetching a wishlist from the database
 
         // Create WishListItems
-        WishListItem item1 = new WishListItem.Builder()
+        WishlistItem item1 = new WishlistItem.Builder()
                 .setProduct(product)
                 .setDateAdded(LocalDateTime.now())
                 .setWishlist(wishlist)
                 .build();
 
-        WishListItem item2 = new WishListItem.Builder()
+        WishlistItem item2 = new WishlistItem.Builder()
                 .setProduct(product)
                 .setDateAdded(LocalDateTime.now())
                 .setWishlist(wishlist)
                 .build();
 
-        wishListItems = List.of(item1, item2);
+        wishlistItems = List.of(item1, item2);
 
         wishlist = new Wishlist.Builder()
                 .copy(wishlist)
-                .setWishlistItems(wishListItems)
+                .setWishlistItems(wishlistItems)
                 .build();
     }
 
@@ -68,19 +68,19 @@ class WishListItemServiceTest {
     @Order(1)
     void create() {
         // Test creating a new wishlist item
-        WishListItem createdItem = service.create(wishListItems.get(0));
+        WishlistItem createdItem = service.create(wishlistItems.get(0));
         assertNotNull(createdItem);
-        assertEquals(wishListItems.get(0).getProduct().getId(), createdItem.getProduct().getId());
-        assertEquals(wishListItems.get(0).getWishlist().getId(), createdItem.getWishlist().getId());
-        assertEquals(wishListItems.get(0).getDateAdded(), createdItem.getDateAdded());
+        assertEquals(wishlistItems.get(0).getProduct().getId(), createdItem.getProduct().getId());
+        assertEquals(wishlistItems.get(0).getWishlist().getId(), createdItem.getWishlist().getId());
+        assertEquals(wishlistItems.get(0).getDateAdded(), createdItem.getDateAdded());
     }
 
     @Test
     @Order(2)
     void read() {
         // Test reading a wishlist item by ID
-        WishListItem createdItem = service.create(wishListItems.get(0));
-        WishListItem readItem = service.read(createdItem.getId());
+        WishlistItem createdItem = service.create(wishlistItems.get(0));
+        WishlistItem readItem = service.read(createdItem.getId());
         assertNotNull(readItem);
         assertEquals(createdItem.getId(), readItem.getId());
     }
@@ -89,13 +89,13 @@ class WishListItemServiceTest {
     @Order(3)
     void update() {
         // Test updating a wishlist item
-        WishListItem createdItem = service.create(wishListItems.get(0));
-        WishListItem updatedItem = new WishListItem.Builder()
+        WishlistItem createdItem = service.create(wishlistItems.get(0));
+        WishlistItem updatedItem = new WishlistItem.Builder()
                 .copy(createdItem)
                 .setDateAdded(LocalDateTime.now().plusDays(1)) // Update the date
                 .build();
 
-        WishListItem result = service.update(updatedItem);
+        WishlistItem result = service.update(updatedItem);
         assertNotNull(result);
         assertEquals(updatedItem.getDateAdded(), result.getDateAdded());
     }
@@ -104,9 +104,9 @@ class WishListItemServiceTest {
     @Order(4)
     void findAll() {
         // Test finding all wishlist items
-        service.create(wishListItems.get(0));
-        service.create(wishListItems.get(1));
-        List<WishListItem> items = service.findAll();
+        service.create(wishlistItems.get(0));
+        service.create(wishlistItems.get(1));
+        List<WishlistItem> items = service.findAll();
         assertFalse(items.isEmpty());
     }
 
@@ -114,9 +114,9 @@ class WishListItemServiceTest {
     @Order(5)
     void delete() {
         // Test deleting a wishlist item by ID
-        WishListItem createdItem = service.create(wishListItems.get(0));
+        WishlistItem createdItem = service.create(wishlistItems.get(0));
         service.delete(createdItem.getId());
-        WishListItem deletedItem = service.read(createdItem.getId());
+        WishlistItem deletedItem = service.read(createdItem.getId());
         assertNull(deletedItem); // The item should be deleted, so reading should return null
 
     }

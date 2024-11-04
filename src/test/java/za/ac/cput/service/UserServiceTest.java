@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import za.ac.cput.Application;
 import za.ac.cput.domain.User;
+import za.ac.cput.enums.Role;
 import za.ac.cput.factory.UserFactory;
 import za.ac.cput.repository.UserRepository;
 
@@ -33,10 +34,13 @@ class UserServiceTest {
 
     private UserService userService;
     private User user;
+    private Role role;
 
     @BeforeEach
     void setUp() {
         userService = new UserService(userRepository, passwordEncoder);
+        role = Role.USER;
+
 
         // Create user only if it doesn't exist
         Optional<User> existingUser = userService.findByEmail("rethabile1154@gmail.com");
@@ -44,9 +48,9 @@ class UserServiceTest {
             user = new User.Builder()
                     .setFirstName("Rethabile")
                     .setLastName("Ntsekhe")
-                    .setEmail("rethabile1154@gmail.com") // Ensure email matches used in tests
-                    .setPassword(passwordEncoder.encode("password")) // Use encoded password
-                    .setRole(Set.of("USER","ADMIN"))
+                    .setEmail("rethabile1154@gmail.com")
+                    .setPassword(passwordEncoder.encode("password"))
+                    .setRole(role)
                     .setBirthDate(LocalDate.of(1990, 1, 1))
                     .setPhoneNumber("1234567890")
                     .build();

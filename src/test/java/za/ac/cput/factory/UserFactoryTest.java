@@ -3,6 +3,8 @@ package za.ac.cput.factory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.User;
+import za.ac.cput.enums.Role;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -14,14 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class UserFactoryTest {
 
     private User user;
-    private Set<String> roles;
+    private Set<Role> roles;
 
     @BeforeEach
     void setup() {
-        // Set up a sample set of roles
-        roles = new HashSet<>();
-        roles.add("Admin");
-        roles.add("User");
+         roles = new HashSet<>(Set.of(Role.USER, Role.ADMIN));
+
+
 
         // Set up a sample User object using the factory method
         user = UserFactory.createUser(

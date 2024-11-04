@@ -52,7 +52,7 @@ public abstract class BaseServiceTest {
     protected OrderItem orderItem;
     protected PaymentDetails paymentDetails;
     protected Wishlist wishlist;
-    protected List<WishListItem> wishListItems;
+    protected List<WishlistItem> wishListItems;
     protected Category category;
     protected SubCategory subCategory;
 
@@ -216,13 +216,13 @@ public abstract class BaseServiceTest {
         wishlist = wishlistService.create(wishlist);
 
         // Create WishlistItems for Wishlist
-        WishListItem item1 = new WishListItem.Builder()
+        WishlistItem item1 = new WishlistItem.Builder()
                 .setProductSubCategories(product)
                 .setDateAdded(LocalDateTime.now())
                 .setWishlist(wishlist)
                 .build();
 
-        WishListItem item2 = new WishListItem.Builder()
+        WishlistItem item2 = new WishlistItem.Builder()
                 .setProductSubCategories(product)
                 .setDateAdded(LocalDateTime.now())
                 .setWishlist(wishlist)
