@@ -1,30 +1,18 @@
 package za.ac.cput.dto;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import za.ac.cput.domain.User;
+
+@Getter
+@Setter
+@ToString
+@Builder
 public class Auth {
-    private String username;
-    private String password;
+private User user;
+private String token;
+private String status;
 
-    public Auth() {
-    }
-
-    public Auth(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String toString() {
-        return "Auth{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

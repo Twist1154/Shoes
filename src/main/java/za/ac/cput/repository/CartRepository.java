@@ -80,7 +80,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
      * @param total the minimum total value to search by
      * @return a list of Carts with a total greater than the specified amount
      */
-    @Query(value = "SELECT * FROM cart WHERE total > :total", nativeQuery = true)
+
     List<Cart> findCartsWithTotalGreaterThan(@Param("total") Double total);
 
     /**

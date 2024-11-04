@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.User;
 import za.ac.cput.repository.UserRepository;
+import za.ac.cput.util.Helper;
+import za.ac.cput.util.JwtUtil;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,6 +33,7 @@ public class UserService implements UserDetailsService, IUser {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     /**
      * Constructs a UserService with the specified UserRepository, PasswordEncoder, and UserMapper.
@@ -39,9 +42,10 @@ public class UserService implements UserDetailsService, IUser {
      * @param passwordEncoder  the PasswordEncoder for encoding passwords
      */
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
 
@@ -66,7 +70,7 @@ public class UserService implements UserDetailsService, IUser {
                     .setBirthDate(user.getBirthDate())
                     .setPhoneNumber(user.getPhoneNumber())
                     .setEmail(user.getEmail())
-                    .setPassword(user.getPassword())
+                    .setPassword(passwordEncoder.encode(user.getPassword()))
                     .setRole(user.getRole())
                     .build();
             return userRepository.save(updatedUser);
@@ -103,7 +107,7 @@ public class UserService implements UserDetailsService, IUser {
 
 
         List<SimpleGrantedAuthority> authorities = user.getRole().stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+                .map(role -> new SimpleGrantedAuthority( role.name()))
                 .collect(Collectors.toList());
 
         // Return user details for authentication
@@ -143,5 +147,13 @@ public class UserService implements UserDetailsService, IUser {
     @Override
     public List<User> findByRole(String role) {
         return userRepository.findByRole(role);
+    }
+
+    public String generateToken(User user) {
+        return jwtUtil.generateToken(user);
+    }
+
+    public boolean validateToken(String token, User user) {
+        return jwtUtil.validateToken(token, user);
     }
 }

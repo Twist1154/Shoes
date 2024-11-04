@@ -22,26 +22,26 @@ import java.util.List;
 @Transactional
 public class OrderItemService implements IOrderItem {
 
-    private final OrderItemRepository orderItemRepository;
+    private final OrderItemRepository repository;
 
     @Autowired
-    public OrderItemService(OrderItemRepository orderItemRepository) {
-        this.orderItemRepository = orderItemRepository;
+    public OrderItemService(OrderItemRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public OrderItem create(OrderItem orderItem) {
-        return orderItemRepository.save(orderItem);
+        return repository.save(orderItem);
     }
 
     @Override
     public OrderItem read(Long id) {
-        return orderItemRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     @Override
     public OrderItem update(OrderItem orderItem) {
-     OrderItem   existingOrderItem = orderItemRepository.findById(orderItem.getId()).orElse(null);
+     OrderItem   existingOrderItem = repository.findById(orderItem.getId()).orElse(null);
         if(existingOrderItem != null) {
             OrderItem updatedOrderItem = new OrderItem.Builder()
                     .copy(existingOrderItem) // Copy existing fields
@@ -52,7 +52,7 @@ public class OrderItemService implements IOrderItem {
                     .setCreatedAt(existingOrderItem.getCreatedAt()) // Keep original creation date
                     .setUpdatedAt(LocalDateTime.now()) // Update to current time
                     .build();
-            return orderItemRepository.save(updatedOrderItem);
+            return repository.save(updatedOrderItem);
         } else {
             log.warn("Attempt to update a non-existent order item with ID: {}", orderItem.getId());
             return null;
@@ -60,10 +60,10 @@ public class OrderItemService implements IOrderItem {
     }
 
     public boolean delete(Long id) {
-        orderItemRepository.deleteById(id);
+        repository.deleteById(id);
 
         // Check if the entity still exists after deletion
-        boolean exists = orderItemRepository.existsById(id);
+        boolean exists = repository.existsById(id);
 
         // Return false if entity was deleted successfully, otherwise return true
         return !exists;
@@ -71,11 +71,11 @@ public class OrderItemService implements IOrderItem {
 
     @Override
     public List<OrderItem> findAll() {
-        return orderItemRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
     public void deleteOrderItemByOrderDetails_Id(Long orderId) {
-        orderItemRepository.deleteOrderItemByOrderDetails_Id(orderId);
+        repository.deleteOrderItemByOrderDetails_Id(orderId);
     }
 }
