@@ -10,7 +10,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import za.ac.cput.Application;
 import za.ac.cput.domain.User;
 import za.ac.cput.enums.Role;
-import za.ac.cput.factory.UserFactory;
 import za.ac.cput.repository.UserRepository;
 
 import java.time.LocalDate;
@@ -34,12 +33,12 @@ class UserServiceTest {
 
     private UserService userService;
     private User user;
-    private Role role;
+    private Set<Role> role;
 
     @BeforeEach
     void setUp() {
         userService = new UserService(userRepository, passwordEncoder);
-        role = Role.USER;
+        role = Set.of(Role.USER, Role.ADMIN);
 
 
         // Create user only if it doesn't exist
@@ -167,8 +166,8 @@ class UserServiceTest {
 
     @Test
     @Order(12)
-    void testFindByRole() {
-        List<User> users = userService.findByRole("USER");
+    void testFindByUsername() {
+        Optional<User> users = userService.findByUsername("USER");
         System.out.println("Found By Roles: " + users);
         assertFalse(users.isEmpty());
      }
