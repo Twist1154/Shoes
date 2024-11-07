@@ -1,30 +1,20 @@
 package za.ac.cput.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+ * UserAuth.java
+ *
+ * @author Rethabile Ntsekhe
+ * Student Num: 220455430
+ * @date 24-Oct-24
+ */
+@Setter
+@Getter
+@ToString
 public class UserAuth {
-    private String username;
+    private String email;
     private String password;
-
-    public UserAuth() {
-    }
-
-    public UserAuth(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String toString() {
-        return "UserAuth{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }
