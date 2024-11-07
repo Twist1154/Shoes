@@ -167,8 +167,8 @@ class UserServiceTest {
     @Test
     @Order(12)
     void testFindByUsername() {
-        Optional<User> users = userService.findByUsername("USER");
+        User users = userService.findByUsername("USER");
         System.out.println("Found By Roles: " + users);
-        assertFalse(users.isEmpty());
+        assertNotNull(users);
      }
 }

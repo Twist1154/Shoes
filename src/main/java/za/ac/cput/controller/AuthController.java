@@ -1,28 +1,35 @@
+package za.ac.cput.controller;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import za.ac.cput.dto.AuthenticationResponse;
 import za.ac.cput.domain.User;
+import za.ac.cput.dto.UserAuth;
 import za.ac.cput.service.AuthenticationService;
 import za.ac.cput.service.UserService;
-import za.ac.cput.util.JwtUtil;
 
 @RestController
+@RequestMapping("/auth")
 public class AuthController {
 
 
     private final AuthenticationService authService;
-    private final UserService userService;
-    private JwtUtil jwtUtil;
 
-    public AuthController(AuthenticationService authService, UserService userService, JwtUtil jwtUtil) {
+
+
+    public AuthController(AuthenticationService authService, UserService userService) {
         this.authService = authService;
-        this.userService = userService;
-        this.jwtUtil = jwtUtil;
+    }
+
+
+    @PostMapping("/register")
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody User request) {
+        return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody User request) {
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody UserAuth request) {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 }

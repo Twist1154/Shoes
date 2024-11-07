@@ -10,7 +10,6 @@ import za.ac.cput.domain.User;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
-import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -49,10 +48,10 @@ public class JwtService {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(Optional<User> users) {
+    public String generateToken(User users) {
         String token = Jwts
                 .builder()
-                .subject(String.valueOf(users))
+                .subject(users.getEmail())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 2 * 60 * 60 * 1000)) // 24-hour validity
                 .signWith(getSigninKey()).compact();

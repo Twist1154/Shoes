@@ -1,13 +1,7 @@
 package za.ac.cput.dto;
 
-import lombok.Getter;
-import za.ac.cput.domain.User;
-
 public class AuthenticationResponse {
-    @Getter
-    private User user;
 
-    @Getter
     private String token;
 
     /**
@@ -17,6 +11,15 @@ public class AuthenticationResponse {
      */
     public AuthenticationResponse(String token) {
         this.token = token;
+    }
+
+    /**
+     * Retrieves the JWT token.
+     *
+     * @return the JWT token
+     */
+    public String getToken() {
+        return token;
     }
 
 }

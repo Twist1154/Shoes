@@ -1,30 +1,18 @@
 package za.ac.cput.dto;
 
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@Builder
 public class UserPasswordDTO {
-    private String username;
+    private String email;
     private String password;
 
-    public UserPasswordDTO() {
-    }
 
-    public UserPasswordDTO(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String toString() {
-        return "UserPasswordDTO{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

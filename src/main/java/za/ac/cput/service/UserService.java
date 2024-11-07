@@ -10,9 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.User;
+import za.ac.cput.dto.UserPasswordDTO;
 import za.ac.cput.repository.UserRepository;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,22 +50,7 @@ public class UserService implements UserDetailsService, IUser {
 
     @Override
     public User create(User user) {
-        Optional<User> existingUser = userRepository.findById(user.getId());
-        if (existingUser.isEmpty()) {
-            User registeredUser = new User.Builder()
-                    .copy(user) // Initialize using new user data
-                    .setFirstName(user.getFirstName())
-                    .setLastName(user.getLastName())
-                    .setBirthDate(user.getBirthDate())
-                    .setPhoneNumber(passwordEncoder.encode(user.getPhoneNumber()))
-                    .setEmail(user.getEmail())
-                    .setPassword(passwordEncoder.encode(user.getPassword()))
-                    .setRole(user.getRole())
-                    .build();
-            return userRepository.save(registeredUser);
-        }
-        log.info("User with ID {} already exists", user.getId());
-        return existingUser.get();
+        return userRepository.save(user);
     }
 
     @Override
@@ -101,28 +88,20 @@ public class UserService implements UserDetailsService, IUser {
         return userRepository.findAll();
     }
 
-    /**
-     * Loads user-specific data by username.
-     *
-     * @param username the username of the user
-     * @return the UserDetails object containing user data
-     * @throws UsernameNotFoundException if no user is found with the given username
-     */
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        System.out.println("Attempting to load user: " + email);
 
-        List<SimpleGrantedAuthority> authorities = user.getRole().stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
-                .collect(Collectors.toList());
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> {
+                    System.out.println("User not found: " + email);
+                    return new UsernameNotFoundException("User not Found");
+                });
+        System.out.println("User found: " + user.getEmail());
 
-        // Return user details for authentication
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                authorities
-        );
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole())));
     }
 
     @Override
@@ -151,8 +130,16 @@ public class UserService implements UserDetailsService, IUser {
     }
 
     @Override
-    public Optional<User> findByUsername(String username) {
+    public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    public User updatePassword(UserPasswordDTO userPasswordDTO) {
+        User user = userRepository.findByEmail(userPasswordDTO.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + userPasswordDTO.getEmail()));
+
+        user.setPassword(passwordEncoder.encode(userPasswordDTO.getPassword()));
+        return userRepository.save(user);
     }
 
 }

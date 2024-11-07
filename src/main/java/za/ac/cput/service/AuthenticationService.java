@@ -8,9 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import za.ac.cput.dto.AuthenticationResponse;
 import za.ac.cput.domain.User;
+import za.ac.cput.dto.UserAuth;
 import za.ac.cput.repository.UserRepository;
-
-import java.util.Optional;
 
 
 @Service
@@ -63,7 +62,7 @@ public class AuthenticationService {
         user = repository.save(user);
 
         // Generate JWT token for the registered user
-        String token = jwtService.generateToken(Optional.of(user));
+        String token = jwtService.generateToken(user);
 
         return new AuthenticationResponse(token);
     }
@@ -74,7 +73,7 @@ public class AuthenticationService {
      * @param request the user credentials provided for authentication
      * @return an {@link AuthenticationResponse} containing the JWT token
      */
-    public AuthenticationResponse authenticate(User request) {
+    public AuthenticationResponse authenticate(UserAuth request) {
         // private static final String logger = Logger.getLogger(AuthenticationService.class.getName());
 
         try {
@@ -87,7 +86,8 @@ public class AuthenticationService {
                     )
             );
 
-            Optional<User> user = repository.findByUsername(request.getUsername());
+            User user = repository.findByEmail(request.getEmail())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
             String token = jwtService.generateToken(user);
             System.out.println("Authentication successful for user: " + request.getEmail());

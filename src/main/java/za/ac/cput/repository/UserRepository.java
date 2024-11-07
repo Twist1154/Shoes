@@ -68,5 +68,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param username the role to search for
      * @return a List of Users with the specified username
      */
-    Optional<User> findByUsername(String username);
+   User findByUsername(String username);
+
 }

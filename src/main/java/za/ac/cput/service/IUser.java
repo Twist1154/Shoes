@@ -26,5 +26,5 @@ public interface IUser extends IService<User, Long>{
 
     List<User> findByPhoneNumber(String phoneNumber);
 
-    Optional<User> findByUsername(String role);
+    User findByUsername(String role);
 }

@@ -83,10 +83,10 @@ public class UserController {
      * @param userPasswordDTO the data transfer object containing the new password details.
      * @return ResponseEntity containing a success message and HTTP OK status.
      */
-   /* @PostMapping("/{id}/password")
-    public ResponseEntity<String> updateUserPassword(@PathVariable Long id, @RequestBody UserPasswordDTO userPasswordDTO) {
-       User user = UserFactory.createUserForSignIn(userPasswordDTO.getUsername(), userPasswordDTO.getPassword());
-        userService.update( userPasswordDTO);
+    @PostMapping("/password")
+    public ResponseEntity<String> updateUserPassword( @RequestBody UserPasswordDTO userPasswordDTO) {
+       User user = UserFactory.createUserForSignIn(userPasswordDTO.getEmail(), userPasswordDTO.getPassword());
+        userService.updatePassword(userPasswordDTO);
         return ResponseEntity.ok("Password updated successfully");
-    }*/
+    }
 }
