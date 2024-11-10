@@ -22,15 +22,13 @@ public class WishlistFactory {
      * @param user         the {@link User} entity associated with this wishlist
      * @param wishlistItems the list of {@link WishlistItem} associated with this wishlist
      * @param createdAt    the date when the wishlist was created
-     * @param deletedAt    the date when the wishlist was deleted (if applicable)
-     * @return a new {@link Wishlist} object with properties set from the input parameters
+      * @return a new {@link Wishlist} object with properties set from the input parameters
      */
     public static Wishlist createWishlist(
             Long id,
             User user,
             List<WishlistItem> wishlistItems,
-            LocalDateTime createdAt,
-            LocalDateTime deletedAt
+            LocalDateTime createdAt
     ) {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null in WishlistFactory");
@@ -44,7 +42,6 @@ public class WishlistFactory {
                 .setUser(user)
                 .setWishlistItems(wishlistItems)
                 .setCreatedAt(createdAt)
-                .setDeletedAt(deletedAt)
                 .build();
     }
 }

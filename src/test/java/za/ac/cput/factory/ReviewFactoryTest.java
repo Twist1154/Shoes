@@ -37,8 +37,7 @@ class ReviewFactoryTest {
                 "Great product",
                 5,
                 product,
-                user,
-                LocalDateTime.now()
+                user
         );
 
         assertNotNull(review);
@@ -67,8 +66,7 @@ class ReviewFactoryTest {
                         null,
                         5,
                         product,
-                        user,
-                        LocalDateTime.now()
+                        user
                 )
         );
 
@@ -93,8 +91,7 @@ class ReviewFactoryTest {
                         "Good product",
                         0,
                         product,
-                        user,
-                        LocalDateTime.now()
+                        user
                 )
         );
 
@@ -111,8 +108,7 @@ class ReviewFactoryTest {
                         "Good product",
                         5,
                         null,
-                        user,
-                        LocalDateTime.now()
+                        user
                 )
         );
 
@@ -137,8 +133,7 @@ class ReviewFactoryTest {
                         "Good product",
                         5,
                         product,
-                        user,
-                        null
+                        user
                 )
         );
 

@@ -27,9 +27,7 @@ public class ProductSkuFactory {
      * @param sku             the SKU code of the product
      * @param price           the price of the product SKU
      * @param quantity        the quantity of the product SKU
-     * @param createdAt       the date and time the product SKU was created
-     * @param deletedAt       the date and time the product SKU was deleted (if applicable)
-     * @return a new {@link ProductSku} object with properties set from the input parameters
+    * @return a new {@link ProductSku} object with properties set from the input parameters
      */
     public static ProductSku createProductSku(Long id,
                                               Product product,
@@ -38,9 +36,7 @@ public class ProductSkuFactory {
                                               ProductAttribute brandAttribute,
                                               String sku,
                                               double price,
-                                              int quantity,
-                                              LocalDateTime createdAt,
-                                              LocalDateTime deletedAt
+                                              int quantity
     ) {
 
         // Define constants for validation flags
@@ -112,8 +108,6 @@ public class ProductSkuFactory {
                 .setSku(sku)
                 .setPrice(price)
                 .setQuantity(quantity)
-                .setCreatedAt(createdAt)
-                .setDeletedAt(deletedAt)
                 .build();
     }
 }

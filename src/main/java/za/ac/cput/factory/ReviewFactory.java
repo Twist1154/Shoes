@@ -21,8 +21,7 @@ public class ReviewFactory {
                                        String review,
                                        int rating,
                                        Product product,
-                                       User user,
-                                       LocalDateTime createdAt) {
+                                       User user) {
         // Define constants for the switch cases
         final int REVIEW_NULL = 1;
         final int RATING_INVALID = 2;
@@ -42,9 +41,7 @@ public class ReviewFactory {
         if (product == null) {
             errorFlags |= PRODUCT_NULL;
         }
-        if (Helper.isNullOrEmpty(createdAt)) {
-            errorFlags |= CREATED_AT_NULL;
-        }
+
 
         // Use switch statement to throw exception based on the flags
         switch (errorFlags) {
@@ -64,8 +61,6 @@ public class ReviewFactory {
                 throw new IllegalArgumentException("Rating is invalid (should be between 1 and 5)");
             case PRODUCT_NULL:
                 throw new IllegalArgumentException("Product cannot be null");
-            case CREATED_AT_NULL:
-                throw new IllegalArgumentException("Created date cannot be null");
             default:
                 // No null or empty values
                 break;
@@ -78,7 +73,6 @@ public class ReviewFactory {
                 .setRating(rating)
                 .setProduct(product)
                 .setUser(user)
-                .setCreatedAt(createdAt)
                 .build();
     }
 }

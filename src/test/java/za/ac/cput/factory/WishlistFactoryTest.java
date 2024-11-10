@@ -24,30 +24,24 @@ class WishlistFactoryTest {
     @BeforeEach
     void setup() {
         wishlist = new Wishlist();
+        product = new Product();
         // Create a sample Category object using the factory method
         category = CategoryFactory.createCategory(
                 1L,
-                "Sneakers",
-                "Sneakers",
-                LocalDateTime.now(),
-                null);
+                "Sneakers"
+        );
 
         // Create sample SubCategory objects using the factory method
         SubCategory subCategory1 = SubCategoryFactory.createSubCategory(
                 1L,
                 category,
-                "High Tops",
-                "High Top Sneakers",
-                LocalDateTime.now(),
-                null);
+                product
+        );
 
         SubCategory subCategory2 = SubCategoryFactory.createSubCategory(
                 2L,
                 category,
-                "Low Tops",
-                "Low Top Sneakers",
-                LocalDateTime.now(),
-                null);
+                product);
 
         subCategory = List.of(subCategory1, subCategory2);
 
@@ -68,8 +62,8 @@ class WishlistFactoryTest {
                 "Product Cover",
                 imageUrls,
                 subCategory,
-                LocalDateTime.now(),
-                null);
+                LocalDateTime.now()
+        );
 
         // Set up a sample User object
         user = new User.Builder()
@@ -104,8 +98,8 @@ class WishlistFactoryTest {
                 1L,
                 user,
                 wishlistItems,
-                LocalDateTime.now(),
-                null);
+                LocalDateTime.now()
+        );
 
         // Verify that the Wishlist object is not null
         assertNotNull(wishlist);
@@ -122,8 +116,7 @@ class WishlistFactoryTest {
                         1L,
                         null,
                         wishlistItems,
-                        LocalDateTime.now(),
-                        null)
+                        LocalDateTime.now())
         );
 
         // Print a message to the terminal indicating that an exception was thrown
@@ -138,8 +131,8 @@ class WishlistFactoryTest {
                         1L,
                         user,
                         null,
-                        LocalDateTime.now(),
-                        null)
+                        LocalDateTime.now()
+                )
         );
 
         System.out.println("Expected IllegalArgumentException thrown when creating Wishlist with null items");

@@ -16,25 +16,23 @@ class ProductSkuFactoryTest {
 
     private List<SubCategory> subCategoryList;
     private Category category;
+    private Product product;
 
     @BeforeEach
     void setUp() {
         // Create a sample Category
         category = CategoryFactory.createCategory(
                 1L,
-                "LowTops",
-                "description",
-                LocalDateTime.of(2024, 6, 12, 0, 0),
-                null);
+                "LowTops"
+        );
+
+        product = new Product();
 
         // Create a sample SubCategory
         SubCategory subCategory = SubCategoryFactory.createSubCategory(
                 1L,
                 category,
-                "Air Jordans",
-                "description",
-                LocalDateTime.of(2024, 6, 12, 0, 0),
-                null);
+                product);
 
         // Store the SubCategory in a List
         subCategoryList = Collections.singletonList(subCategory);  // or Arrays.asList if you have multiple subcategories
@@ -46,23 +44,20 @@ class ProductSkuFactoryTest {
         ProductAttribute sizeAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.SIZE,
-                "10",
-                LocalDateTime.now(),
-                null);
+                "10"
+        );
 
         ProductAttribute colorAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.COLOR,
-                "Green",
-                LocalDateTime.now(),
-                null);
+                "Green"
+                );
 
         ProductAttribute brandAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.BRAND,
-                "Nike",
-                LocalDateTime.now(),
-                null);
+                "Nike"
+        );
 
         // Create a sample Product object
         Product product = ProductFactory.createProduct(
@@ -73,8 +68,8 @@ class ProductSkuFactoryTest {
                 "Product Cover",
                 null,
                 subCategoryList,
-                LocalDateTime.now(),
-                null);
+                LocalDateTime.now()
+        );
 
         // Create a sample ProductSkuService object
         ProductSku productSku = ProductSkuFactory.createProductSku(
@@ -85,9 +80,8 @@ class ProductSkuFactoryTest {
                 brandAttribute,
                 "SKU-123",
                 100.0,
-                10,
-                LocalDateTime.now(),
-                null);
+                10
+        );
 
         // Verify that the ProductSkuService object is not null
         assertNotNull(productSku);
@@ -102,23 +96,19 @@ class ProductSkuFactoryTest {
         ProductAttribute sizeAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.SIZE,
-                "10",
-                LocalDateTime.now(),
-                null);
+                "10");
 
         ProductAttribute colorAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.COLOR,
-                "Green",
-                LocalDateTime.now(),
-                null);
+                "Green"
+                );
 
         ProductAttribute brandAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.BRAND,
-                "Nike",
-                LocalDateTime.now(),
-                null);
+                "Nike"
+        );
 
         // Try to create a ProductSkuService object with a null product
         assertThrows(IllegalArgumentException.class,
@@ -130,9 +120,9 @@ class ProductSkuFactoryTest {
                         brandAttribute,
                         "SKU-123",
                         100.0,
-                        10,
-                        LocalDateTime.now(),
-                        null));
+                        10
+                )
+        );
 
         System.out.println("Expected IllegalArgumentException thrown when creating ProductSkuService with null product");
     }
@@ -143,23 +133,20 @@ class ProductSkuFactoryTest {
         ProductAttribute sizeAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.SIZE,
-                "10",
-                LocalDateTime.now(),
-                null);
+                "10"
+        );
 
         ProductAttribute colorAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.COLOR,
-                "Green",
-                LocalDateTime.now(),
-                null);
+                "Green"
+        );
 
         ProductAttribute brandAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.BRAND,
-                "Nike",
-                LocalDateTime.now(),
-                null);
+                "Nike"
+        );
 
         // Create a sample Product object
         Product product = ProductFactory.createProduct(
@@ -170,8 +157,8 @@ class ProductSkuFactoryTest {
                 "Product Cover",
                 null,
                 subCategoryList,  // Passing the list of SubCategory
-                LocalDateTime.now(),
-                null);
+                LocalDateTime.now()
+        );
 
         // Try to create a ProductSkuService object with a null SKU
         assertThrows(IllegalArgumentException.class,
@@ -183,9 +170,8 @@ class ProductSkuFactoryTest {
                         brandAttribute,
                         null,
                         100.0,
-                        10,
-                        LocalDateTime.now(),
-                        null));
+                        10
+                ));
 
         System.out.println("Expected IllegalArgumentException thrown when creating ProductSkuService with null SKU");
     }
@@ -196,23 +182,20 @@ class ProductSkuFactoryTest {
         ProductAttribute sizeAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.SIZE,
-                "10",
-                LocalDateTime.now(),
-                null);
+                "10"
+        );
 
         ProductAttribute colorAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.COLOR,
-                "Green",
-                LocalDateTime.now(),
-                null);
+                "Green"
+        );
 
         ProductAttribute brandAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.BRAND,
-                "Nike",
-                LocalDateTime.now(),
-                null);
+                "Nike"
+        );
 
         // Create a sample Product object
         Product product = ProductFactory.createProduct(
@@ -223,8 +206,8 @@ class ProductSkuFactoryTest {
                 "Product Cover",
                 null,
                 subCategoryList,  // Passing the list of SubCategory
-                LocalDateTime.now(),
-                null);
+                LocalDateTime.now()
+        );
 
         // Try to create a ProductSkuService object with a zero quantity
         assertThrows(IllegalArgumentException.class,
@@ -236,9 +219,9 @@ class ProductSkuFactoryTest {
                         brandAttribute,
                         "SKU-123",
                         100.0,
-                        0,
-                        LocalDateTime.now(),
-                        null));
+                        0
+                )
+        );
 
         System.out.println("Expected IllegalArgumentException thrown when creating ProductSkuService with zero quantity");
     }

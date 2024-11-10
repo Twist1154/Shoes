@@ -52,7 +52,6 @@ public class ProductService implements IProduct {
                     .setImageUrls(product.getImageUrls())
                     .setSubCategory(product.getSubCategory())
                     .setCreatedAt(product.getCreatedAt())
-                    .setDeletedAt(product.getDeletedAt())
                     .build();
             return productRepository.save(updatedProduct);
         } else {

@@ -24,7 +24,6 @@ public class PaymentDetailsFactory {
      * @param provider    the payment provider (cannot be null or empty)
      * @param status      the status of the payment (cannot be null or empty)
      * @param createdAt   the date the payment was created (cannot be null)
-     * @param updatedAt   the date the payment was updated (nullable)
      * @return a new {@link PaymentDetails} object with properties set from the input parameters
      * @throws IllegalArgumentException if any required parameters are null or invalid
      */
@@ -33,8 +32,7 @@ public class PaymentDetailsFactory {
                                                       Double amount,
                                                       String provider,
                                                       String status,
-                                                      LocalDateTime createdAt,
-                                                      LocalDateTime updatedAt) {
+                                                      LocalDateTime createdAt) {
         // Define constants for the switch cases
         final int AMOUNT_NULL = 1;
         final int PROVIDER_NULL = 2;
@@ -91,7 +89,6 @@ public class PaymentDetailsFactory {
                 .setProvider(provider) // Set the payment provider (required)
                 .setStatus(status) // Set the status of the payment (required)
                 .setCreatedAt(createdAt) // Set the date the payment was created (required)
-                .setUpdatedAt(updatedAt != null ? updatedAt : LocalDateTime.now()) // Set updatedAt to now if not provided
                 .build();
     }
 }

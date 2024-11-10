@@ -32,7 +32,7 @@ class ProductSkuServiceTest {
 
     @BeforeEach
     void setUp() {
-        Product product = productService.read(16L);
+        Product product = new Product();
 
         // Set up Product attributes (ensure these exist in the DB)
         ProductAttribute size = productAttributeService.read(6L); // Replace with actual ID
@@ -51,9 +51,7 @@ class ProductSkuServiceTest {
                 brand,
                 uniqueSku,
                 100.0,
-                10,
-                LocalDateTime.now(),
-                null
+                10
         );
 
         productSku = productSkuService.create(productSku); // Save the SKU

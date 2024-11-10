@@ -30,11 +30,6 @@ public class ProductAttribute {
     @Column(nullable = false)
     private String value;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 
     public ProductAttribute() {
     }
@@ -43,8 +38,6 @@ public class ProductAttribute {
         this.id = builder.id;
         this.type = builder.type;
         this.value = builder.value;
-        this.createdAt = builder.createdAt;
-        this.updatedAt = builder.updatedAt;
     }
 
     @Override
@@ -53,8 +46,6 @@ public class ProductAttribute {
                 "id=" + id +
                 ", type=" + type +
                 ", value='" + value + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
                 "}\n ";
     }
 
@@ -65,22 +56,18 @@ public class ProductAttribute {
         ProductAttribute that = (ProductAttribute) o;
         return Objects.equals(id, that.id) &&
                 type == that.type &&
-                Objects.equals(value, that.value) &&
-                Objects.equals(createdAt, that.createdAt) &&
-                Objects.equals(updatedAt, that.updatedAt);
+                Objects.equals(value, that.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, value, createdAt, updatedAt);
+        return Objects.hash(id, type, value);
     }
 
     public static class Builder {
         private Long id;
         private ProductAttributeType type;
         private String value;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -97,22 +84,10 @@ public class ProductAttribute {
             return this;
         }
 
-        public Builder setCreatedAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public Builder setUpdatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
         public Builder copy(ProductAttribute productAttribute) {
             this.id = productAttribute.id;
             this.type = productAttribute.type;
             this.value = productAttribute.value;
-            this.createdAt = productAttribute.createdAt;
-            this.updatedAt = productAttribute.updatedAt;
             return this;
         }
 

@@ -48,27 +48,21 @@ class OrderItemServiceTest {
         ProductAttribute sizeAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.SIZE,
-                "10",
-                LocalDateTime.now(),
-                null
+                "10"
         );
         sizeAttribute = productAttributeService.create(sizeAttribute); // Ensure it's saved
 
         ProductAttribute colorAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.COLOR,
-                "Green",
-                LocalDateTime.now(),
-                null
+                "Green"
         );
         colorAttribute = productAttributeService.create(colorAttribute); // Ensure it's saved
 
         ProductAttribute brandAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.BRAND,
-                "Nike",
-                LocalDateTime.now(),
-                null
+                "Nike"
         );
         brandAttribute = productAttributeService.create(brandAttribute); // Ensure it's saved
 
@@ -84,9 +78,7 @@ class OrderItemServiceTest {
                 brandAttribute,
                 uniqueSku,
                 100.0,
-                10,
-                LocalDateTime.now(),
-                null
+                10
         );
         productSku = productSkuService.create(productSku); // Persist SKU
 
@@ -106,9 +98,7 @@ class OrderItemServiceTest {
                 orderDetails,
                 product,
                 productSku,
-                2,
-                LocalDateTime.parse("2024-06-12T08:00"),
-                LocalDateTime.parse("2024-06-12T08:00")
+                2
         );
 
         // Persist OrderItem

@@ -28,10 +28,9 @@ public class ProductFactory {
      * @param imageUrls   the object containing image URLs
      * @param subCategories the {@link SubCategory} list associated with this product
      * @param createdAt   the date and time the product was created
-     * @param deletedAt   the date and time the product was deleted (if applicable)
      * @return a new {@link Product} object with properties set from the input parameters
      */
-    public static Product createProduct(Long id, String name, String description, String summary, String cover, ImageUrls imageUrls, List<SubCategory> subCategories, LocalDateTime createdAt, LocalDateTime deletedAt) {
+    public static Product createProduct(Long id, String name, String description, String summary, String cover, ImageUrls imageUrls, List<SubCategory> subCategories, LocalDateTime createdAt) {
         // Define constants for the switch cases
         final int NAME_NULL = 1;
         final int DESCRIPTION_NULL = 2;
@@ -83,7 +82,6 @@ public class ProductFactory {
                 .setImageUrls(imageUrls) // Set the image URLs of the product
                 .setSubCategory(subCategories) // Set the list of subcategories associated with the product
                 .setCreatedAt(createdAt) // Set the date the product was created
-                .setDeletedAt(deletedAt) // Set the date the product was deleted (if applicable)
                 .build();
     }
 }

@@ -67,9 +67,7 @@ class ProductSkuControllerTest {
                 brand,
                 uniqueSku,
                 100.0,
-                10,
-                LocalDateTime.now(),
-                null
+                10
         );
     }
 
@@ -128,8 +126,6 @@ class ProductSkuControllerTest {
                 .setSku(productSku.getSku()) // SKU stays the same
                 .setPrice(257.0) // Update the price
                 .setQuantity(productSku.getQuantity()) // Quantity stays the same
-                .setCreatedAt(productSku.getCreatedAt()) // Created date stays the same
-                .setDeletedAt(productSku.getDeletedAt()) // Deleted date stays the same
                 .build();
 
         System.out.println(updatedProductSku);

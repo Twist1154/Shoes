@@ -2,6 +2,7 @@ package za.ac.cput.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -26,7 +27,7 @@ public class WishlistItem {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
-
+    @CreationTimestamp
     private LocalDateTime dateAdded;
 
     @ManyToOne
