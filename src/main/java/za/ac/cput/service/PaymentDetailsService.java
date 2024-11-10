@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.PaymentDetails;
-import za.ac.cput.factory.PaymentDetailsFactory;
 import za.ac.cput.repository.PaymentDetailsRepository;
 
 import java.time.LocalDateTime;
@@ -12,7 +11,7 @@ import java.util.List;
 
 /**
  * PaymentDetailsService.java
- *
+ * <p>
  * Service implementation for managing {@link PaymentDetails} entities.
  * Provides CRUD operations and additional methods for business logic.
  *
@@ -48,18 +47,19 @@ public class PaymentDetailsService implements IPaymentDetails {
         }
 
         PaymentDetails existingPayment = paymentDetailsRepository.findById(paymentDetails.getId()).orElseThrow();
+        if (existingPayment != null) {
+            PaymentDetails updatedPaymentDetails = new PaymentDetails.Builder()
+                    .copy(existingPayment)
+                    .setProvider(paymentDetails.getProvider())
+                    .setAmount(paymentDetails.getAmount())
+                    .setStatus(paymentDetails.getStatus())
+                    .setCreatedAt(paymentDetails.getCreatedAt())
+                    .setOrderDetails(paymentDetails.getOrderDetails())
+                    .build();
 
-        PaymentDetails updatedPaymentDetails = PaymentDetailsFactory.createPaymentDetails(
-                existingPayment.getId(),
-                paymentDetails.getOrderDetails(),
-                paymentDetails.getAmount(),
-                paymentDetails.getProvider(),
-                paymentDetails.getStatus(),
-                existingPayment.getCreatedAt(),
-                LocalDateTime.now()
-        );
-
-        return paymentDetailsRepository.save(updatedPaymentDetails);
+            return paymentDetailsRepository.save(updatedPaymentDetails);
+        }
+        return null;
     }
 
     public boolean delete(Long id) {

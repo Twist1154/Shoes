@@ -18,10 +18,8 @@ class CategoryFactoryTest {
         // Set up a sample Category object using the factory method
         category = CategoryFactory.createCategory(
                 1L,
-                "LowTops",
-                "description",
-                LocalDateTime.parse("2024-06-12T07:00:00"),
-                null);
+                "LowTops"
+        );
     }
 
     @Test
@@ -54,10 +52,9 @@ class CategoryFactoryTest {
         assertThrows(IllegalArgumentException.class,
                 () -> CategoryFactory.createCategory(
                         1L,
-                        null,
-                        "description",
-                        LocalDateTime.parse("2024-06-12T07:00:00"),
-                        null));
+                        null
+                )
+        );
 
         // Print a message to the terminal indicating that an exception was thrown
         System.out.println("Expected IllegalArgumentException thrown when creating Category with null name");
@@ -69,10 +66,8 @@ class CategoryFactoryTest {
         assertThrows(IllegalArgumentException.class,
                 () -> CategoryFactory.createCategory(
                         1L,
-                        "LowTops",
-                        null,
-                        LocalDateTime.parse("2024-06-12T07:00:00"),
-                        null));
+                        "LowTops")
+        );
 
         // Print a message to the terminal indicating that an exception was thrown
         System.out.println("Expected IllegalArgumentException thrown when creating Category with null description");

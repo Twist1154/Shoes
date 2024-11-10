@@ -7,6 +7,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import za.ac.cput.Application;
 import za.ac.cput.domain.OrderDetails;
 import za.ac.cput.domain.PaymentDetails;
+import za.ac.cput.domain.User;
 import za.ac.cput.factory.OrderDetailsFactory;
 import za.ac.cput.factory.PaymentDetailsFactory;
 import za.ac.cput.repository.PaymentDetailsRepository;
@@ -35,9 +36,20 @@ class PaymentDetailsServiceTest {
     @Autowired
     private OrderDetailsService orderDetailsService;
 
+    private User user;
+
     @BeforeEach
     void setUp() {
-        orderDetails = orderDetailsService.read(1L);
+
+        user = new User(); // Initialize a sample User object
+        // Set up a sample OrderDetails object using the factory method
+        orderDetails = OrderDetailsFactory.createOrderDetails(
+                1L,
+                user,
+                paymentDetails,
+                100.0,
+                LocalDateTime.parse("2024-06-12T00:00:00"),
+                LocalDateTime.parse("2024-06-12T00:00:00"));
         System.out.println("Order Details: " + orderDetails);
         paymentDetails = PaymentDetailsFactory.createPaymentDetails(
                 null, // ID will be auto-generated
@@ -45,8 +57,7 @@ class PaymentDetailsServiceTest {
                 1000.00,
                 "PayPal",
                 "Paid",
-                LocalDateTime.now(),
-                null
+                LocalDateTime.now()
         );
         System.out.println("created payment details: "+paymentDetails);
         paymentDetailsService.create(paymentDetails);
@@ -66,8 +77,7 @@ class PaymentDetailsServiceTest {
                 1500.00,
                 "Credit Card",
                 "Pending",
-                LocalDateTime.now(),
-                null
+                LocalDateTime.now()
         );
         PaymentDetails created = paymentDetailsService.create(newPaymentDetails);
         assertNotNull(created);

@@ -2,6 +2,8 @@ package za.ac.cput.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,13 +33,15 @@ public class Address {
     private String country;
     private String postalCode;
     private String phoneNumber;
+    @CreationTimestamp
     private LocalDateTime createdAt;
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
 
     public Address() {}
 
-    // Builder pattern constructor
+
     private Address(Builder builder) {
         this.id = builder.id;
         this.user = builder.user;

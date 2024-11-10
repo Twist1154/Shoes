@@ -20,12 +20,9 @@ public class CategoryFactory {
      *
      * @param id          the ID of the category
      * @param name        the name of the category
-     * @param description the description of the category
-     * @param createdAt   the date the category was created
-     * @param deletedAt   the date the category was deleted (if applicable)
      * @return a new {@link Category} object with properties set from the input parameters
      */
-    public static Category createCategory(Long id, String name, String description, LocalDateTime createdAt, LocalDateTime deletedAt) {
+    public static Category createCategory(Long id, String name) {
         // Define constants for the switch cases
         final int NAME_EMPTY = 1;
         final int DESCRIPTION_EMPTY = 2;
@@ -36,9 +33,6 @@ public class CategoryFactory {
         if (Helper.isNullOrEmpty(name)) {
             errorFlags |= NAME_EMPTY;
         }
-        if (Helper.isNullOrEmpty(description)) {
-            errorFlags |= DESCRIPTION_EMPTY;
-        }
 
         // Use switch statement to throw exception based on the flags
         switch (errorFlags) {
@@ -46,8 +40,6 @@ public class CategoryFactory {
                 throw new IllegalArgumentException("Name and description cannot be null or empty");
             case NAME_EMPTY:
                 throw new IllegalArgumentException("Name cannot be null or empty");
-            case DESCRIPTION_EMPTY:
-                throw new IllegalArgumentException("Description cannot be null or empty");
             default:
                 // No null or empty values
                 break;
@@ -55,11 +47,8 @@ public class CategoryFactory {
 
         // Use the Builder pattern to create a new Category object
         return new Category.Builder()
-                .setId(id) // Set the ID of the category
-                .setName(name) // Set the name of the category
-                .setDescription(description) // Set the description of the category
-                .setCreatedAt(createdAt) // Set the date the category was created
-                .setDeletedAt(LocalDateTime.now()) // Set the date the category was deleted (if applicable)
-                .build();
+                .setId(id)
+                .setName(name)
+               .build();
     }
 }

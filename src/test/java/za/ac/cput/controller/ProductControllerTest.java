@@ -53,8 +53,6 @@ class ProductControllerTest {
         if (category == null) {
             category = new Category.Builder()
                     .setName("Sample Category")
-                    .setDescription("Category Description")
-                    .setCreatedAt(LocalDateTime.now())
                     .build();
             category = categoryService.create(category);  // Create and save the category
         }
@@ -62,8 +60,7 @@ class ProductControllerTest {
         // Create a subcategory linked to the category if it doesn't exist
         subCategory = new SubCategory.Builder()
                 .setCategory(category)
-                .setName("Test SubCategory")
-                .setDescription("SubCategory for testing")
+                .setProduct(product)
                 .build();
         subCategory = subCategoryService.create(subCategory);  // Create and save subcategory
 
@@ -84,8 +81,7 @@ class ProductControllerTest {
                 "cover image url",
                 image,
                 Collections.singletonList(subCategory),
-                LocalDateTime.now(),
-                null
+                LocalDateTime.now()
         );
     }
 

@@ -67,7 +67,7 @@ public class UserController {
      *
      * @return ResponseEntity containing the list of UserDTOs and an HTTP OK status.
      */
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.findAll();
         return ResponseEntity.ok(users);
@@ -79,7 +79,6 @@ public class UserController {
      * This endpoint allows updating the password for a user with the specified ID.
      * It receives the new password details in the request body and returns a success message.
      *
-     * @param id the ID of the user whose password is to be updated.
      * @param userPasswordDTO the data transfer object containing the new password details.
      * @return ResponseEntity containing a success message and HTTP OK status.
      */

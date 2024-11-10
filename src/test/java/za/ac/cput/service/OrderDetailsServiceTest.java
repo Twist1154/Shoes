@@ -46,8 +46,7 @@ class OrderDetailsServiceTest {
                 100.0,       // total amount
                 "Visa",      // payment method
                 "Success",   // payment status
-                LocalDateTime.now(), // payment date/time
-                null         // updatedAt can be set later
+                LocalDateTime.now() // payment date
         );
 
         // Persist the payment details in the database

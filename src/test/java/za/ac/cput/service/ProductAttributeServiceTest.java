@@ -29,9 +29,7 @@ class ProductAttributeServiceTest {
         productAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.SIZE,
-                "10",
-                LocalDateTime.now(),
-                null
+                "10"
         );
         productAttribute = service.create(productAttribute);
     }

@@ -18,7 +18,7 @@ class OrderItemFactoryTest {
 
     private OrderItem orderItem;
     private OrderDetails orderDetails;
-    public static  Product product;
+    public  Product product;
     private ProductSku productSku;
     private ImageUrls images;
     private List<SubCategory> subCategory;
@@ -29,10 +29,10 @@ class OrderItemFactoryTest {
         // Create a sample Category object using the factory method
         category = CategoryFactory.createCategory(
                 1L,
-                "Sneakers",
-                "Sneakers",
-                LocalDateTime.now(),
-                null);
+                "Sneakers"
+        );
+
+
 
         // Create a sample ImageUrls object using the factory method
         images = ImageUrlsFactory.createImageUrls(
@@ -46,18 +46,14 @@ class OrderItemFactoryTest {
         SubCategory subCategory1 = SubCategoryFactory.createSubCategory(
                 1L,
                 category,
-                "High Tops",
-                "High Top Sneakers",
-                LocalDateTime.now(),
-                null);
+                product
+                );
 
         SubCategory subCategory2 = SubCategoryFactory.createSubCategory(
                 2L,
                 category,
-                "Low Tops",
-                "Low Top Sneakers",
-                LocalDateTime.now(),
-                null);
+                product
+        );
 
         subCategory = List.of(subCategory1, subCategory2);
 
@@ -73,30 +69,27 @@ class OrderItemFactoryTest {
                 "Product Cover",
                 images,
                 subCategory,
-                LocalDateTime.now(),
-                null);
+                LocalDateTime.now()
+        );
 
         // Create sample ProductAttribute objects for size, color, and brand
         ProductAttribute sizeAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.SIZE,
-                "10",
-                LocalDateTime.now(),
-                null);
+                "10"
+        );
 
         ProductAttribute colorAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.COLOR,
-                "Green",
-                LocalDateTime.now(),
-                null);
+                "Green"
+        );
 
         ProductAttribute brandAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.BRAND,
-                "Nike",
-                LocalDateTime.now(),
-                null);
+                "Nike"
+        );
 
         productSku = ProductSkuFactory.createProductSku(
                 1L,
@@ -106,9 +99,8 @@ class OrderItemFactoryTest {
                 brandAttribute,
                 "SKU-13",
                 150.00,
-                10,
-                LocalDateTime.now(),
-                null);
+                10
+        );
 
         // Set up a sample OrderItem object using the factory method
         orderItem = OrderItemFactory.createOrderItem(
@@ -116,9 +108,7 @@ class OrderItemFactoryTest {
                 orderDetails,
                 product,
                 productSku,
-                2,
-                LocalDateTime.parse("2024-06-12T08:00"),
-                LocalDateTime.parse("2024-06-12T08:00")
+                2
         );
     }
 
@@ -140,9 +130,9 @@ class OrderItemFactoryTest {
                         null,
                         product,
                         productSku,
-                        2,
-                        LocalDateTime.parse("2024-06-12T08:00"),
-                        LocalDateTime.parse("2024-06-12T08:00")));
+                        2
+                )
+        );
 
         // Print a message to the terminal indicating that an exception was thrown
         System.out.println("Expected IllegalArgumentException thrown when creating OrderItem with null OrderDetails");
@@ -157,9 +147,9 @@ class OrderItemFactoryTest {
                         orderDetails,
                         null,
                         productSku,
-                        2,
-                        LocalDateTime.parse("2024-06-12T08:00"),
-                        LocalDateTime.parse("2024-06-12T08:00")));
+                        2
+                )
+        );
 
         // Print a message to the terminal indicating that an exception was thrown
         System.out.println("Expected IllegalArgumentException thrown when creating OrderItem with null Product");
@@ -174,9 +164,9 @@ class OrderItemFactoryTest {
                         orderDetails,
                         product,
                         null,
-                        2,
-                        LocalDateTime.parse("2024-06-12T08:00"),
-                        LocalDateTime.parse("2024-06-12T08:00")));
+                        2
+                )
+        );
 
         // Print a message to the terminal indicating that an exception was thrown
         System.out.println("Expected IllegalArgumentException thrown when creating OrderItem with null ProductSkuService");

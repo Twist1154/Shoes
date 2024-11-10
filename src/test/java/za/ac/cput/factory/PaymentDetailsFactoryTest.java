@@ -27,7 +27,6 @@ class PaymentDetailsFactoryTest {
                 100.0,
                 "PayPal",
                 "Success",
-                LocalDateTime.parse("2024-06-12T12:00:00"),
                 LocalDateTime.parse("2024-06-12T12:00:00")
         );
     }
@@ -51,8 +50,9 @@ class PaymentDetailsFactoryTest {
                         100.0,
                         "PayPal",
                         "Success",
-                        LocalDateTime.parse("2024-06-12T12:00:00"),
-                        LocalDateTime.parse("2024-06-12T12:00:00")));
+                        LocalDateTime.parse("2024-06-12T12:00:00")
+                )
+        );
 
         // Print a message to the terminal indicating that an exception was thrown
         System.out.println("Expected IllegalArgumentException thrown when creating PaymentDetails with null OrderDetails");
@@ -68,8 +68,9 @@ class PaymentDetailsFactoryTest {
                         null,
                         "PayPal",
                         "Success",
-                        LocalDateTime.parse("2024-06-12T12:00:00"),
-                        LocalDateTime.parse("2024-06-12T12:00:00")));
+                        LocalDateTime.parse("2024-06-12T12:00:00")
+                )
+        );
 
         // Print a message to the terminal indicating that an exception was thrown
         System.out.println("Expected IllegalArgumentException thrown when creating PaymentDetails with null amount");
@@ -85,8 +86,9 @@ class PaymentDetailsFactoryTest {
                         100.0,
                         null,
                         "Success",
-                        LocalDateTime.parse("2024-06-12T12:00:00"),
-                        LocalDateTime.parse("2024-06-12T12:00:00")));
+                        LocalDateTime.parse("2024-06-12T12:00:00")
+                )
+        );
 
         // Print a message to the terminal indicating that an exception was thrown
         System.out.println("Expected IllegalArgumentException thrown when creating PaymentDetails with null provider");
@@ -102,8 +104,9 @@ class PaymentDetailsFactoryTest {
                         100.0,
                         "PayPal",
                         null,
-                        LocalDateTime.parse("2024-06-12T12:00:00"),
-                        LocalDateTime.parse("2024-06-12T12:00:00")));
+                        LocalDateTime.parse("2024-06-12T12:00:00")
+                )
+        );
 
         // Print a message to the terminal indicating that an exception was thrown
         System.out.println("Expected IllegalArgumentException thrown when creating PaymentDetails with null status");

@@ -25,7 +25,7 @@ public class PaymentDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_details_id")
     private OrderDetails orderDetails;
 
@@ -33,7 +33,6 @@ public class PaymentDetails {
     private String provider;
     private String status;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     public PaymentDetails() {}
 
@@ -44,7 +43,6 @@ public class PaymentDetails {
         this.provider = builder.provider;
         this.status = builder.status;
         this.createdAt = builder.createdAt;
-        this.updatedAt = builder.updatedAt;
     }
 
     @Override
@@ -56,7 +54,6 @@ public class PaymentDetails {
                 ", provider='" + provider + '\'' +
                 ", status='" + status + '\'' +
                 ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
                 "}\n";
     }
 
@@ -70,13 +67,12 @@ public class PaymentDetails {
                 Objects.equals(amount, that.amount) &&
                 Objects.equals(provider, that.provider) &&
                 Objects.equals(status, that.status) &&
-                Objects.equals(createdAt, that.createdAt) &&
-                Objects.equals(updatedAt, that.updatedAt);
+                Objects.equals(createdAt, that.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, orderDetails, amount, provider, status, createdAt, updatedAt);
+        return Objects.hash(id, orderDetails, amount, provider, status, createdAt);
     }
 
     public static class Builder {
@@ -86,7 +82,6 @@ public class PaymentDetails {
         private String provider;
         private String status;
         private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -118,11 +113,6 @@ public class PaymentDetails {
             return this;
         }
 
-        public Builder setUpdatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
         public Builder copy(PaymentDetails paymentDetails) {
             this.id = paymentDetails.getId();
             this.orderDetails = paymentDetails.getOrderDetails();
@@ -130,7 +120,6 @@ public class PaymentDetails {
             this.provider = paymentDetails.getProvider();
             this.status = paymentDetails.getStatus();
             this.createdAt = paymentDetails.getCreatedAt();
-            this.updatedAt = paymentDetails.getUpdatedAt();
             return this;
         }
 

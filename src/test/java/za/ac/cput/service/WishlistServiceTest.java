@@ -45,6 +45,8 @@ class WishlistServiceTest {
 
     @Autowired
     private SubCategoryRepository subCategoryRepository;
+    @Autowired
+    private ProductService productService;
 
     private Wishlist wishlist;
     private Product product;
@@ -52,34 +54,29 @@ class WishlistServiceTest {
     private Category category;
     private ImageUrls imageUrls;
     private User user;
-    private List<WishListItem> wishListItems;
+    private List<WishlistItem> wishListItems;
 
     @BeforeEach
     void setup() {
+        product = productService.read(1L);
         // Set up Category and save to get generated ID
         category = CategoryFactory.createCategory(
                 null, // ID will be generated
-                "Sneakers",
-                "Sneakers",
-                LocalDateTime.now(),
-                null);
+                "Sneakers"
+        );
         category = categoryRepository.save(category);
 
         // Create and save SubCategory objects
         SubCategory subCategory1 = SubCategoryFactory.createSubCategory(
                 null, // ID will be generated
                 category,
-                "High Tops",
-                "High Top Sneakers",
-                LocalDateTime.now(),
-                null);
+                product
+        );
         SubCategory subCategory2 = SubCategoryFactory.createSubCategory(
                 null, // ID will be generated
                 category,
-                "Low Tops",
-                "Low Top Sneakers",
-                LocalDateTime.now(),
-                null);
+                product
+        );
 
         subCategories = List.of(subCategory1, subCategory2);
         subCategoryRepository.saveAll(subCategories); // Save all at once
@@ -101,8 +98,8 @@ class WishlistServiceTest {
                 "Product Cover",
                 imageUrls,
                 subCategories,
-                LocalDateTime.now(),
-                null);
+                LocalDateTime.now()
+        );
         product = productRepository.save(product);
 
         // Set up User and save to get generated ID
@@ -124,12 +121,12 @@ class WishlistServiceTest {
                 .build();
         wishlist = wishlistRepository.save(wishlist); // Save Wishlist first to get ID
 
-        WishListItem item1 = new WishListItem.Builder()
+        WishlistItem item1 = new WishlistItem.Builder()
                 .setProduct(product)
                 .setDateAdded(LocalDateTime.now())
                 .setWishlist(wishlist) // Reference the saved Wishlist
                 .build();
-        WishListItem item2 = new WishListItem.Builder()
+        WishlistItem item2 = new WishlistItem.Builder()
                 .setProduct(product)
                 .setDateAdded(LocalDateTime.now())
                 .setWishlist(wishlist) // Reference the saved Wishlist
@@ -171,7 +168,7 @@ class WishlistServiceTest {
         assertNotNull(createdWishlist);
         System.out.println("Created Wishlist: " + createdWishlist);
         assertEquals(newWishlist.getUser().getId(), createdWishlist.getUser().getId());
-        assertEquals(newWishlist.getWishListItems().size(), createdWishlist.getWishListItems().size());
+        assertEquals(newWishlist.getWishlistItems().size(), createdWishlist.getWishlistItems().size());
     }
 
     @Test
@@ -189,7 +186,7 @@ class WishlistServiceTest {
     void testUpdateWishlist() {
         wishlist = new Wishlist.Builder()
                 .copy(wishlist)
-                .setDeletedAt(LocalDateTime.now())
+                .setUser(user)
                 .build()
         ; // Update wishlist to set deletedAt
         Wishlist updatedWishlist = wishlistService.update(wishlist);

@@ -49,8 +49,6 @@ public class ProductAttributeService implements IProductAttribute {
                     .copy(productAttribute)
                     .setType(productAttribute.getType())
                     .setValue(productAttribute.getValue())
-                    .setCreatedAt(existingProductAttribute.getCreatedAt())
-                    .setUpdatedAt(LocalDateTime.now())
                     .build();
             return productAttributeRepository.save(updatedProductAttribute);
         }

@@ -1,9 +1,14 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,16 +36,18 @@ public final class Product {
     @Embedded
     private ImageUrls imageUrls;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "product_subcategory",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "subcategory_id")
-    )
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @JsonManagedReference("productReference")
+    @JsonIgnore
     private List<SubCategory> subCategory;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference("productReviewReference")
+    @JsonIgnore
+    private List<Review> review = new ArrayList<>();
+
+    @CreationTimestamp
     private LocalDateTime createdAt;
-    private LocalDateTime deletedAt;
 
     public Product() {
     }
@@ -54,7 +61,6 @@ public final class Product {
         this.imageUrls = builder.imageUrls;
         this.subCategory = builder.subCategory;
         this.createdAt = builder.createdAt;
-        this.deletedAt = builder.deletedAt;
     }
 
     @Override
@@ -66,9 +72,8 @@ public final class Product {
                 ", summary='" + summary + '\'' +
                 ", cover='" + cover + '\'' +
                 ", images=" + imageUrls +
-                ", subCategory=" +  (subCategory != null ? subCategory.size() : 0) +
+                ", subCategory=" + (subCategory != null ? subCategory.size() : 0) +
                 ", createdAt=" + createdAt +
-                ", deletedAt=" + deletedAt +
                 '}' + '\n';
     }
 
@@ -84,13 +89,12 @@ public final class Product {
                 Objects.equals(cover, product.cover) &&
                 Objects.equals(imageUrls, product.imageUrls) &&
                 Objects.equals(subCategory, product.subCategory) &&
-                Objects.equals(createdAt, product.createdAt) &&
-                Objects.equals(deletedAt, product.deletedAt);
+                Objects.equals(createdAt, product.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, summary, cover, imageUrls, subCategory, createdAt, deletedAt);
+        return Objects.hash(id, name, description, summary, cover, imageUrls, subCategory, createdAt);
     }
 
     public static class Builder {
@@ -102,7 +106,6 @@ public final class Product {
         private ImageUrls imageUrls;
         private List<SubCategory> subCategory;
         private LocalDateTime createdAt;
-        private LocalDateTime deletedAt;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -144,11 +147,6 @@ public final class Product {
             return this;
         }
 
-        public Builder setDeletedAt(LocalDateTime deletedAt) {
-            this.deletedAt = deletedAt;
-            return this;
-        }
-
         public Builder copy(Product product) {
             this.id = product.getId();
             this.name = product.getName();
@@ -157,7 +155,6 @@ public final class Product {
             this.cover = product.getCover();
             this.subCategory = product.getSubCategory();
             this.createdAt = product.getCreatedAt();
-            this.deletedAt = product.getDeletedAt();
             return this;
         }
 

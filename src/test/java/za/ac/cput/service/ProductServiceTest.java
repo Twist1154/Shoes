@@ -29,32 +29,28 @@ class ProductServiceTest {
 
     @BeforeEach
     void setUp() {
+        product = productService.read(1L);
         // Create Category and SubCategory
         Category category = CategoryFactory.createCategory(
-                null, // ID should be generated
-                "Sneakers",
-                "Sneakers",
-                LocalDateTime.now(),
-                null
+                null,
+                "Sneakers"
         );
         category = categoryService.create(category);
 
         SubCategory subCategory = SubCategoryFactory.createSubCategory(
                 null, // ID should be generated
                 category,
-                "High Tops",
-                "High Top Sneakers",
-                LocalDateTime.now(),
-                null
+                product
+
         );
         subCategory = subCategoryService.create(subCategory);
 
         // Set up the Product
         ImageUrls imageUrls = ImageUrlsFactory.createImageUrls(
-                "image1.jpg",
-                "image2.jpg",
-                "image3.jpg",
-                "image4.jpg"
+                "https://african-arts-and-crafts-bucket.s3.eu-north-1.amazonaws.com/NIKE%2BAIR%2BFORCE%2B1%2B'07%2BNN+(1).jpeg",
+                "https://african-arts-and-crafts-bucket.s3.eu-north-1.amazonaws.com/NIKE%2BAIR%2BFORCE%2B1%2B'07%2BNN+(1).png",
+                "https://african-arts-and-crafts-bucket.s3.eu-north-1.amazonaws.com/NIKE%2BAIR%2BFORCE%2B1%2B'07%2BNN.jpeg",
+                "https://african-arts-and-crafts-bucket.s3.eu-north-1.amazonaws.com/NIKE%2BAIR%2BFORCE%2B1%2B'07%2BNN.png"
         );
 
         product = ProductFactory.createProduct(
@@ -62,11 +58,10 @@ class ProductServiceTest {
                 "AirForce 1",
                 "All White AirForce 1",
                 "Nike AirForce 1",
-                "cover img url",
+                "https://african-arts-and-crafts-bucket.s3.eu-north-1.amazonaws.com/NIKE%2BAIR%2BFORCE%2B1%2B'07%2BNN+(2).png",
                 imageUrls,
                 List.of(subCategory),
-                LocalDateTime.now(),
-                null
+                LocalDateTime.now()
         );
     }
 

@@ -12,15 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDate;
 import java.util.*;
 
-/**
- * Represents a user in the system.
- * <p>
- * This entity class is mapped to the "users" table in the database.
- *
- * @author Rethabile
- * @date 25-Aug-24
- */
-
 @Entity
 @Getter
 @Setter
@@ -46,7 +37,7 @@ public class User implements UserDetails {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @Column(name = "username", unique = true, nullable = false) // Added username column
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
     @Column(name = "password")
@@ -55,7 +46,6 @@ public class User implements UserDetails {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    // ElementCollection with a separate table "user_roles" to store roles
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
@@ -66,7 +56,6 @@ public class User implements UserDetails {
     public User() {
     }
 
-    // Private constructor to be used by the builder
     private User(Builder builder) {
         this.id = builder.id;
         this.avatar = builder.avatar;
@@ -82,6 +71,7 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role r : role) {
@@ -107,9 +97,8 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enabled;
     }
-
 
     @Override
     public String toString() {
@@ -118,7 +107,7 @@ public class User implements UserDetails {
                 ", avatar='" + avatar + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", username='" + username + '\'' +  // Updated to include username
+                ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", birthDate=" + birthDate +
                 ", password='" + password + '\'' +

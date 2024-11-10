@@ -57,8 +57,6 @@ public class ProductSkuService implements IProductSku {
                     .setSku(productSku.getSku())
                     .setPrice(productSku.getPrice())
                     .setQuantity(productSku.getQuantity())
-                    .setCreatedAt(productSku.getCreatedAt())
-                    .setDeletedAt(productSku.getDeletedAt())
                     .build();
             return productSkuRepository.save(updatedProductSku);
         } else {

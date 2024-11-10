@@ -64,7 +64,7 @@ public class AuthenticationService {
         // Generate JWT token for the registered user
         String token = jwtService.generateToken(user);
 
-        return new AuthenticationResponse(token);
+        return new AuthenticationResponse(user,token);
     }
 
     /**
@@ -92,7 +92,7 @@ public class AuthenticationService {
             String token = jwtService.generateToken(user);
             System.out.println("Authentication successful for user: " + request.getEmail());
 
-            return new AuthenticationResponse(token);
+            return new AuthenticationResponse(user,token);
         } catch (BadCredentialsException e) {
             System.out.println("Authentication failed for user: " + request.getEmail() + ". Reason: Bad credentials");
             throw new BadCredentialsException("Incorrect username or password");

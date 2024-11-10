@@ -49,8 +49,6 @@ public class OrderItemService implements IOrderItem {
                     .setProduct(orderItem.getProduct()) // Update new product
                     .setProductSku(orderItem.getProductSku()) // Update new product SKU
                     .setQuantity(orderItem.getQuantity()) // Update new quantity
-                    .setCreatedAt(existingOrderItem.getCreatedAt()) // Keep original creation date
-                    .setUpdatedAt(LocalDateTime.now()) // Update to current time
                     .build();
             return orderItemRepository.save(updatedOrderItem);
         } else {

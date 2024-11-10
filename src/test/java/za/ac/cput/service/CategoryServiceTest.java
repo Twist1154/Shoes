@@ -3,6 +3,7 @@ package za.ac.cput.service;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.annotation.DirtiesContext;
 import za.ac.cput.Application;
 import za.ac.cput.domain.Category;
@@ -31,10 +32,7 @@ class CategoryServiceTest {
     void setUp() {
         category = CategoryFactory.createCategory(
                 null,
-                "Art",
-                "Category for Art products",
-                LocalDateTime.now(),
-                null
+                "Art"
         );
 
         category = categoryService.create(category);
@@ -50,10 +48,9 @@ class CategoryServiceTest {
     void create() {
         Category createdCategory = categoryService.create(CategoryFactory.createCategory(
                 null,
-                "Craft",
-                "Category for Craft products",
-                LocalDateTime.now(),
-                null));
+                "Craft"
+        )
+        );
 
         assertNotNull(createdCategory);
         assertEquals("Craft", createdCategory.getName());
@@ -75,7 +72,6 @@ class CategoryServiceTest {
         updatedCategory = new Category.Builder()
                 .copy(category)
                 .setName("Updated Art")
-                .setDescription("Updated Category for Art products")
                 .build();
         Category result = categoryService.update(updatedCategory);
         assertNotNull(result);
@@ -105,39 +101,12 @@ class CategoryServiceTest {
         assertFalse(categories.isEmpty());
     }
 
+
+
     @Test
     @Order(7)
-    void findByCreatedAtAfter() {
-        List<Category> categories = categoryService.findByCreatedAtAfter(LocalDateTime.now().minusDays(1));
-        assertFalse(categories.isEmpty());
-    }
-
-    @Test
-    @Order(8)
-    void findByDeletedAt() {
-        List<Category> categories = categoryService.findByDeletedAt(null);
-        assertTrue(categories.isEmpty());
-    }
-
-    @Test
-    @Order(9)
     void findByNameContaining() {
         List<Category> categories = categoryService.findByNameContaining("Art");
-        assertFalse(categories.isEmpty());
-    }
-
-    @Test
-    @Order(10)
-    void findByDescriptionContaining() {
-        List<Category> categories = categoryService.findByDescriptionContaining("products");
-        assertFalse(categories.isEmpty());
-    }
-
-    @Test
-    @Order(11)
-    void findCategoriesCreatedWithinDateRange() {
-        List<Category> categories = categoryService.findCategoriesCreatedWithinDateRange(
-                LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1));
         assertFalse(categories.isEmpty());
     }
 

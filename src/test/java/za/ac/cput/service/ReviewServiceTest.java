@@ -41,8 +41,7 @@ class ReviewServiceTest {
                 "awesome stuff",
                 5,
                 product,
-                user,
-                LocalDateTime.now()
+                user
         );
         service.create(review);
     }

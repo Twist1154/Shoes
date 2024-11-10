@@ -37,10 +37,10 @@ class WishlistControllerTest {
 
     @BeforeEach
     void setUp() {
-        user = userService.read(2L); // Fetch a valid user
+        user = userService.read(2L);
 
-        WishlistItem item1 = wishListItemService.read(15L); // Valid WishListItems
-        WishlistItem item2 = wishListItemService.read(16L);
+        WishlistItem item1 = new WishlistItem();
+        WishlistItem item2 = new WishlistItem();
 
         wishListItem = List.of(item1, item2);
 
@@ -48,8 +48,7 @@ class WishlistControllerTest {
                 null,
                 user,
                 wishListItem,
-                LocalDateTime.now(),
-                null
+                LocalDateTime.now()
         );
     }
 

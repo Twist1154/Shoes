@@ -21,9 +21,7 @@ class ProductAttributeFactoryTest {
         ProductAttribute productAttribute = ProductAttributeFactory.createProductAttribute(
                 1L,
                 ProductAttributeType.SIZE,
-                "10",
-                LocalDateTime.now(),
-                null);
+                "10");
 
         assertNotNull(productAttribute);
         System.out.println("Created ProductAttribute: " + productAttribute);
@@ -34,9 +32,7 @@ class ProductAttributeFactoryTest {
         assertThrows(IllegalArgumentException.class, () -> ProductAttributeFactory.createProductAttribute(
                 1L,
                 null,
-                "10",
-                LocalDateTime.now(),
-                null));
+                "10"));
 
         System.out.println("Expected IllegalArgumentException thrown when creating ProductAttribute with null type");
     }
@@ -46,8 +42,6 @@ class ProductAttributeFactoryTest {
         assertThrows(IllegalArgumentException.class, () -> ProductAttributeFactory.createProductAttribute(
                 1L,
                 ProductAttributeType.COLOR,
-                null,
-                LocalDateTime.now(),
                 null));
 
         System.out.println("Expected IllegalArgumentException thrown when creating ProductAttribute with null value");

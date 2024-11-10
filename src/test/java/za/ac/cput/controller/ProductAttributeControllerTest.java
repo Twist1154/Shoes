@@ -41,9 +41,7 @@ class ProductAttributeControllerTest {
         productAttribute = ProductAttributeFactory.createProductAttribute(
                 null,
                 ProductAttributeType.SIZE,
-                "10",
-                LocalDateTime.now(),
-                null
+                "10"
         );
     }
 

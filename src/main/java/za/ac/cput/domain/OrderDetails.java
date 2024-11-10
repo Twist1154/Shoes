@@ -2,6 +2,8 @@ package za.ac.cput.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -10,7 +12,7 @@ import java.util.Objects;
  * Represents an order details entry in the system.
  * Each entry provides details about an order, including the user_id who placed the order,
  * payment details, and the total amount. This entity is mapped to the "order_details" table in the database.
- *
+ * <p>
  * Author: Rethabile Ntsekhe
  * Date: 25-Aug-24
  */
@@ -32,11 +34,13 @@ public class OrderDetails {
     private PaymentDetails paymentDetails;
 
     private Double total;
-
+    @CreationTimestamp
     private LocalDateTime createdAt;
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public OrderDetails() {}
+    public OrderDetails() {
+    }
 
     private OrderDetails(Builder builder) {
         this.id = builder.id;
@@ -51,7 +55,7 @@ public class OrderDetails {
     public String toString() {
         return "\n OrderDetails{" +
                 "id=" + id +
-                ", user=" + user.getFirstName() +user.getLastName() +
+                ", user=" + user.getFirstName() + user.getLastName() +
                 ", paymentDetails=" + paymentDetails.getStatus() +
                 ", total=" + total +
                 ", createdAt=" + createdAt +

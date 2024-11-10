@@ -40,9 +40,6 @@ public class CategoryService implements ICategory {
         Category updatedCategory = new Category.Builder()
                 .setId(category.getId())  // Reusing the existing ID
                 .setName(category.getName())
-                .setDescription(category.getDescription())
-                .setCreatedAt(category.getCreatedAt())
-                .setDeletedAt(category.getDeletedAt())
                 .build();
 
         return categoryRepository.save(updatedCategory);
@@ -70,38 +67,10 @@ public class CategoryService implements ICategory {
         return categoryRepository.findByName(name);
     }
 
-    @Override
-    public List<Category> findByCreatedAtAfter(LocalDateTime createdAt) {
-        return categoryRepository.findByCreatedAtAfter(createdAt);
-    }
-
-    @Override
-    public List<Category> findByDeletedAt(LocalDateTime deletedAt) {
-        return categoryRepository.findByDeletedAt(deletedAt);
-    }
 
     @Override
     public List<Category> findByNameContaining(String keyword) {
         return categoryRepository.findByNameContaining(keyword);
     }
 
-    @Override
-    public List<Category> findByDescriptionContaining(String keyword) {
-        return categoryRepository.findByDescriptionContaining(keyword);
-    }
-
-    @Override
-    public List<Category> findCategoriesCreatedWithinDateRange(LocalDateTime startDate, LocalDateTime endDate) {
-        return categoryRepository.findCategoriesCreatedWithinDateRange(startDate, endDate);
-    }
-
-    @Override
-    public Category findMostRecentlyCreatedCategory() {
-        return categoryRepository.findMostRecentlyCreatedCategory();
-    }
-
-    @Override
-    public Optional<Category> findByDeletedAtIsNotNull() {
-        return categoryRepository.findByDeletedAtIsNotNull();
-    }
 }

@@ -123,8 +123,6 @@ public class WishlistService implements iWishlist {
     @Transactional(readOnly = true)
     public List<Wishlist> findAll() {
         // this method will now ignore rows where deleted at is not null
-        return wishlistRepository.findAll().stream()
-                .filter(wishlist -> wishlist.getDeletedAt() == null)
-                .collect(Collectors.toList());
+        return wishlistRepository.findAll();
     }
 }
