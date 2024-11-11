@@ -23,9 +23,8 @@ public class CategoryFactory {
      * @return a new {@link Category} object with properties set from the input parameters
      */
     public static Category createCategory(Long id, String name) {
-        // Define constants for the switch cases
+
         final int NAME_EMPTY = 1;
-        final int DESCRIPTION_EMPTY = 2;
 
         // Calculate the errorFlags based on null or empty checks
         int errorFlags = 0;
@@ -36,8 +35,6 @@ public class CategoryFactory {
 
         // Use switch statement to throw exception based on the flags
         switch (errorFlags) {
-            case NAME_EMPTY | DESCRIPTION_EMPTY:
-                throw new IllegalArgumentException("Name and description cannot be null or empty");
             case NAME_EMPTY:
                 throw new IllegalArgumentException("Name cannot be null or empty");
             default:

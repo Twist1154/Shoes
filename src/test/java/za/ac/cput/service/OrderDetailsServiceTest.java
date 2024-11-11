@@ -42,7 +42,6 @@ class OrderDetailsServiceTest {
         // Step 1: Create and persist PaymentDetails first
         testPaymentDetails = PaymentDetailsFactory.createPaymentDetails(
                 null,        // id will be auto-generated
-                null,        // orderDetails will be set later
                 100.0,       // total amount
                 "Visa",      // payment method
                 "Success",   // payment status

@@ -19,7 +19,6 @@ public class PaymentDetailsFactory {
      * Creates a {@link PaymentDetails} instance from various inputs.
      *
      * @param id          the ID of the payment details (nullable)
-     * @param orderDetails the {@link OrderDetails} entity associated with the payment details (can be null for initial creation)
      * @param amount      the amount of the payment (cannot be null or empty)
      * @param provider    the payment provider (cannot be null or empty)
      * @param status      the status of the payment (cannot be null or empty)
@@ -28,7 +27,6 @@ public class PaymentDetailsFactory {
      * @throws IllegalArgumentException if any required parameters are null or invalid
      */
     public static PaymentDetails createPaymentDetails(Long id,
-                                                      OrderDetails orderDetails,
                                                       Double amount,
                                                       String provider,
                                                       String status,
@@ -84,7 +82,6 @@ public class PaymentDetailsFactory {
         // Use the Builder pattern to create a new PaymentDetails object
         return new PaymentDetails.Builder()
                 .setId(id) // Set the ID of the payment details (nullable)
-                .setOrderDetails(orderDetails) // Set the order details associated with the payment (can be null)
                 .setAmount(amount) // Set the amount of the payment (required)
                 .setProvider(provider) // Set the payment provider (required)
                 .setStatus(status) // Set the status of the payment (required)

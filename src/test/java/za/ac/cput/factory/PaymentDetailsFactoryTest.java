@@ -39,22 +39,21 @@ class PaymentDetailsFactoryTest {
                 roles,
                 "0123456789",
                 "password123");
+
+        // Set up a sample PaymentDetails object using the factory method
+        paymentDetails = PaymentDetailsFactory.createPaymentDetails(
+                1L,
+                100.0,
+                "PayPal",
+                "Success",
+                LocalDateTime.parse("2024-06-12T12:00:00")
+        );
         // Set up a sample OrderDetails object
         orderDetails = OrderDetailsFactory.createOrderDetails(
                 1L,
                 user,
                 paymentDetails,
                 100.0
-        );
-
-        // Set up a sample PaymentDetails object using the factory method
-        paymentDetails = PaymentDetailsFactory.createPaymentDetails(
-                1L,
-                orderDetails,
-                100.0,
-                "PayPal",
-                "Success",
-                LocalDateTime.parse("2024-06-12T12:00:00")
         );
     }
 
@@ -73,7 +72,6 @@ class PaymentDetailsFactoryTest {
         assertThrows(IllegalArgumentException.class,
                 () -> PaymentDetailsFactory.createPaymentDetails(
                         1L,
-                        orderDetails,
                         null,
                         "PayPal",
                         "Success",
@@ -91,7 +89,6 @@ class PaymentDetailsFactoryTest {
         assertThrows(IllegalArgumentException.class,
                 () -> PaymentDetailsFactory.createPaymentDetails(
                         1L,
-                        orderDetails,
                         100.0,
                         null,
                         "Success",
@@ -109,7 +106,6 @@ class PaymentDetailsFactoryTest {
         assertThrows(IllegalArgumentException.class,
                 () -> PaymentDetailsFactory.createPaymentDetails(
                         1L,
-                        orderDetails,
                         100.0,
                         "PayPal",
                         null,

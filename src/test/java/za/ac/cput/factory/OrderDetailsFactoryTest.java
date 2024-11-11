@@ -42,7 +42,6 @@ class OrderDetailsFactoryTest {
 
         paymentDetails = PaymentDetailsFactory.createPaymentDetails(
                 1L,
-                null,
                 100.0,
                 "PayPal",
                 "Success",
