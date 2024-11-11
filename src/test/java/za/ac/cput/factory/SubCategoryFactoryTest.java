@@ -31,38 +31,7 @@ class SubCategoryFactoryTest {
     void testCreateSubCategory() {
         // Verify that the SubCategory object is not null
         assertNotNull(subCategory);
-
-        // Print the created SubCategory object to the terminal
-        System.out.println("Created SubCategory: " + subCategory);
     }
 
-    @Test
-    void testCreateSubCategory_WithNullName_ThrowsIllegalArgumentException() {
-        // Try to create a SubCategory object with null name
-        assertThrows(IllegalArgumentException.class,
-                () -> SubCategoryFactory.createSubCategory(
-                        1L,
-                        category,
-                        product
-                )
-        );
 
-        // Print a message to the terminal indicating that an exception was thrown
-        System.out.println("Expected IllegalArgumentException thrown when creating SubCategory with null name");
-    }
-
-    @Test
-    void testCreateSubCategory_WithNullDescription_ThrowsIllegalArgumentException() {
-        // Try to create a SubCategory object with null description
-        assertThrows(IllegalArgumentException.class,
-                () -> SubCategoryFactory.createSubCategory(
-                        1L,
-                        category,
-                        product
-                )
-        );
-
-        // Print a message to the terminal indicating that an exception was thrown
-        System.out.println("Expected IllegalArgumentException thrown when creating SubCategory with null description");
-    }
 }

@@ -24,17 +24,13 @@ public class OrderDetailsFactory {
      * @param user          the ID of the {@link User} entity associated with the order
      * @param paymentDetails  the ID of the {@link PaymentDetails} entity associated with the order
      * @param total           the total cost of the order
-     * @param createdAt       the date the order was created
-     * @param updatedAt       the date the order was updated (if applicable)
-     * @return a new {@link OrderDetails} object with properties set from the input parameters
+    * @return a new {@link OrderDetails} object with properties set from the input parameters
      */
     public static OrderDetails createOrderDetails(
             Long id,
             User user,
             PaymentDetails paymentDetails,
-            Double total,
-            LocalDateTime createdAt,
-            LocalDateTime updatedAt
+            Double total
     ) {
         // Define constants for the switch cases
         final int USER_NULL = 1;
@@ -77,12 +73,10 @@ public class OrderDetailsFactory {
 
         // Use the Builder pattern to create a new OrderDetails object
         return new OrderDetails.Builder()
-                .setId(id) // Set the ID of the order details
-                .setUser(user) // Set the user associated with the order
-                .setPaymentDetails(paymentDetails) // Set the payment details associated with the order
-                .setTotal(total) // Set the total cost of the order
-                .setCreatedAt(createdAt) // Set the date the order was created
-                .setUpdatedAt(LocalDateTime.now()) // Set the date the order was updated (if applicable)
-                .build();
+                .setId(id)
+                .setUser(user)
+                .setPaymentDetails(paymentDetails)
+                .setTotal(total)
+               .build();
     }
 }

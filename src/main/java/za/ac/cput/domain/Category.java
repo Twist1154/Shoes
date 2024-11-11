@@ -13,7 +13,7 @@ import java.util.Objects;
 
 /**
  * Represents a categories entry in the system.
- *
+ * <p>
  * This entity class is mapped to the "categories" table in the database.
  *
  * @author Rethabile Ntsekhe
@@ -28,7 +28,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -36,12 +36,14 @@ public class Category {
     @JsonIgnore
     private List<SubCategory> subCategories;
 
-    public Category() {}
+    public Category() {
+    }
 
     private Category(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
     }
+
     @Override
     public String toString() {
         return "\n Category{" +
@@ -63,11 +65,12 @@ public class Category {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name,subCategories);
+        return Objects.hash(id, name, subCategories);
     }
 
     public static class Builder {
         private Long id;
+
         private String name;
         private List<SubCategory> subCategories;
 

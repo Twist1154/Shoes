@@ -42,7 +42,11 @@ public class UserFactory {
                                   String password
     ) {
         // Validation checks
-        if (Helper.isNullOrEmpty(firstName) || Helper.isNullOrEmpty(lastName) || Helper.isNullOrEmpty(email) || Helper.isNullOrEmpty(password)) {
+        if (Helper.isNullOrEmpty(firstName) ||
+                Helper.isNullOrEmpty(lastName) ||
+                Helper.isNullOrEmpty(username) ||
+                Helper.isNullOrEmpty(email) ||
+                Helper.isNullOrEmpty(password)) {
             throw new IllegalArgumentException("First name, last name, email, and password cannot be null or empty");
         }
 

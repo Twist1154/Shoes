@@ -57,9 +57,7 @@ class OrderDetailsServiceTest {
                 null,                        // id will be auto-generated
                 user,                        // User associated with the order
                 testPaymentDetails,          // Link the created payment details
-                100.0,                       // Order total amount
-                LocalDateTime.parse("2024-06-12T00:00:00"), // Order creation date
-                LocalDateTime.now()           // Order update date
+                100.0                         // Order total amount
         );
 
         // Persist the order details
@@ -84,9 +82,7 @@ class OrderDetailsServiceTest {
                 null,
                 user,
                 testPaymentDetails,
-                200.0,
-                LocalDateTime.now(),
-                null
+                200.0
         );
         OrderDetails createdOrder = orderDetailsService.create(newOrder);
 

@@ -54,10 +54,8 @@ public class OrderDetailsService implements IOrderDetails {
                         updatedOrderDetails.getId(),
                         updatedOrderDetails.getUser(),
                         updatedOrderDetails.getPaymentDetails(),
-                        updatedOrderDetails.getTotal(),
-                        existingOrderDetails.getCreatedAt(), // Retain the original creation date
-                        LocalDateTime.now() // Update the updatedAt field to current date
-                );
+                        updatedOrderDetails.getTotal()
+                        );
                 return orderDetailsRepository.save(orderDetailsToUpdate);
             }
         }

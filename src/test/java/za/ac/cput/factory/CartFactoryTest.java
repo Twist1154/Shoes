@@ -3,18 +3,35 @@ package za.ac.cput.factory;
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.Cart;
 import za.ac.cput.domain.User;
+import za.ac.cput.enums.Role;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CartFactoryTest {
-
+private User user;
+private Set<Role> roles;
     @Test
     void testCreateCart() {
-        // Create a sample User object
-        User user = new User();
+        roles = new HashSet<>(Set.of(Role.USER, Role.ADMIN));
+
+        // Set up a sample User object using the factory method
+        user = UserFactory.createUser(
+                null,
+                "avatar.jpg",
+                "John",
+                "Doe",
+                "user1",
+                "johndoe@example.com",
+                LocalDate.parse("1990-01-01"),
+                roles,
+                "0123456789",
+                "password123");
 
         // Create a sample Cart object using the factory method
         Cart cart = CartFactory.createCart(

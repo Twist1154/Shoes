@@ -2,13 +2,13 @@ package za.ac.cput.factory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import za.ac.cput.domain.Cart;
-import za.ac.cput.domain.CartItem;
-import za.ac.cput.domain.Product;
-import za.ac.cput.domain.ProductSku;
+import za.ac.cput.domain.*;
+import za.ac.cput.enums.Role;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,11 +20,33 @@ class CartItemFactoryTest {
     private Cart cart;
     private Product product;
     private ProductSku productSku;
+    private User user;
+    private Set<Role> roles;
 
     @BeforeEach
     void setup() {
         // Initialize valid objects for testing
-        cart = new Cart();  // Assuming Cart has a no-arg constructor
+        roles = new HashSet<>(Set.of(Role.USER, Role.ADMIN));
+
+        // Set up a sample User object using the factory method
+        user = UserFactory.createUser(
+                null,
+                "avatar.jpg",
+                "John",
+                "Doe",
+                "user1",
+                "johndoe@example.com",
+                LocalDate.parse("1990-01-01"),
+                roles,
+                "0123456789",
+                "password123");
+        // Create a sample Cart object using the factory method
+        Cart cart = CartFactory.createCart(
+                1L,
+                user,
+                100.0,
+                LocalDateTime.now(),
+                null);
         product = new Product();  // Assuming Product has a no-arg constructor
         productSku = new ProductSku();  // Assuming ProductSkuService has a no-arg constructor
     }

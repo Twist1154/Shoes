@@ -25,7 +25,7 @@ public class SubCategoryFactory {
                                                 Category category,
                                                 Product product) {
         // Define constants for the switch cases;
-        final int CATEGORY_NULL = 1; // Removed DESCRIPTION_NULL since it's not in SubCategory
+        final int CATEGORY_NULL = 1;
 
         // Calculate the errorFlags based on null or empty checks
         int errorFlags = 0;

@@ -5,11 +5,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.*;
 import za.ac.cput.enums.ProductAttributeType;
+import za.ac.cput.enums.Role;
 
 import java.awt.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -23,6 +27,9 @@ class OrderItemFactoryTest {
     private ImageUrls images;
     private List<SubCategory> subCategory;
     private Category category;
+    private User user;
+    private PaymentDetails paymentDetails;
+    private Set<Role> roles;
 
     @BeforeEach
     void setup() {
@@ -31,8 +38,31 @@ class OrderItemFactoryTest {
                 1L,
                 "Sneakers"
         );
+        // Set up a sample PaymentDetails object using the factory method
+        paymentDetails = PaymentDetailsFactory.createPaymentDetails(
+                1L,
+                orderDetails,
+                100.0,
+                "PayPal",
+                "Success",
+                LocalDateTime.parse("2024-06-12T12:00:00")
+        );
 
+        // Create a sample User object using the factory method
+        roles = new HashSet<>(Set.of(Role.USER, Role.ADMIN));
 
+        // Set up a sample User object using the factory method
+        user = UserFactory.createUser(
+                null,
+                "avatar.jpg",
+                "John",
+                "Doe",
+                "user1",
+                "johndoe@example.com",
+                LocalDate.parse("1990-01-01"),
+                roles,
+                "0123456789",
+                "password123");
 
         // Create a sample ImageUrls object using the factory method
         images = ImageUrlsFactory.createImageUrls(
@@ -59,7 +89,13 @@ class OrderItemFactoryTest {
 
 
         // Set up sample OrderDetails, Product, and ProductSkuService objects
-        orderDetails = new OrderDetails(); // Initialize a sample OrderDetails object
+        orderDetails = OrderDetailsFactory.createOrderDetails(
+                1L,
+                user,
+                paymentDetails,
+                300.00
+        );
+
         // Create a sample Product object using the factory method
         product = ProductFactory.createProduct(
                 1L,
