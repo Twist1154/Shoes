@@ -36,10 +36,10 @@ public final class Product {
     @Embedded
     private ImageUrls imageUrls;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference("productReference")
     @JsonIgnore
-    private List<SubCategory> subCategory;
+    private List<SubCategory> subCategory = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference("productReviewReference")
@@ -104,7 +104,7 @@ public final class Product {
         private String summary;
         private String cover;
         private ImageUrls imageUrls;
-        private List<SubCategory> subCategory;
+        private List<SubCategory> subCategory = new ArrayList<>();
         private LocalDateTime createdAt;
 
         public Builder setId(Long id) {

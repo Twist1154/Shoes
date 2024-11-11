@@ -58,18 +58,6 @@ class OrderItemFactoryTest {
                 "image4.jpg"
         );
 
-        SubCategory subCategory1 = SubCategoryFactory.createSubCategory(
-                1L,
-                category,
-                product
-        );
-
-        SubCategory subCategory2 = SubCategoryFactory.createSubCategory(
-                2L,
-                category,
-                product
-        );
-
 
         orderDetails = OrderDetailsFactory.createOrderDetails(
                 1L,
@@ -85,7 +73,6 @@ class OrderItemFactoryTest {
                 "Product Summary",
                 "Product Cover",
                 images,
-                List.of(subCategory1, subCategory2),
                 LocalDateTime.now()
         );
 

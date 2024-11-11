@@ -27,11 +27,13 @@ public class WishlistService implements iWishlist {
 
     private final WishlistRepository wishlistRepository;
     private final WishlistItemService wishListItemService;
+    private final WishlistItemService wishlistItemService;
 
     @Autowired
-    public WishlistService(WishlistRepository wishlistRepository, WishlistItemService wishListItemService) {
+    public WishlistService(WishlistRepository wishlistRepository, WishlistItemService wishListItemService, WishlistItemService wishlistItemService) {
         this.wishlistRepository = wishlistRepository;
         this.wishListItemService = wishListItemService;
+        this.wishlistItemService = wishlistItemService;
     }
 
     /**
@@ -41,6 +43,7 @@ public class WishlistService implements iWishlist {
      * @return the saved wishlist
      */
     @Override
+    @Transactional(readOnly = false)
     public Wishlist create(Wishlist wishlist) {
         return wishlistRepository.save(wishlist);
     }
@@ -54,15 +57,12 @@ public class WishlistService implements iWishlist {
      * @throws EntityNotFoundException if the wishlist is not found
      */
     @Override
-    @Transactional(readOnly = true) // Mark this read-only as it doesn't modify the database
+    @Transactional(readOnly = true)
     public Wishlist read(Long id) {
         Wishlist wishlist = wishlistRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Wishlist not found"));
 
-        // Access to initialize lazy-loaded collections (WishlistItems and their Products' SubCategories)
-        for (WishlistItem item : wishlist.getWishlistItems()) {
-            item.getProduct().getSubCategory().size(); // Ensure subCategory is initialized
-        }
+        wishlist.getWishlistItems().size();
         return wishlist;
     }
 
@@ -74,6 +74,7 @@ public class WishlistService implements iWishlist {
      * @throws IllegalArgumentException if the wishlist with the provided ID does not exist
      */
     @Override
+    @Transactional(readOnly = false)
     public Wishlist update(Wishlist wishlist) {
         // Check if the wishlist exists in the repository
         Wishlist existingWishlist = wishlistRepository.findById(wishlist.getId()).orElse(null);
@@ -96,6 +97,7 @@ public class WishlistService implements iWishlist {
      * @param id the ID of the wishlist to delete
      * @return
      */
+   @Transactional(readOnly = false)
     public boolean delete(Long id) {
 
         wishListItemService.deleteByWishlistId(id);
@@ -122,7 +124,6 @@ public class WishlistService implements iWishlist {
     @Override
     @Transactional(readOnly = true)
     public List<Wishlist> findAll() {
-        // this method will now ignore rows where deleted at is not null
         return wishlistRepository.findAll();
     }
 }

@@ -24,26 +24,6 @@ class WishlistFactoryTest {
     @BeforeEach
     void setup() {
         wishlist = new Wishlist();
-        product = new Product();
-        // Create a sample Category object using the factory method
-        category = CategoryFactory.createCategory(
-                1L,
-                "Sneakers"
-        );
-
-        // Create sample SubCategory objects using the factory method
-        SubCategory subCategory1 = SubCategoryFactory.createSubCategory(
-                1L,
-                category,
-                product
-        );
-
-        SubCategory subCategory2 = SubCategoryFactory.createSubCategory(
-                2L,
-                category,
-                product);
-
-        subCategory = List.of(subCategory1, subCategory2);
 
         // Create a sample ImageUrls object using the factory method
         imageUrls = ImageUrlsFactory.createImageUrls(
@@ -61,7 +41,6 @@ class WishlistFactoryTest {
                 "Product Summary",
                 "Product Cover",
                 imageUrls,
-                subCategory,
                 LocalDateTime.now()
         );
 

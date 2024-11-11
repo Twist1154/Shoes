@@ -33,7 +33,7 @@ class ReviewServiceTest {
 
     @BeforeEach
     void setUp() {
-        product = productService.read(16L);
+        product = productService.read(1L);
         user = userService.read(2L);
 
         review = ReviewFactory.createReviews(
@@ -52,6 +52,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(1)
     void create() {
         Review created = service.create(review);
         assertEquals(review.getId(), created.getId());
@@ -59,6 +60,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(2)
     void read() {
         Review read = service.read(review.getId());
         assertNotNull(read);
@@ -67,6 +69,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(3)
     void update() {
         Review updated = new Review.Builder()
                 .copy(review)
@@ -78,6 +81,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(4)
     void findAll() {
         List<Review> reviews = service.findAll();
         assertFalse(reviews.isEmpty());
@@ -85,6 +89,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(5)
     void delete() {
         boolean deleted = service.delete(review.getId());
         assertTrue(deleted);
@@ -93,6 +98,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(6)
     void findByProduct_Id() {
         List<Review> reviews = service.findByProduct_Id(product.getId());
         assertFalse(reviews.isEmpty());
@@ -101,6 +107,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(7)
     void findByRating() {
         List<Review> reviews = service.findByRating(5);
         assertFalse(reviews.isEmpty());
@@ -109,6 +116,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(8)
     void findByRatingGreaterThan() {
         List<Review> reviews = service.findByRatingGreaterThan(3);
         assertFalse(reviews.isEmpty());

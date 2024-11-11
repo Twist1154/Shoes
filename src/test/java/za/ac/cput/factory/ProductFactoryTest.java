@@ -20,11 +20,6 @@ class ProductFactoryTest {
 
     @Test
     void testCreateProduct() {
-        // Create a sample Category object using the factory method
-        category = CategoryFactory.createCategory(
-                1L,
-                "Sneakers"
-        );
 
         // Create a sample ImageUrls object using the factory method
         imageUrls = ImageUrlsFactory.createImageUrls(
@@ -34,20 +29,6 @@ class ProductFactoryTest {
                 "image4.jpg"
         );
 
-        // Create sample SubCategory objects using the factory method
-        SubCategory subCategory1 = SubCategoryFactory.createSubCategory(
-                1L,
-                category,
-                product
-        );
-
-        SubCategory subCategory2 = SubCategoryFactory.createSubCategory(
-                2L,
-                category,
-                product);
-
-        subCategory = List.of(subCategory1, subCategory2);
-
         // Create a sample Product object using the factory method
         product = ProductFactory.createProduct(
                 1L,
@@ -56,7 +37,6 @@ class ProductFactoryTest {
                 "Product Summary",
                 "Product Cover",
                 imageUrls,
-                subCategory,
                 LocalDateTime.now()
         );
 
@@ -77,7 +57,6 @@ class ProductFactoryTest {
                 "Product Summary",
                 "Product Cover",
                 imageUrls,
-                subCategory,
                 LocalDateTime.now()
         ));
 
@@ -94,7 +73,6 @@ class ProductFactoryTest {
                 "Product Summary",
                 "Product Cover",
                 imageUrls,
-                subCategory,
                 LocalDateTime.now()
         ));
 
@@ -112,8 +90,9 @@ class ProductFactoryTest {
                 null,
                 "Product Cover",
                 imageUrls,
-                subCategory,
-                LocalDateTime.now()));
+                LocalDateTime.now()
+                )
+        );
 
         System.out.println("Expected IllegalArgumentException thrown when creating Product with null summary");
         System.out.println("Created Product with null Summary: " + product);
@@ -129,27 +108,10 @@ class ProductFactoryTest {
                 "Product Summary",
                 null,
                 imageUrls,
-                subCategory,
                 LocalDateTime.now()));
 
         System.out.println("Expected IllegalArgumentException thrown when creating Product with null cover");
         System.out.println("Created Product with null Cover: " + product);
     }
 
-    @Test
-    void testCreateProduct_WithNullCategory_ThrowsIllegalArgumentException() {
-        // Try to create a Product object with a null category
-        assertThrows(IllegalArgumentException.class, () -> ProductFactory.createProduct(
-                1L,
-                "Product Name",
-                "Product Description",
-                "Product Summary",
-                "Product Cover",
-                imageUrls,
-                null,
-                LocalDateTime.now()
-        ));
-
-        System.out.println("Expected IllegalArgumentException thrown when creating Product with null category");
-    }
 }

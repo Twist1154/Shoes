@@ -20,23 +20,25 @@ class ProductSkuFactoryTest {
 
     @BeforeEach
     void setUp() {
-        // Create a sample Category
-        category = CategoryFactory.createCategory(
-                1L,
-                "LowTops"
+        // Create a sample ImageUrls object using the factory method
+        ImageUrls imageUrls = ImageUrlsFactory.createImageUrls(
+                "image1.jpg",
+                "image2.jpg",
+                "image3.jpg",
+                "image4.jpg"
         );
 
-        product = new Product();
-
-        // Create a sample SubCategory
-        SubCategory subCategory = SubCategoryFactory.createSubCategory(
+        product = ProductFactory.createProduct(
                 1L,
-                category,
-                product);
+                "Product Name",
+                "Product Description",
+                null,
+                "Product Cover",
+                imageUrls,
+                LocalDateTime.now()
+        );
 
-        // Store the SubCategory in a List
-        subCategoryList = Collections.singletonList(subCategory);  // or Arrays.asList if you have multiple subcategories
-    }
+      }
 
     @Test
     void testCreateProductSku() {
@@ -67,7 +69,6 @@ class ProductSkuFactoryTest {
                 "Product Summary",
                 "Product Cover",
                 null,
-                subCategoryList,
                 LocalDateTime.now()
         );
 
@@ -156,7 +157,6 @@ class ProductSkuFactoryTest {
                 "Product Summary",
                 "Product Cover",
                 null,
-                subCategoryList,  // Passing the list of SubCategory
                 LocalDateTime.now()
         );
 
@@ -205,7 +205,6 @@ class ProductSkuFactoryTest {
                 "Product Summary",
                 "Product Cover",
                 null,
-                subCategoryList,  // Passing the list of SubCategory
                 LocalDateTime.now()
         );
 

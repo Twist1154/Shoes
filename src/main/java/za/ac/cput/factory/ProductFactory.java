@@ -25,18 +25,16 @@ public class ProductFactory {
      * @param description the description of the product
      * @param summary     the summary of the product
      * @param cover       the cover image path of the product
-     * @param imageUrls   the object containing image URLs
-     * @param subCategories the {@link SubCategory} list associated with this product
+     * @param imageUrls   the object containing image URLs of the product
      * @param createdAt   the date and time the product was created
      * @return a new {@link Product} object with properties set from the input parameters
      */
-    public static Product createProduct(Long id, String name, String description, String summary, String cover, ImageUrls imageUrls, List<SubCategory> subCategories, LocalDateTime createdAt) {
+    public static Product createProduct(Long id, String name, String description, String summary, String cover, ImageUrls imageUrls,  LocalDateTime createdAt) {
         // Define constants for the switch cases
         final int NAME_NULL = 1;
         final int DESCRIPTION_NULL = 2;
         final int SUMMARY_NULL = 4;
         final int COVER_NULL = 8;
-        final int SUBCATEGORY_NULL = 16;
 
         // Calculate the errorFlags based on null checks
         int errorFlags = 0;
@@ -53,9 +51,6 @@ public class ProductFactory {
         if (Helper.isNullOrEmpty(cover)) {
             errorFlags |= COVER_NULL;
         }
-        if (subCategories == null || subCategories.isEmpty()) {
-            errorFlags |= SUBCATEGORY_NULL;
-        }
 
         // Use if-else to throw exceptions based on the flags
         if (errorFlags != 0) {
@@ -64,7 +59,6 @@ public class ProductFactory {
             if ((errorFlags & DESCRIPTION_NULL) != 0) errorMessage.append("description, ");
             if ((errorFlags & SUMMARY_NULL) != 0) errorMessage.append("summary, ");
             if ((errorFlags & COVER_NULL) != 0) errorMessage.append("cover, ");
-            if ((errorFlags & SUBCATEGORY_NULL) != 0) errorMessage.append("subcategories");
 
             // Remove trailing comma and space
             errorMessage.setLength(errorMessage.length() - 2);
@@ -80,7 +74,6 @@ public class ProductFactory {
                 .setSummary(summary) // Set the summary of the product
                 .setCover(cover) // Set the cover of the product
                 .setImageUrls(imageUrls) // Set the image URLs of the product
-                .setSubCategory(subCategories) // Set the list of subcategories associated with the product
                 .setCreatedAt(createdAt) // Set the date the product was created
                 .build();
     }
