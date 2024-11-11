@@ -40,7 +40,6 @@ class PaymentDetailsControllerTest {
         // Create initial payment details
         paymentDetails = PaymentDetailsFactory.createPaymentDetails(
                 null, // ID will be auto-generated
-                orderDetails, // OrderDetails ID
                 1000.00, // Amount
                 "PayPal", // Provider
                 "Paid", // Status
@@ -55,7 +54,6 @@ class PaymentDetailsControllerTest {
     void createPaymentDetails() {
         PaymentDetails newPaymentDetails = PaymentDetailsFactory.createPaymentDetails(
                 null,
-                orderDetails,
                 1500.00,
                 "Credit Card",
                 "Pending",

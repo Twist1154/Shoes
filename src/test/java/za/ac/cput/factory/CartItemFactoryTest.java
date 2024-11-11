@@ -41,7 +41,7 @@ class CartItemFactoryTest {
                 "0123456789",
                 "password123");
         // Create a sample Cart object using the factory method
-        Cart cart = CartFactory.createCart(
+         cart = CartFactory.createCart(
                 1L,
                 user,
                 100.0,
@@ -73,7 +73,14 @@ class CartItemFactoryTest {
         // Test with null Cart, expecting IllegalArgumentException
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> CartItemFactory.createCartItem(1L, null, product, productSku, 10));
+                () -> CartItemFactory.createCartItem(
+                        1L,
+                        null,
+                        product,
+                        productSku,
+                        10
+                )
+        );
 
         assertEquals("Cart cannot be null", exception.getMessage());
 
@@ -86,7 +93,14 @@ class CartItemFactoryTest {
         // Test with null Product, expecting IllegalArgumentException
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> CartItemFactory.createCartItem(1L, cart, null, productSku, 10));
+                () -> CartItemFactory.createCartItem(
+                        1L,
+                        cart,
+                        null,
+                        productSku,
+                        10
+                )
+        );
 
         assertEquals("Product cannot be null", exception.getMessage());
 
@@ -99,7 +113,14 @@ class CartItemFactoryTest {
         // Test with null ProductSkuService, expecting IllegalArgumentException
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> CartItemFactory.createCartItem(1L, cart, product, null, 10));
+                () -> CartItemFactory.createCartItem(
+                        1L,
+                        cart,
+                        product,
+                        null,
+                        10
+                )
+        );
 
         assertEquals("ProductSkuService cannot be null", exception.getMessage());
 
@@ -112,7 +133,12 @@ class CartItemFactoryTest {
         // Test with zero quantity, expecting IllegalArgumentException
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> CartItemFactory.createCartItem(1L, cart, product, productSku, 0));
+                () -> CartItemFactory.createCartItem(
+                        1L,
+                        cart,
+                        product,
+                        productSku,
+                        0));
 
         assertEquals("Quantity must be greater than zero", exception.getMessage());
 
@@ -125,7 +151,14 @@ class CartItemFactoryTest {
         // Test with null Cart and Product, expecting IllegalArgumentException
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> CartItemFactory.createCartItem(1L, null, null, productSku, 10));
+                () -> CartItemFactory.createCartItem(
+                        1L,
+                        null,
+                        null,
+                        productSku,
+                        10
+                )
+        );
 
         assertEquals("Cart and Product cannot be null", exception.getMessage());
 
@@ -138,7 +171,14 @@ class CartItemFactoryTest {
         // Test with all null values and invalid quantity, expecting IllegalArgumentException
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> CartItemFactory.createCartItem(1L, null, null, null, 0));
+                () -> CartItemFactory.createCartItem(
+                        1L,
+                        null,
+                        null,
+                        null,
+                        0
+                )
+        );
 
         assertEquals("Cart, Product, ProductSkuService cannot be null and Quantity must be greater than zero", exception.getMessage());
 

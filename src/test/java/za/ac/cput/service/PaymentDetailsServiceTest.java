@@ -51,8 +51,7 @@ class PaymentDetailsServiceTest {
         );
         System.out.println("Order Details: " + orderDetails);
         paymentDetails = PaymentDetailsFactory.createPaymentDetails(
-                null, // ID will be auto-generated
-                orderDetails,
+                null,
                 1000.00,
                 "PayPal",
                 "Paid",
@@ -72,7 +71,6 @@ class PaymentDetailsServiceTest {
     void create() {
         PaymentDetails newPaymentDetails = PaymentDetailsFactory.createPaymentDetails(
                 null,
-                orderDetails,
                 1500.00,
                 "Credit Card",
                 "Pending",
