@@ -1,5 +1,6 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,7 +27,9 @@ public class WishlistItem {
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonIncludeProperties({"id", "name", "description", "summary", "cover"})
     private Product product;
+
     @CreationTimestamp
     private LocalDateTime dateAdded;
 

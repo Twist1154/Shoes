@@ -29,21 +29,6 @@ class ProductServiceTest {
 
     @BeforeEach
     void setUp() {
-        product = productService.read(1L);
-        // Create Category and SubCategory
-        Category category = CategoryFactory.createCategory(
-                null,
-                "Sneakers"
-        );
-        category = categoryService.create(category);
-
-        SubCategory subCategory = SubCategoryFactory.createSubCategory(
-                null, // ID should be generated
-                category,
-                product
-
-        );
-        subCategory = subCategoryService.create(subCategory);
 
         // Set up the Product
         ImageUrls imageUrls = ImageUrlsFactory.createImageUrls(
@@ -60,25 +45,17 @@ class ProductServiceTest {
                 "Nike AirForce 1",
                 "https://african-arts-and-crafts-bucket.s3.eu-north-1.amazonaws.com/NIKE%2BAIR%2BFORCE%2B1%2B'07%2BNN+(2).png",
                 imageUrls,
-                List.of(subCategory),
                 LocalDateTime.now()
         );
     }
 
-    @AfterEach
-    void tearDown() {
-        // Check if the product exists before deleting to avoid exceptions
-        /*if (product != null && product.getId() != null) {
-            productService.delete(product.getId());
-        }*/
-    }
 
     @Test
     @Order(1)
     void create() {
         Product createdProduct = productService.create(product);
         assertNotNull(createdProduct);
-        assertNotNull(createdProduct.getId()); // Ensure ID was generated
+        assertNotNull(createdProduct.getId());
         assertEquals(product.getName(), createdProduct.getName());
     }
 

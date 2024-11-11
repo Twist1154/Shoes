@@ -32,11 +32,13 @@ public class SubCategoryService implements ISubCategory {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public SubCategory read(Long id) {
         return subCategoryRepository.findById(id).orElse(null);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public SubCategory update(SubCategory subCategory) {
         SubCategory existingSubCategory = subCategoryRepository.findById(subCategory.getId()).orElse(null);
         if (existingSubCategory != null) {
@@ -51,7 +53,7 @@ public class SubCategoryService implements ISubCategory {
             return null;
         }
     }
-
+@Transactional(readOnly = false)
     public boolean delete(Long id) {
         subCategoryRepository.deleteById(id);
 
@@ -63,11 +65,13 @@ public class SubCategoryService implements ISubCategory {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<SubCategory> findAll() {
         return subCategoryRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public SubCategory findById(Long id) {
         return subCategoryRepository.findById(id).orElse(null);
     }

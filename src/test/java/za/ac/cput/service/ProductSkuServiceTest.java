@@ -9,7 +9,6 @@ import za.ac.cput.domain.ProductAttribute;
 import za.ac.cput.domain.ProductSku;
 import za.ac.cput.factory.ProductSkuFactory;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,14 +31,13 @@ class ProductSkuServiceTest {
 
     @BeforeEach
     void setUp() {
-        Product product = new Product();
+        // Load existing product and attributes from DB (make sure these IDs exist in your test data)
+        Product product = productService.read(1L);
+        ProductAttribute size = productAttributeService.read(1L);
+        ProductAttribute color = productAttributeService.read(2L);
+        ProductAttribute brand = productAttributeService.read(3L);
 
-        // Set up Product attributes (ensure these exist in the DB)
-        ProductAttribute size = productAttributeService.read(6L); // Replace with actual ID
-        ProductAttribute color = productAttributeService.read(7L);
-        ProductAttribute brand = productAttributeService.read(8L);
-
-        // Generate a unique SKU for each test run
+        // Generate a unique SKU
         String uniqueSku = "SKU-" + System.currentTimeMillis();
 
         // Create Product SKU
@@ -54,10 +52,9 @@ class ProductSkuServiceTest {
                 10
         );
 
-        productSku = productSkuService.create(productSku); // Save the SKU
+        // Save the Product SKU
+        productSku = productSkuService.create(productSku);
     }
-
-
 
     @AfterEach
     void tearDown() {
@@ -69,31 +66,32 @@ class ProductSkuServiceTest {
     @Test
     @Order(1)
     void create() {
-        assertNotNull(productSku);
-        assertNotNull(productSku.getId());
+        assertNotNull(productSku, "Product SKU should not be null after creation");
+        assertNotNull(productSku.getId(), "Product SKU ID should be generated");
         System.out.println("Created: " + productSku);
     }
 
     @Test
     @Order(2)
     void read() {
-        ProductSku readSku = productSkuService.read(3L);
-        assertNotNull(readSku);
-        assertEquals(2, readSku.getId());
+        ProductSku productSku1 = productSkuService.create(productSku);
+        ProductSku readSku = productSkuService.read(productSku1.getId());
+        assertNotNull(readSku, "Read SKU should not be null");
+        assertEquals(productSku1.getId(), readSku.getId(), "Read SKU ID should match created SKU ID");
         System.out.println("Read: " + readSku);
     }
 
     @Test
     @Order(3)
     void update() {
-        // Update some attributes
         ProductSku updatedSku = new ProductSku.Builder()
                 .copy(productSku)
                 .setPrice(120.0)
                 .build();
         updatedSku = productSkuService.update(updatedSku);
-        assertNotNull(updatedSku);
-        assertEquals(120.0, updatedSku.getPrice());
+
+        assertNotNull(updatedSku, "Updated SKU should not be null");
+        assertEquals(120.0, updatedSku.getPrice(), "Updated SKU price should be 120.0");
         System.out.println("Updated: " + updatedSku);
     }
 
@@ -101,8 +99,8 @@ class ProductSkuServiceTest {
     @Order(4)
     void findAll() {
         List<ProductSku> skus = productSkuService.findAll();
-        assertNotNull(skus);
-        assertTrue(skus.size() > 0);
+        assertNotNull(skus, "Find all SKUs should not return null");
+        assertFalse(skus.isEmpty(), "Find all SKUs should return at least one SKU");
         System.out.println("Found all SKUs: " + skus);
     }
 
@@ -111,7 +109,7 @@ class ProductSkuServiceTest {
     void delete() {
         productSkuService.delete(productSku.getId());
         ProductSku deletedSku = productSkuService.read(productSku.getId());
-        assertNull(deletedSku);  // The SKU should be deleted and return null
+        assertNull(deletedSku, "Deleted SKU should be null when read");
         System.out.println("Deleted SKU with ID: " + productSku.getId());
     }
 }

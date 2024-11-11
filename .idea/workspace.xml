@@ -4,18 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef58de28-6174-419a-8626-436ead673cf8" name="Changes" comment="fixing factory classes">
+    <list default="true" id="ef58de28-6174-419a-8626-436ead673cf8" name="Changes" comment="all factory classes test passed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/factory/CategoryFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/factory/CategoryFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/factory/PaymentDetailsFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/factory/PaymentDetailsFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/controller/PaymentDetailsControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/controller/PaymentDetailsControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/CartItemFactoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/CartItemFactoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/CategoryFactoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/CategoryFactoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/OrderDetailsFactoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/OrderDetailsFactoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/SubCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/SubCategory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/Wishlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/Wishlist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/WishlistItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/domain/WishlistItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/factory/ProductFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/factory/ProductFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/repository/WishlistItemRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/repository/WishlistItemRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/SubCategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/SubCategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/WishlistItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/WishlistItemService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/WishlistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/WishlistService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/controller/ProductControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/controller/ProductControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/OrderItemFactoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/OrderItemFactoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/PaymentDetailsFactoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/PaymentDetailsFactoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/OrderDetailsServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/OrderDetailsServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/PaymentDetailsServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/PaymentDetailsServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/ProductFactoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/ProductFactoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/ProductSkuFactoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/ProductSkuFactoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/WishlistFactoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/factory/WishlistFactoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/ProductAttributeServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/ProductAttributeServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/ProductServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/ProductServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/ProductSkuServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/ProductSkuServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/ReviewServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/ReviewServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/WishlistItemServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/WishlistItemServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/WishlistServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/za/ac/cput/service/WishlistServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,6 +201,8 @@
     "JUnit.WishListItemServiceTest.executor": "Run",
     "JUnit.WishlistControllerTest.createWishlist.executor": "Run",
     "JUnit.WishlistControllerTest.executor": "Run",
+    "JUnit.WishlistItemServiceTest.delete.executor": "Run",
+    "JUnit.WishlistItemServiceTest.executor": "Run",
     "JUnit.WishlistServiceTest.executor": "Run",
     "JUnit.WishlistServiceTest.testFindAllWishlists.executor": "Run",
     "JUnit.cput in Shoe_Store.executor": "Run",
@@ -258,28 +271,8 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CategoryFactoryTest.testCreateCategory_WithNullId_ThrowsIllegalArgumentException">
-    <configuration name="generated-requests | #16" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="16" requestIdentifier="#16" runType="Run single request">
-      <method v="2" />
-    </configuration>
-    <configuration name="CategoryFactoryTest.testCreateCategory_WithNullId_ThrowsIllegalArgumentException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Shoe_Store" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="za.ac.cput.factory.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="za.ac.cput.factory" />
-      <option name="MAIN_CLASS_NAME" value="za.ac.cput.factory.CategoryFactoryTest" />
-      <option name="METHOD_NAME" value="testCreateCategory_WithNullId_ThrowsIllegalArgumentException" />
-      <option name="TEST_OBJECT" value="method" />
-      <dir value="$PROJECT_DIR$/src/test/java/za/ac/cput/factory" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProductServiceTest.create" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.WishlistItemServiceTest.delete">
+    <configuration name="ReviewServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Shoe_Store" />
       <extension name="coverage">
         <pattern>
@@ -288,41 +281,81 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="za.ac.cput.service" />
-      <option name="MAIN_CLASS_NAME" value="za.ac.cput.service.ProductServiceTest" />
-      <option name="METHOD_NAME" value="create" />
+      <option name="MAIN_CLASS_NAME" value="za.ac.cput.service.ReviewServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WishlistItemServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Shoe_Store" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="za.ac.cput.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="za.ac.cput.service" />
+      <option name="MAIN_CLASS_NAME" value="za.ac.cput.service.WishlistItemServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WishlistItemServiceTest.delete" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Shoe_Store" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="za.ac.cput.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="za.ac.cput.service" />
+      <option name="MAIN_CLASS_NAME" value="za.ac.cput.service.WishlistItemServiceTest" />
+      <option name="METHOD_NAME" value="delete" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="factory in Shoe_Store" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="WishlistServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Shoe_Store" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/src/test/java/za/ac/cput/factory" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="za.ac.cput.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="za.ac.cput.service" />
+      <option name="MAIN_CLASS_NAME" value="za.ac.cput.service.WishlistServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+    <configuration name="WishlistServiceTest.testFindAllWishlists" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Shoe_Store" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="za.ac.cput.Application" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="za.ac.cput.*" />
+          <option name="PATTERN" value="za.ac.cput.service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="za.ac.cput.service" />
+      <option name="MAIN_CLASS_NAME" value="za.ac.cput.service.WishlistServiceTest" />
+      <option name="METHOD_NAME" value="testFindAllWishlists" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CategoryFactoryTest.testCreateCategory_WithNullId_ThrowsIllegalArgumentException" />
-        <item itemvalue="JUnit.factory in Shoe_Store" />
-        <item itemvalue="Spring Boot.Application" />
-        <item itemvalue="HTTP Request.generated-requests | #16" />
-        <item itemvalue="JUnit.ProductServiceTest.create" />
+        <item itemvalue="JUnit.WishlistItemServiceTest.delete" />
+        <item itemvalue="JUnit.WishlistItemServiceTest" />
+        <item itemvalue="JUnit.WishlistServiceTest" />
+        <item itemvalue="JUnit.WishlistServiceTest.testFindAllWishlists" />
+        <item itemvalue="JUnit.ReviewServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -514,7 +547,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731313438554</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="all factory classes test passed">
+      <option name="closed" value="true" />
+      <created>1731323838295</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1731323838295</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -547,7 +588,8 @@
     <MESSAGE value="security works perfectly" />
     <MESSAGE value="domain models need to be fixed" />
     <MESSAGE value="fixing factory classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing factory classes" />
+    <MESSAGE value="all factory classes test passed" />
+    <option name="LAST_COMMIT_MESSAGE" value="all factory classes test passed" />
   </component>
   <component name="WfRunsListSearchHistory">{
   &quot;history&quot;: [
@@ -577,6 +619,11 @@
         <breakpoint enabled="true" log-message="true" log-stack="true" suspend="THREAD" type="java-exception" />
       </default-breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="package za.ac.cput.service;&#10;&#10;import org.junit.jupiter.api.*;&#10;import org.springframework.beans.factory.annotation.Autowired;&#10;import org.springframework.boot.test.context.SpringBootTest;&#10;import za.ac.cput.domain.Product;&#10;import za.ac.cput.domain.WishlistItem;&#10;import za.ac.cput.domain.Wishlist;&#10;import za.ac.cput.repository.WishlistItemRepository;&#10;&#10;import java.time.LocalDateTime;&#10;import java.util.List;&#10;&#10;import static org.junit.jupiter.api.Assertions.*;&#10;&#10;@SpringBootTest&#10;@TestMethodOrder(MethodOrderer.OrderAnnotation.class)&#10;class WishlistItemServiceTest {&#10;&#10;    @Autowired&#10;    private WishlistItemService service;&#10;&#10;    @Autowired&#10;    private WishlistItemRepository repository;&#10;&#10;    private Product product;&#10;    private Wishlist wishlist;&#10;    private List&lt;WishlistItem&gt; wishlistItems;&#10;&#10;    @Autowired&#10;    private ProductService productService;&#10;&#10;    @Autowired&#10;    private WishlistService wishlistService;&#10;&#10;    @BeforeEach&#10;    void setUp() {&#10;        product = productService.read(1L);&#10;        wishlist = wishlistService.read(2L);&#10;&#10;        // Create WishListItems&#10;        WishlistItem item1 = new WishlistItem.Builder()&#10;                .setProduct(product)&#10;                .setDateAdded(LocalDateTime.now())&#10;                .setWishlist(wishlist)&#10;                .build();&#10;&#10;        WishlistItem item2 = new WishlistItem.Builder()&#10;                .setProduct(product)&#10;                .setDateAdded(LocalDateTime.now())&#10;                .setWishlist(wishlist)&#10;                .build();&#10;&#10;        wishlistItems = List.of(item1, item2);&#10;&#10;        wishlist = new Wishlist.Builder()&#10;                .copy(wishlist)&#10;                .setWishlistItems(wishlistItems)&#10;                .build();&#10;    }&#10;&#10;    @AfterEach&#10;    void tearDown() {&#10;        repository.deleteById(wishlistItems.get(0).getId());&#10;    }&#10;&#10;    @Test&#10;    @Order(1)&#10;    void create() {&#10;        // Test creating a new wishlist item&#10;        WishlistItem createdItem = service.create(wishlistItems.get(0));&#10;        assertNotNull(createdItem);&#10;        assertEquals(wishlistItems.get(0).getProduct().getId(), createdItem.getProduct().getId());&#10;        assertEquals(wishlistItems.get(0).getWishlist().getId(), createdItem.getWishlist().getId());&#10;        assertEquals(wishlistItems.get(0).getDateAdded(), createdItem.getDateAdded());&#10;    }&#10;&#10;    @Test&#10;    @Order(2)&#10;    void read() {&#10;        // Test reading a wishlist item by ID&#10;        WishlistItem createdItem = service.create(wishlistItems.get(0));&#10;        WishlistItem readItem = service.read(createdItem.getId());&#10;        assertNotNull(readItem);&#10;        assertEquals(createdItem.getId(), readItem.getId());&#10;    }&#10;&#10;    @Test&#10;    @Order(3)&#10;    void update() {&#10;        // Test updating a wishlist item&#10;        WishlistItem createdItem = service.create(wishlistItems.get(0));&#10;        WishlistItem updatedItem = new WishlistItem.Builder()&#10;                .copy(createdItem)&#10;                .setDateAdded(LocalDateTime.now().plusDays(1)) // Update the date&#10;                .build();&#10;&#10;        WishlistItem result = service.update(updatedItem);&#10;        assertNotNull(result);&#10;        assertEquals(updatedItem.getDateAdded(), result.getDateAdded());&#10;    }&#10;&#10;    @Test&#10;    @Order(4)&#10;    void findAll() {&#10;        // Test finding all wishlist items&#10;        service.create(wishlistItems.get(0));&#10;        service.create(wishlistItems.get(1));&#10;        List&lt;WishlistItem&gt; items = service.findAll();&#10;        assertFalse(items.isEmpty());&#10;    }&#10;&#10;    @Test&#10;    @Order(5)&#10;    void delete() {&#10;        WishlistItem item = new WishlistItem.Builder()&#10;                .setProduct(product)&#10;                .setDateAdded(LocalDateTime.now())&#10;                .setWishlist(wishlist)&#10;                .build();&#10;         service.create(item);&#10;        System.out.println(&quot;Created review ID: &quot; + item.getId());&#10;&#10;        boolean deleted = service.delete(item.getId());&#10;&#10;        assertFalse(deleted);&#10;        assertNull(service.read(item.getId()));&#10;&#10;        System.out.println(&quot;Deleted review ID: &quot; + item.getId());&#10;&#10;    }&#10;}&#10;" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,5 +1,6 @@
 package za.ac.cput.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,8 +36,8 @@ class WishlistItemServiceTest {
 
     @BeforeEach
     void setUp() {
-        product = productService.read(16L);  // Fetching a product from the database
-        wishlist = wishlistService.read(7L); // Fetching a wishlist from the database
+        product = productService.read(1L);
+        wishlist = wishlistService.read(2L);
 
         // Create WishListItems
         WishlistItem item1 = new WishlistItem.Builder()
@@ -61,7 +62,7 @@ class WishlistItemServiceTest {
 
     @AfterEach
     void tearDown() {
-        repository.deleteAll(); // Optional, to clean up after each test
+        //repository.deleteById(wishlistItems.get(0).getId());
     }
 
     @Test
@@ -113,11 +114,24 @@ class WishlistItemServiceTest {
     @Test
     @Order(5)
     void delete() {
-        // Test deleting a wishlist item by ID
-        WishlistItem createdItem = service.create(wishlistItems.get(0));
-        service.delete(createdItem.getId());
-        WishlistItem deletedItem = service.read(createdItem.getId());
-        assertNull(deletedItem); // The item should be deleted, so reading should return null
+        // Create a new WishlistItem to test deletion
+        WishlistItem item = new WishlistItem.Builder()
+                .setProduct(product)
+                .setDateAdded(LocalDateTime.now())
+                .setWishlist(wishlist)
+                .build();
 
+        // Save the item
+        service.create(item);
+        System.out.println("Created review ID: " + item.getId());
+
+        // Delete the item and assert successful deletion
+        boolean deleted = service.delete(item.getId());
+        assertTrue(deleted, "Item should be deleted");
+
+        // Check that the item no longer exists
+        assertThrows(EntityNotFoundException.class, () -> service.read(item.getId()));
+
+        System.out.println("Deleted review ID: " + item.getId());
     }
 }
