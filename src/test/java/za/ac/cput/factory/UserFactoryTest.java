@@ -22,8 +22,6 @@ class UserFactoryTest {
     void setup() {
          roles = new HashSet<>(Set.of(Role.USER, Role.ADMIN));
 
-
-
         // Set up a sample User object using the factory method
         user = UserFactory.createUser(
                 null,

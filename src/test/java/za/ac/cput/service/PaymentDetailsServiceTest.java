@@ -47,9 +47,8 @@ class PaymentDetailsServiceTest {
                 1L,
                 user,
                 paymentDetails,
-                100.0,
-                LocalDateTime.parse("2024-06-12T00:00:00"),
-                LocalDateTime.parse("2024-06-12T00:00:00"));
+                100.0
+        );
         System.out.println("Order Details: " + orderDetails);
         paymentDetails = PaymentDetailsFactory.createPaymentDetails(
                 null, // ID will be auto-generated

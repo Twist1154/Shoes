@@ -87,9 +87,7 @@ class OrderItemServiceTest {
                 1L,
                 user,
                 paymentDetails,
-                100.0,
-                LocalDateTime.now(),
-                LocalDateTime.parse("2024-06-12T00:00:00")
+                100.0
         );
 
         // Set up OrderItem
