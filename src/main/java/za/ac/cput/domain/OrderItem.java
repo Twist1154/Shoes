@@ -57,7 +57,7 @@ public class OrderItem {
     public String toString() {
         return "\n OrderItem{" +
                 "id=" + id +
-                ", orderDetails=" + orderDetails +  (orderDetails != null ? orderDetails.getTotal() : 0) +
+                //", orderDetails=" + orderDetails +  (orderDetails != null ? orderDetails.getTotal() : 0) +
                 ", product=" + product + (product != null ? product.getName() : 0) +
                 ", productSku=" + productSku + (productSku != null ? productSku.getSku() : 0) +
                 ", quantity=" + quantity +

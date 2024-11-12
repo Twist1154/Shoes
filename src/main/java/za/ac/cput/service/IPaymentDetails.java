@@ -58,11 +58,4 @@ public interface IPaymentDetails extends IService<PaymentDetails, Long> {
      */
     long countByStatus(String status);
 
-    /**
-     * Deletes all {@link PaymentDetails} associated with a specific order ID.
-     *
-     * @param orderDetailsId the ID of the order details
-     * @return the number of deleted {@link PaymentDetails} entries
-     */
-    int deleteByOrderDetailsId(Long orderDetailsId);
 }

@@ -42,8 +42,7 @@ class PaymentDetailsControllerTest {
                 null, // ID will be auto-generated
                 1000.00, // Amount
                 "PayPal", // Provider
-                "Paid", // Status
-                LocalDateTime.now()
+                "Paid"
         );
         // Post initial payment details to create it in the database
         restTemplate.postForEntity(baseUrl, paymentDetails, PaymentDetails.class);
@@ -56,8 +55,7 @@ class PaymentDetailsControllerTest {
                 null,
                 1500.00,
                 "Credit Card",
-                "Pending",
-                LocalDateTime.now()
+                "Pending"
         );
         ResponseEntity<PaymentDetails> response = restTemplate.postForEntity(baseUrl, newPaymentDetails, PaymentDetails.class);
         assertNotNull(response.getBody());

@@ -1,97 +1,47 @@
 package za.ac.cput.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import za.ac.cput.domain.*;
-import za.ac.cput.enums.ProductAttributeType;
-import za.ac.cput.factory.*;
+import za.ac.cput.factory.OrderItemFactory;
 import za.ac.cput.repository.OrderItemRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class OrderItemServiceTest {
+
     @Autowired
     private OrderItemRepository itemRepository;
     @Autowired
     private OrderItemService orderItemService;
 
     private OrderItem orderItem;
-    private za.ac.cput.domain.ProductSku productSku;
-    private User user;
-    private PaymentDetails paymentDetails;
 
-    @Autowired
-    private PaymentDetailsService paymentDetailsService;
+    private ProductSku productSku;
+
     @Autowired
     private ProductService productService;
     @Autowired
     private ProductSkuService productSkuService;
     @Autowired
-    private UserService userService;
-    @Autowired
-    private ProductAttributeService productAttributeService;
+    private OrderDetailsService orderDetailsService;
 
     @BeforeEach
     void setUp() {
-        // Fetch existing user and payment details
-        user = userService.read(2L);
-        paymentDetails = paymentDetailsService.read(35L);
-        Product product = productService.read(16L);
-
-        // Set up Product attributes and save them
-        ProductAttribute sizeAttribute = ProductAttributeFactory.createProductAttribute(
-                null,
-                ProductAttributeType.SIZE,
-                "10"
-        );
-        sizeAttribute = productAttributeService.create(sizeAttribute); // Ensure it's saved
-
-        ProductAttribute colorAttribute = ProductAttributeFactory.createProductAttribute(
-                null,
-                ProductAttributeType.COLOR,
-                "Green"
-        );
-        colorAttribute = productAttributeService.create(colorAttribute); // Ensure it's saved
-
-        ProductAttribute brandAttribute = ProductAttributeFactory.createProductAttribute(
-                null,
-                ProductAttributeType.BRAND,
-                "Nike"
-        );
-        brandAttribute = productAttributeService.create(brandAttribute); // Ensure it's saved
-
-        // Generate a unique SKU for each test run
-        String uniqueSku = "SKU-" + System.currentTimeMillis();
-
-        // Create Product SKU
-        productSku = ProductSkuFactory.createProductSku(
-                null,
-                product,
-                sizeAttribute,
-                colorAttribute,
-                brandAttribute,
-                uniqueSku,
-                100.0,
-                10
-        );
-        productSku = productSkuService.create(productSku); // Persist SKU
-
-        // Set up OrderDetails
-        OrderDetails orderDetails = OrderDetailsFactory.createOrderDetails(
-                1L,
-                user,
-                paymentDetails,
-                100.0
-        );
+        Product product = productService.read(1L);
+        productSku = productSkuService.read(1L);
+        OrderDetails orderDetails = orderDetailsService.read(1L);
 
         // Set up OrderItem
-        orderItem = OrderItemFactory.createOrderItem(
+        OrderItem orderItem1 = OrderItemFactory.createOrderItem(
                 1L,
                 orderDetails,
                 product,
@@ -99,31 +49,36 @@ class OrderItemServiceTest {
                 2
         );
 
-        // Persist OrderItem
-        orderItem = orderItemService.create(orderItem);
+        orderItem = orderItemService.create(orderItem1);
     }
 
     @AfterEach
     void tearDown() {
-        // Clear repository after each test if needed
-        /*itemRepository.deleteAll();*/
+        itemRepository.deleteById(orderItem.getId());
     }
 
     @Test
     @Order(1)
     void create() {
         OrderItem createdOrderItem = orderItemService.create(orderItem);
-        Assertions.assertNotNull(createdOrderItem);
-        Assertions.assertEquals(orderItem.getId(), createdOrderItem.getId());
+
+        // Print out created order item details
+        System.out.println("Created OrderItem: " + createdOrderItem);
+
+        assertNotNull(createdOrderItem);
+        assertEquals(orderItem.getId(), createdOrderItem.getId());
     }
 
     @Test
     @Order(2)
     void read() {
         OrderItem readOrderItem = orderItemService.read(orderItem.getId());
-        System.out.println(readOrderItem);
-        Assertions.assertNotNull(readOrderItem);
-        Assertions.assertEquals(orderItem.getId(), readOrderItem.getId());
+
+        // Print out read order item details
+        System.out.println("Read OrderItem: " + readOrderItem);
+
+        assertNotNull(readOrderItem);
+        assertEquals(orderItem.getId(), readOrderItem.getId());
     }
 
     @Test
@@ -139,22 +94,34 @@ class OrderItemServiceTest {
         orderItemService.update(updatedOrderItem);
 
         OrderItem resultOrderItem = orderItemService.read(updatedOrderItem.getId());
-        Assertions.assertNotNull(resultOrderItem);
-        Assertions.assertEquals(3, resultOrderItem.getQuantity()); // Assert quantity updated
+
+        // Print out updated order item details
+        System.out.println("Updated OrderItem: " + resultOrderItem);
+
+        assertNotNull(resultOrderItem);
+        assertEquals(3, resultOrderItem.getQuantity());
     }
 
     @Test
     @Order(4)
     void delete() {
-        orderItemService.delete(orderItem.getId());
-        OrderItem deletedOrderItem = orderItemService.read(orderItem.getId());
-        Assertions.assertNull(deletedOrderItem); // Check that it is deleted
+        OrderItem orderItemD = orderItemService.create(orderItem);
+        boolean deleted = orderItemService.delete(orderItemD.getId());
+
+        // Print result of delete action
+        System.out.println("OrderItem deleted: " + deleted);
+
+        assertTrue(deleted);
     }
 
     @Test
     @Order(5)
     void findAll() {
         List<OrderItem> orderItems = orderItemService.findAll();
-        Assertions.assertFalse(orderItems.isEmpty());
+
+        // Print all order items
+        System.out.println("All OrderItems: " + orderItems);
+
+        assertFalse(orderItems.isEmpty());
     }
 }

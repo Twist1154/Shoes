@@ -1,7 +1,9 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -11,45 +13,38 @@ import java.util.Objects;
  * This class is mapped to the "payment_details" table in the database.
  *
  * Stores only the ID of the associated OrderDetails entity.
- *
- * @author Rethabile Ntsekhe
- * @date 25-Aug-24
  */
 @Entity
 @Getter
 @Table(name = "payment_details")
 public class PaymentDetails {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_details_id")
-    private OrderDetails orderDetails;
-
     private Double amount;
     private String provider;
     private String status;
+    @OneToOne(mappedBy = "paymentDetails", cascade = CascadeType.ALL, orphanRemoval = true)
+    private OrderDetails orderDetails;
+
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     public PaymentDetails() {}
 
     private PaymentDetails(Builder builder) {
         this.id = builder.id;
-        this.orderDetails = builder.orderDetails;
         this.amount = builder.amount;
         this.provider = builder.provider;
         this.status = builder.status;
-        this.createdAt = builder.createdAt;
     }
 
     @Override
     public String toString() {
         return "\n PaymentDetails{" +
                 "id=" + id +
-                ", orderDetails=" + orderDetails +
                 ", amount=" + amount +
                 ", provider='" + provider + '\'' +
                 ", status='" + status + '\'' +
@@ -63,7 +58,6 @@ public class PaymentDetails {
         if (o == null || getClass() != o.getClass()) return false;
         PaymentDetails that = (PaymentDetails) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(orderDetails, that.orderDetails) &&
                 Objects.equals(amount, that.amount) &&
                 Objects.equals(provider, that.provider) &&
                 Objects.equals(status, that.status) &&
@@ -72,12 +66,11 @@ public class PaymentDetails {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, orderDetails, amount, provider, status, createdAt);
+        return Objects.hash(id, amount, provider, status, createdAt);
     }
 
     public static class Builder {
         private Long id;
-        private OrderDetails orderDetails;
         private Double amount;
         private String provider;
         private String status;
@@ -85,11 +78,6 @@ public class PaymentDetails {
 
         public Builder setId(Long id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder setOrderDetails(OrderDetails orderDetails) {
-            this.orderDetails = orderDetails;
             return this;
         }
 
@@ -115,11 +103,9 @@ public class PaymentDetails {
 
         public Builder copy(PaymentDetails paymentDetails) {
             this.id = paymentDetails.getId();
-            this.orderDetails = paymentDetails.getOrderDetails();
             this.amount = paymentDetails.getAmount();
             this.provider = paymentDetails.getProvider();
             this.status = paymentDetails.getStatus();
-            this.createdAt = paymentDetails.getCreatedAt();
             return this;
         }
 

@@ -135,17 +135,13 @@ class ProductAttributeServiceTest {
     @Test
     @Order(5)
     void delete() {
-        service.delete(size.getId());
-        service.delete(color.getId());
-        service.delete(brand.getId());
+        boolean deletedSize = service.delete(size.getId());
+        boolean deletedColor = service.delete(color.getId());
+        boolean deletedBrand = service.delete(brand.getId());
 
-        ProductAttribute deletedSize = service.read(size.getId());
-        ProductAttribute deletedColor = service.read(color.getId());
-        ProductAttribute deletedBrand = service.read(brand.getId());
-
-        assertNull(deletedSize);
-        assertNull(deletedColor);
-        assertNull(deletedBrand);
+        assertTrue(deletedSize && service.read(size.getId()) == null);
+        assertTrue(deletedColor && service.read(color.getId()) == null);
+        assertTrue(deletedBrand && service.read(brand.getId()) == null);
 
         System.out.println("Deleted attribute with ID: " + size.getId());
         System.out.println("Deleted attribute with ID: " + color.getId());

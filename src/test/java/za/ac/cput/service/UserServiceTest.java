@@ -38,19 +38,19 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        Optional<User> existingUser = userService.findByEmail("rethabile1154@gmail.com");
+        Optional<User> existingUser = userService.findByEmail("rethabile1154@gmail.co.za");
         if (existingUser.isEmpty()) {
             user = new User.Builder()
                     .setId(null)
                     .setAvatar("avatar.jpg")
-                    .setFirstName("Rethabile")
-                    .setLastName("Ntsekhe")
-                    .setEmail("rethabile1154@gmail.com")
-                    .setUsername("USER1")
+                    .setFirstName("Ntsekhe")
+                    .setLastName("Rethabile")
+                    .setEmail("rethabile1154@gmail.co.za")
+                    .setUsername("USER12")
                     .setPassword(passwordEncoder.encode("password"))
                     .setRole(Set.of(Role.USER, Role.ADMIN))
-                    .setBirthDate(LocalDate.of(1990, 1, 1))
-                    .setPhoneNumber("1234567890")
+                    .setBirthDate(LocalDate.of(1991, 1, 1))
+                    .setPhoneNumber("123456789")
                     .build();
             userService.create(user);
         } else {
@@ -58,19 +58,29 @@ class UserServiceTest {
         }
     }
 
+    @AfterEach
+    void tearDown() {
+
+        if (userRepository.findById(user.getId()).isPresent() && user.getId() != 2) {
+            userService.delete(user.getId());
+        }
+    }
+
     @Test
     @Order(1)
     void testCreateUser() {
         User createdUser = userService.create(user);
+        System.out.println("Created User: " + createdUser);
         assertNotNull(createdUser);
-        assertEquals("Rethabile", createdUser.getFirstName());
-        assertTrue(userRepository.findByEmail("rethabile1154@gmail.com").isPresent());
+        assertEquals("Ntsekhe", createdUser.getFirstName());
+        assertTrue(userRepository.findByEmail("rethabile1154@gmail.co.za").isPresent());
     }
 
     @Test
     @Order(2)
     void testReadUser() {
-        User foundUser = userService.read(user.getId());
+        User foundUser = userService.read(2L);
+        System.out.println("Found User: " + foundUser);
         assertNotNull(foundUser);
         assertEquals("Rethabile", foundUser.getFirstName());
     }
@@ -83,6 +93,7 @@ class UserServiceTest {
                 .setLastName("UpdatedLastName")
                 .build();
         User updatedUser = userService.update(user);
+        System.out.println("Updated User: " + updatedUser);
         assertNotNull(updatedUser);
         assertEquals("UpdatedLastName", updatedUser.getLastName());
     }
@@ -90,8 +101,10 @@ class UserServiceTest {
     @Test
     @Order(4)
     void testDeleteUser() {
-        userService.delete(user.getId());
-        assertFalse(userRepository.findById(user.getId()).isPresent());
+        User deletedUser = userService.create(user);
+        boolean delete = userService.delete(deletedUser.getId());
+        assertFalse(userRepository.findById(deletedUser.getId()).isPresent());
+        assertTrue(delete);
     }
 
     @Test
@@ -105,10 +118,10 @@ class UserServiceTest {
     @Test
     @Order(6)
     void testLoadUserByUsername() {
-        UserDetails userDetails = userService.loadUserByUsername("rethabile1154@gmail.com");
+        UserDetails userDetails = userService.loadUserByUsername("rethabile1154@gmail.co.za");
         System.out.println("Found By Username: " + userDetails);
         assertNotNull(userDetails);
-        assertEquals("rethabile1154@gmail.com", userDetails.getUsername());
+        assertEquals("rethabile1154@gmail.co.za", userDetails.getUsername());
     }
 
     @Test
@@ -121,34 +134,34 @@ class UserServiceTest {
     @Test
     @Order(8)
     void testFindByEmail() {
-        Optional<User> foundUser = userService.findByEmail("rethabile1154@gmail.com");
+        Optional<User> foundUser = userService.findByEmail("rethabile1154@gmail.co.za");
         System.out.println("Found By Email:\n" + foundUser);
         assertTrue(foundUser.isPresent());
-        assertEquals("rethabile1154@gmail.com", foundUser.get().getEmail());
+        assertEquals("rethabile1154@gmail.co.za", foundUser.get().getEmail());
     }
 
     @Test
     @Order(9)
     void testFindByFirstName() {
-        List<User> users = userService.findByFirstName("Rethabile");
+        List<User> users = userService.findByFirstName("Ntsekhe");
         System.out.println("Found By First Name: " + users);
         assertFalse(users.isEmpty());
-        assertEquals("Rethabile", users.get(0).getFirstName());
+        assertEquals("Ntsekhe", users.get(0).getFirstName());
     }
 
     @Test
     @Order(10)
     void testFindByLastName() {
-        List<User> users = userService.findByLastName("Ntsekhe");
+        List<User> users = userService.findByLastName("Rethabile");
         System.out.println("Found By Last Name: " + users);
         assertFalse(users.isEmpty());
-        assertEquals("Ntsekhe", users.get(0).getLastName());
+        assertEquals("Rethabile", users.get(0).getLastName());
     }
 
     @Test
     @Order(11)
     void testFindByBirthDate() {
-        List<User> users = userService.findByBirthDate(LocalDate.of(1990, 1, 1));
+        List<User> users = userService.findByBirthDate(LocalDate.of(1991, 1, 1));
         System.out.println("Found By Birthday: " + users);
         assertFalse(users.isEmpty());
         assertEquals(1, users.size());
@@ -157,10 +170,10 @@ class UserServiceTest {
     @Test
     @Order(12)
     void testFindByPhoneNumber() {
-        List<User> users = userService.findByPhoneNumber("1234567890");
+        List<User> users = userService.findByPhoneNumber("123456789");
         System.out.println("Found By Phone Number: " + users);
         assertFalse(users.isEmpty());
-        assertEquals("1234567890", users.get(0).getPhoneNumber());
+        assertEquals("123456789", users.get(0).getPhoneNumber());
     }
 
     @Test

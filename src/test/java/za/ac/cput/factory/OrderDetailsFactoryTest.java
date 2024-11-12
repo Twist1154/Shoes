@@ -44,8 +44,7 @@ class OrderDetailsFactoryTest {
                 1L,
                 100.0,
                 "PayPal",
-                "Success",
-                LocalDateTime.parse("2024-06-12T12:00:00")
+                "Success"
         );
 
         // Set up a sample OrderDetails object using the factory method

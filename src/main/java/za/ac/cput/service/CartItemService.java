@@ -23,11 +23,11 @@ import java.util.List;
 @Transactional
 public class CartItemService implements ICartItem {
 
-    private final CartItemRepository cartItemRepository;
+    private final CartItemRepository repository;
 
     @Autowired
-    public CartItemService(CartItemRepository cartItemRepository) {
-        this.cartItemRepository = cartItemRepository;
+    public CartItemService(CartItemRepository repository) {
+        this.repository = repository;
     }
 
     /**
@@ -38,7 +38,7 @@ public class CartItemService implements ICartItem {
      */
     @Override
     public CartItem create(CartItem cartItem) {
-        return cartItemRepository.save(cartItem);
+        return repository.save(cartItem);
     }
 
     /**
@@ -49,7 +49,7 @@ public class CartItemService implements ICartItem {
      */
     @Override
     public CartItem read(Long id) {
-        return cartItemRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     /**
@@ -61,7 +61,7 @@ public class CartItemService implements ICartItem {
      */
     @Override
     public CartItem update(CartItem cartItem) {
-        CartItem existingCartItem = cartItemRepository.findById(cartItem.getId()).orElse(null);
+        CartItem existingCartItem = repository.findById(cartItem.getId()).orElse(null);
         if (existingCartItem != null) {
             CartItem updatedCartItem = new CartItem.Builder()
                     .copy(existingCartItem)
@@ -70,7 +70,7 @@ public class CartItemService implements ICartItem {
                     .setProductSku(cartItem.getProductSku())
                     .setQuantity(cartItem.getQuantity())
                     .build();
-            return cartItemRepository.save(updatedCartItem);
+            return repository.save(updatedCartItem);
         } else {
             throw new IllegalArgumentException("Attempt to update a non-existent cart item with ID: " + cartItem.getId());
         }
@@ -84,13 +84,12 @@ public class CartItemService implements ICartItem {
      */
     @Override
     public boolean delete(Long id) {
-        cartItemRepository.deleteById(id); // Use deleteById (standard JpaRepository method)
-
-        // Check if the entity still exists after deletion
-        boolean exists = cartItemRepository.existsById(id);
-
-        // Return true if it no longer exists (successful deletion), otherwise return false
-        return !exists;
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        } else {
+            throw new IllegalArgumentException("Attempt to delete a non-existent cart item with ID: " + id);
+        }
     }
 
     /**
@@ -100,7 +99,7 @@ public class CartItemService implements ICartItem {
      */
     @Override
     public List<CartItem> findAll() {
-        return cartItemRepository.findAll();
+        return repository.findAll();
     }
 
     /**
@@ -111,7 +110,7 @@ public class CartItemService implements ICartItem {
      */
     @Override
     public List<CartItem> findByCartId(Long cartId) {
-        return cartItemRepository.findByCartId(cartId);
+        return repository.findByCartId(cartId);
     }
 
     /**
@@ -122,7 +121,7 @@ public class CartItemService implements ICartItem {
      */
     @Override
     public List<CartItem> findByProductId(Long productId) {
-        return cartItemRepository.findByProductId(productId);
+        return repository.findByProductId(productId);
     }
 
     /**
@@ -133,7 +132,7 @@ public class CartItemService implements ICartItem {
      */
     @Override
     public List<CartItem> findByProductSkuId(Long productSkuId) {
-        return cartItemRepository.findByProductSkuId(productSkuId);
+        return repository.findByProductSkuId(productSkuId);
     }
 
     /**
@@ -144,11 +143,11 @@ public class CartItemService implements ICartItem {
      */
     @Override
     public List<CartItem> findByQuantity(int quantity) {
-        return cartItemRepository.findByQuantity(quantity);
+        return repository.findByQuantity(quantity);
     }
 
     @Override
     public void deleteByCartId(Long cartId) {
-        cartItemRepository.deleteByCartId(cartId);
+        repository.deleteByCartId(cartId);
     }
 }

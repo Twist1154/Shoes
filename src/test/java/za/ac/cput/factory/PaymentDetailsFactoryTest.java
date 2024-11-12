@@ -45,8 +45,7 @@ class PaymentDetailsFactoryTest {
                 1L,
                 100.0,
                 "PayPal",
-                "Success",
-                LocalDateTime.parse("2024-06-12T12:00:00")
+                "Success"
         );
         // Set up a sample OrderDetails object
         orderDetails = OrderDetailsFactory.createOrderDetails(
@@ -74,8 +73,7 @@ class PaymentDetailsFactoryTest {
                         1L,
                         null,
                         "PayPal",
-                        "Success",
-                        LocalDateTime.parse("2024-06-12T12:00:00")
+                        "Success"
                 )
         );
 
@@ -91,8 +89,7 @@ class PaymentDetailsFactoryTest {
                         1L,
                         100.0,
                         null,
-                        "Success",
-                        LocalDateTime.parse("2024-06-12T12:00:00")
+                        "Success"
                 )
         );
 
@@ -108,8 +105,7 @@ class PaymentDetailsFactoryTest {
                         1L,
                         100.0,
                         "PayPal",
-                        null,
-                        LocalDateTime.parse("2024-06-12T12:00:00")
+                        null
                 )
         );
 

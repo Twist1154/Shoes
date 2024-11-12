@@ -32,31 +32,19 @@ class OrderDetailsServiceTest {
 
     private OrderDetails orderDetails;
     private User user;
-    private PaymentDetails testPaymentDetails;
+    private PaymentDetails paymentDetails;
 
     @BeforeEach
     void setUp() {
-        // Set up a user for order details (assuming a valid test user exists)
+
         user = userService.read(2L);
+        paymentDetails = paymentDetailsService.read(6L);
 
-        // Step 1: Create and persist PaymentDetails first
-        testPaymentDetails = PaymentDetailsFactory.createPaymentDetails(
-                null,        // id will be auto-generated
-                100.0,       // total amount
-                "Visa",      // payment method
-                "Success",   // payment status
-                LocalDateTime.now() // payment date
-        );
-
-        // Persist the payment details in the database
-        testPaymentDetails = paymentDetailsService.create(testPaymentDetails);
-
-        // Step 2: Create OrderDetails with the persisted PaymentDetails
         orderDetails = OrderDetailsFactory.createOrderDetails(
-                null,                        // id will be auto-generated
-                user,                        // User associated with the order
-                testPaymentDetails,          // Link the created payment details
-                100.0                         // Order total amount
+                null,
+                user,
+                paymentDetails,
+                1500.0
         );
 
         // Persist the order details
@@ -65,13 +53,10 @@ class OrderDetailsServiceTest {
 
     @AfterEach
     void tearDown() {
-        // Clean up test data by deleting the created order
-        /*if (orderDetails != null && orderDetails.getId() != null) {
+        // Clean up test data by deleting the created order, except for the order with ID 1
+        if (orderDetails != null && orderDetails.getId() != null && orderDetails.getId() != 1 ) {
             orderDetailsService.delete(orderDetails.getId());
         }
-        if (testPaymentDetails != null && testPaymentDetails.getId() != null) {
-            paymentDetailsService.delete(testPaymentDetails.getId());
-        }*/
     }
 
     @Test
@@ -80,7 +65,7 @@ class OrderDetailsServiceTest {
         OrderDetails newOrder = OrderDetailsFactory.createOrderDetails(
                 null,
                 user,
-                testPaymentDetails,
+                paymentDetails,
                 200.0
         );
         OrderDetails createdOrder = orderDetailsService.create(newOrder);
@@ -165,9 +150,9 @@ class OrderDetailsServiceTest {
     @Test
     @Order(10)
     void findByPaymentId() {
-        List<OrderDetails> orders = orderDetailsService.findByPaymentId(testPaymentDetails.getId());
+        List<OrderDetails> orders = orderDetailsService.findByPaymentId(paymentDetails.getId());
         assertFalse(orders.isEmpty());
-        assertEquals(testPaymentDetails.getId(), orders.get(0).getPaymentDetails().getId());
+        assertEquals(paymentDetails.getId(), orders.get(0).getPaymentDetails().getId());
     }
 
     @Test

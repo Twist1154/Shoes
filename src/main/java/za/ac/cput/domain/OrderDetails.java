@@ -1,20 +1,24 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
- * Represents an order details entry in the system.
- * Each entry provides details about an order, including the user_id who placed the order,
- * payment details, and the total amount. This entity is mapped to the "order_details" table in the database.
+ * Represents an order entry in the system.
+ * Each entry is associated with a User, PaymentDetails, and contains multiple OrderItems.
  * <p>
- * Author: Rethabile Ntsekhe
- * Date: 25-Aug-24
+ * This entity class is mapped to the "order_details" table in the database.
+ *
+ * @author Rethabile Ntsekhe
+ * @date 25-Aug-24
  */
 @Entity
 @Getter
@@ -27,20 +31,26 @@ public class OrderDetails {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIncludeProperties({"id", "firstName", "lastName", "email"})
     private User user;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "payment_id", nullable = false)
     private PaymentDetails paymentDetails;
 
     private Double total;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
-    @UpdateTimestamp
+
+    @CreationTimestamp
     private LocalDateTime updatedAt;
 
-    public OrderDetails() {
-    }
+    @OneToMany(mappedBy = "orderDetails",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+    public OrderDetails() {}
 
     private OrderDetails(Builder builder) {
         this.id = builder.id;
@@ -49,18 +59,20 @@ public class OrderDetails {
         this.total = builder.total;
         this.createdAt = builder.createdAt;
         this.updatedAt = builder.updatedAt;
+        this.orderItems.addAll(new ArrayList<>(builder.orderItems));
     }
 
     @Override
     public String toString() {
         return "\n OrderDetails{" +
                 "id=" + id +
-                ", user=" + user.getFirstName() + user.getLastName() +
+                ", user=" + user.getFirstName() + " " + user.getLastName() +
                 ", paymentDetails=" + paymentDetails.getStatus() +
                 ", total=" + total +
+                ", orderItems=" + orderItems +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                "}\n ";
+                "}\n";
     }
 
     @Override
@@ -88,6 +100,7 @@ public class OrderDetails {
         private Double total;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
+        private List<OrderItem> orderItems = new ArrayList<>();
 
         public Builder setId(Long id) {
             this.id = id;
@@ -119,6 +132,11 @@ public class OrderDetails {
             return this;
         }
 
+        public Builder setOrderItems(List<OrderItem> orderItems) {
+            this.orderItems = new ArrayList<>(orderItems);
+            return this;
+        }
+
         public Builder copy(OrderDetails orderDetails) {
             this.id = orderDetails.getId();
             this.user = orderDetails.getUser();
@@ -126,6 +144,7 @@ public class OrderDetails {
             this.total = orderDetails.getTotal();
             this.createdAt = orderDetails.getCreatedAt();
             this.updatedAt = orderDetails.getUpdatedAt();
+            this.orderItems = new ArrayList<>(orderDetails.getOrderItems());
             return this;
         }
 

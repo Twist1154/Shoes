@@ -29,8 +29,7 @@ public class PaymentDetailsFactory {
     public static PaymentDetails createPaymentDetails(Long id,
                                                       Double amount,
                                                       String provider,
-                                                      String status,
-                                                      LocalDateTime createdAt) {
+                                                      String status) {
         // Define constants for the switch cases
         final int AMOUNT_NULL = 1;
         final int PROVIDER_NULL = 2;
@@ -50,11 +49,8 @@ public class PaymentDetailsFactory {
         if (Helper.isNullOrEmpty(status)) {
             errorFlags |= STATUS_NULL;
         }
-        if (Helper.isNullOrEmpty(createdAt)) {
-            errorFlags |= CREATED_AT_NULL;
-        }
 
-        // Use switch statement to throw exception based on the flags
+
         switch (errorFlags) {
             case AMOUNT_NULL | PROVIDER_NULL | STATUS_NULL | CREATED_AT_NULL:
                 throw new IllegalArgumentException("Amount, provider, status, and created date cannot be null or empty");
@@ -75,17 +71,14 @@ public class PaymentDetailsFactory {
             case CREATED_AT_NULL:
                 throw new IllegalArgumentException("Created date cannot be null");
             default:
-                // No null or empty values
                 break;
         }
 
-        // Use the Builder pattern to create a new PaymentDetails object
         return new PaymentDetails.Builder()
-                .setId(id) // Set the ID of the payment details (nullable)
-                .setAmount(amount) // Set the amount of the payment (required)
-                .setProvider(provider) // Set the payment provider (required)
-                .setStatus(status) // Set the status of the payment (required)
-                .setCreatedAt(createdAt) // Set the date the payment was created (required)
+                .setId(id)
+                .setAmount(amount)
+                .setProvider(provider)
+                .setStatus(status)
                 .build();
     }
 }

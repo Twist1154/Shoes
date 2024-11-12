@@ -20,10 +20,6 @@ class ProductServiceTest {
 
     @Autowired
     private ProductService productService;
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private SubCategoryService subCategoryService;
 
     private Product product;
 
@@ -39,7 +35,7 @@ class ProductServiceTest {
         );
 
         product = ProductFactory.createProduct(
-                null, // ID should be generated
+                null,
                 "AirForce 1",
                 "All White AirForce 1",
                 "Nike AirForce 1",
@@ -49,6 +45,13 @@ class ProductServiceTest {
         );
     }
 
+    @AfterEach
+    void tearDown() {
+        // Clean up test data after each test
+        if (product != null && product.getId() != null) {
+            productService.delete(product.getId());
+        }
+    }
 
     @Test
     @Order(1)
@@ -85,9 +88,10 @@ class ProductServiceTest {
     @Order(4)
     void delete() {
         Product createdProduct = productService.create(product);
-        productService.delete(createdProduct.getId());
+        boolean delete  = productService.delete(createdProduct.getId());
         Product deletedProduct = productService.read(createdProduct.getId());
-        assertNull(deletedProduct);  // Ensure product was deleted, should return null
+        assertNull(deletedProduct);
+        assertTrue(delete);
     }
 
     @Test
