@@ -1,5 +1,6 @@
 package za.ac.cput.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.List;
  * Student Num: 220455430
  * @date 22-Sep-24
  */
+@Slf4j
 @Service
 @Transactional
 public class WishlistItemService implements IWishlistItems {
@@ -74,6 +76,7 @@ public class WishlistItemService implements IWishlistItems {
             repository.deleteById(id);
             return true;
         }
+        log.warn("Attempt to delete a non-existent wishlist item with ID: ", id);
         return false;
     }
 

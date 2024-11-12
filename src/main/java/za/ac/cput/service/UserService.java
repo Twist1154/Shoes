@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Service class for handling user-related operations.
@@ -33,34 +32,34 @@ import java.util.stream.Collectors;
 @Transactional
 public class UserService implements UserDetailsService, IUser {
 
-    private final UserRepository userRepository;
+    private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
 
     /**
      * Constructs a UserService with the specified UserRepository and PasswordEncoder.
      *
-     * @param userRepository  the UserRepository for interacting with the database
+     * @param repository  the UserRepository for interacting with the database
      * @param passwordEncoder the PasswordEncoder for encoding passwords
      */
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
+        this.repository = repository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User create(User user) {
-        return userRepository.save(user);
+        return repository.save(user);
     }
 
     @Override
     public User read(Long id) {
-        return userRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     @Override
     public User update(User user) {
-        User existingUser = userRepository.findById(user.getId()).orElse(null);
+        User existingUser = repository.findById(user.getId()).orElse(null);
         if (existingUser != null) {
             User updatedUser = new User.Builder()
                     .copy(existingUser)
@@ -72,20 +71,25 @@ public class UserService implements UserDetailsService, IUser {
                     .setPassword(passwordEncoder.encode(user.getPassword()))
                     .setRole(user.getRole())
                     .build();
-            return userRepository.save(updatedUser);
+            return repository.save(updatedUser);
         } else {
             return null;
         }
     }
 
     public boolean delete(Long id) {
-        userRepository.deleteById(id);
-        return !userRepository.existsById(id);
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return !repository.existsById(id);
+        } else {
+            log.warn("Attempt to delete a non-existent user with ID: ", id);
+            return false;
+        }
     }
 
     @Override
     public List<User> findAll() {
-        return userRepository.findAll();
+        return repository.findAll();
     }
 
 
@@ -93,7 +97,7 @@ public class UserService implements UserDetailsService, IUser {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         System.out.println("Attempting to load user: " + email);
 
-        User user = userRepository.findByEmail(email)
+        User user = repository.findByEmail(email)
                 .orElseThrow(() -> {
                     System.out.println("User not found: " + email);
                     return new UsernameNotFoundException("User not Found");
@@ -106,40 +110,40 @@ public class UserService implements UserDetailsService, IUser {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return repository.findByEmail(email);
     }
 
     @Override
     public List<User> findByFirstName(String firstName) {
-        return userRepository.findByFirstName(firstName);
+        return repository.findByFirstName(firstName);
     }
 
     @Override
     public List<User> findByLastName(String lastName) {
-        return userRepository.findByLastName(lastName);
+        return repository.findByLastName(lastName);
     }
 
     @Override
     public List<User> findByBirthDate(LocalDate birthDate) {
-        return userRepository.findByBirthDate(birthDate);
+        return repository.findByBirthDate(birthDate);
     }
 
     @Override
     public List<User> findByPhoneNumber(String phoneNumber) {
-        return userRepository.findByPhoneNumber(phoneNumber);
+        return repository.findByPhoneNumber(phoneNumber);
     }
 
     @Override
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return repository.findByUsername(username);
     }
 
     public User updatePassword(UserPasswordDTO userPasswordDTO) {
-        User user = userRepository.findByEmail(userPasswordDTO.getEmail())
+        User user = repository.findByEmail(userPasswordDTO.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + userPasswordDTO.getEmail()));
 
         user.setPassword(passwordEncoder.encode(userPasswordDTO.getPassword()));
-        return userRepository.save(user);
+        return repository.save(user);
     }
 
 }

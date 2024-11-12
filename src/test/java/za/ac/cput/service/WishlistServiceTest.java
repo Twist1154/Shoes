@@ -119,6 +119,7 @@ class WishlistServiceTest {
     @Test
     @Order(4)
     void testDeleteWishlist() {
+        wishlistService.create(wishlist);
         wishlistService.delete(wishlist.getId());
         Optional<Wishlist> deletedWishlist = wishlistRepository.findById(wishlist.getId());
         assertTrue(deletedWishlist.isEmpty());

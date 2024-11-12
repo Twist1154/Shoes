@@ -1,5 +1,6 @@
 package za.ac.cput.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,17 +16,18 @@ import java.util.Optional;
  *
  * @author Rethabile Ntsekhe
  * Student Num: 220455430
- * @date 28-Aug-24
+ *
  */
+@Slf4j
 @Service
 @Transactional
 public class AddressService implements IAddress{
 
-    private final AddressRepository addressRepository;
+    private final AddressRepository repository;
 
     @Autowired
-    public AddressService(AddressRepository addressRepository) {
-        this.addressRepository = addressRepository;
+    public AddressService(AddressRepository repository) {
+        this.repository = repository;
     }
 
     /**
@@ -34,7 +36,7 @@ public class AddressService implements IAddress{
      */
     @Override
     public Address create(Address address) {
-        return addressRepository.save(address);
+        return repository.save(address);
     }
 
     /**
@@ -43,13 +45,13 @@ public class AddressService implements IAddress{
      */
     @Override
     public Address read(Long id) {
-        return addressRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
 
     @Override
     public Address update(Address address) {
-        Address existingAddress = addressRepository.findById(address.getId()).orElse(null);
+        Address existingAddress = repository.findById(address.getId()).orElse(null);
         if (existingAddress != null) {
             Address updatedAddress = new Address.Builder()
                     .copy(existingAddress)
@@ -63,7 +65,7 @@ public class AddressService implements IAddress{
                     .setCreatedAt(address.getCreatedAt())
                     .setUpdatedAt(address.getUpdatedAt())
                     .build();
-            return addressRepository.save(updatedAddress);
+            return repository.save(updatedAddress);
         } else {
             return null;
         }
@@ -71,68 +73,68 @@ public class AddressService implements IAddress{
 
     @Override
     public List<Address> findAll() {
-        return addressRepository.findAll();
+        return repository.findAll();
     }
 
 
     @Override
     public boolean delete(Long id) {
-        addressRepository.deleteById(id); // Use deleteById (standard JpaRepository method)
-
-        // Check if the entity still exists after deletion
-        boolean exists = addressRepository.existsById(id);
-
-        // Return true if it no longer exists (successful deletion), otherwise return false
-        return !exists;
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return !repository.existsById(id); // Return true if deleted successfully
+        } else {
+            log.warn("Attempt to delete a non-existent Wishlist with ID: " + id);
+            return false;
+        }
     }
 
     @Override
     public Optional<Address> findByUserId(Long userId) {
-        return addressRepository.findByUserId(userId);
+        return repository.findByUserId(userId);
     }
 
     @Override
     public List<Address> findByTitle(String title) {
-        return addressRepository.findByTitle(title);
+        return repository.findByTitle(title);
     }
 
     @Override
     public List<Address> findByAddressLine1(String addressLine1) {
-        return addressRepository.findByAddressLine1(addressLine1);
+        return repository.findByAddressLine1(addressLine1);
     }
 
     @Override
     public List<Address> findByAddressLine2(String addressLine2) {
-        return addressRepository.findByAddressLine2(addressLine2);
+        return repository.findByAddressLine2(addressLine2);
     }
 
     @Override
     public List<Address> findByCountry(String country) {
-        return addressRepository.findByCountry(country);
+        return repository.findByCountry(country);
     }
 
     @Override
     public List<Address> findByCity(String city) {
-        return addressRepository.findByCity(city);
+        return repository.findByCity(city);
     }
 
     @Override
     public List<Address> findByPostalCode(String postalCode) {
-        return addressRepository.findByPostalCode(postalCode);
+        return repository.findByPostalCode(postalCode);
     }
 
     @Override
     public List<Address> findByPhoneNumber(String phoneNumber) {
-        return addressRepository.findByPhoneNumber(phoneNumber);
+        return repository.findByPhoneNumber(phoneNumber);
     }
 
     @Override
     public List<Address> findByCreatedAtAfter(LocalDateTime createdAt) {
-        return addressRepository.findByCreatedAtAfter(createdAt);
+        return repository.findByCreatedAtAfter(createdAt);
     }
 
     @Override
     public List<Address> findByUpdatedAt(LocalDateTime updatedAt) {
-        return addressRepository.findByUpdatedAt(updatedAt);
+        return repository.findByUpdatedAt(updatedAt);
     }
 }

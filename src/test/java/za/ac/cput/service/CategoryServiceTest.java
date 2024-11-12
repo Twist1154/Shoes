@@ -32,7 +32,7 @@ class CategoryServiceTest {
     void setUp() {
         category = CategoryFactory.createCategory(
                 null,
-                "Art"
+                "Sports"
         );
 
         category = categoryService.create(category);
@@ -40,30 +40,24 @@ class CategoryServiceTest {
 
     @AfterEach
     void tearDown() {
-       // categoryService.delete(category.getId());
+        categoryService.delete(category.getId());
     }
 
     @Test
     @Order(1)
     void create() {
-        Category createdCategory = categoryService.create(CategoryFactory.createCategory(
-                null,
-                "Craft"
-        )
-        );
-
-        assertNotNull(createdCategory);
-        assertEquals("Craft", createdCategory.getName());
-        categoryService.delete(createdCategory.getId());
+        assertNotNull(category);
+        System.out.println("Created category: \n" + category);
+        assertEquals("Sports", category.getName());
     }
 
     @Test
     @Order(2)
     void read() {
         Category foundCategory = categoryService.read(category.getId());
-        System.out.println(foundCategory);
+        System.out.println("Found category: \n" + foundCategory);
         assertNotNull(foundCategory);
-        assertEquals("Art", foundCategory.getName());
+        assertEquals("Sports", foundCategory.getName());
     }
 
     @Test
@@ -71,19 +65,21 @@ class CategoryServiceTest {
     void update() {
         updatedCategory = new Category.Builder()
                 .copy(category)
-                .setName("Updated Art")
+                .setName("Low dunks")
                 .build();
         Category result = categoryService.update(updatedCategory);
+        System.out.println("Updated category: \n" + result);
         assertNotNull(result);
-        assertEquals("Updated Art", result.getName());
+        assertEquals("Low dunks", result.getName());
     }
 
     @Test
     @Order(4)
     void delete() {
-        categoryService.delete(category.getId());
+        boolean deleted = categoryService.delete(category.getId());
         Category deletedCategory = categoryService.read(category.getId());
-        System.out.println(deletedCategory);
+        System.out.println("should be deleted: \n"+deletedCategory);
+        assertTrue(deleted);
         assertNull(deletedCategory);
     }
 
@@ -91,13 +87,15 @@ class CategoryServiceTest {
     @Order(5)
     void findAll() {
         List<Category> categories = categoryService.findAll();
+        System.out.println("All categories: \n" + categories);
         assertFalse(categories.isEmpty());
     }
 
     @Test
     @Order(6)
     void findByName() {
-        List<Category> categories = categoryService.findByName("Art");
+        List<Category> categories = categoryService.findByName("Sports");
+        System.out.println("Categories found by name: \n" + categories);
         assertFalse(categories.isEmpty());
     }
 
@@ -106,7 +104,8 @@ class CategoryServiceTest {
     @Test
     @Order(7)
     void findByNameContaining() {
-        List<Category> categories = categoryService.findByNameContaining("Art");
+        List<Category> categories = categoryService.findByNameContaining("sports");
+        System.out.println("Categories found by name containing: \n" + categories);
         assertFalse(categories.isEmpty());
     }
 

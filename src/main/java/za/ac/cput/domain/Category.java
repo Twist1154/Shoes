@@ -1,56 +1,37 @@
 package za.ac.cput.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-import lombok.Getter;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Represents a categories entry in the system.
- * <p>
- * This entity class is mapped to the "categories" table in the database.
- *
- * @author Rethabile Ntsekhe
- * @date 25-Aug-24
- */
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Entity
+
 @Getter
-@Table(name = "categories")
-public class Category {
-
+@Entity
+public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "category",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("categoryReference")
     @JsonIgnore
-    private List<SubCategory> subCategories;
+    private List<SubCategory> subCategories = new ArrayList<>();
 
     public Category() {
     }
 
-    private Category(Builder builder) {
+    public Category(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
-    }
-
-    @Override
-    public String toString() {
-        return "\n Category{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", subCategories=" + subCategories.get(0).getId() +
-                "}\n ";
+        this.subCategories = builder.subCategories != null ? builder.subCategories : new ArrayList<>();
     }
 
     @Override
@@ -68,11 +49,19 @@ public class Category {
         return Objects.hash(id, name, subCategories);
     }
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "Category ID: " + id +
+                ", NAME: '" + name + '\'' +
+                ", Sub Categories: " + (subCategories != null ? subCategories : "null") +
+                '}';
+    }
+
     public static class Builder {
         private Long id;
-
         private String name;
-        private List<SubCategory> subCategories;
+        private List<SubCategory> subCategories = new ArrayList<>();
 
         public Builder setId(Long id) {
             this.id = id;

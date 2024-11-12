@@ -37,7 +37,7 @@ class WishlistItemServiceTest {
     @BeforeEach
     void setUp() {
         product = productService.read(1L);
-        wishlist = wishlistService.read(2L);
+        wishlist = wishlistService.read(1L);
 
         // Create WishListItems
         WishlistItem item1 = new WishlistItem.Builder()
@@ -62,7 +62,7 @@ class WishlistItemServiceTest {
 
     @AfterEach
     void tearDown() {
-        //repository.deleteById(wishlistItems.get(0).getId());
+        repository.deleteById(wishlistItems.get(0).getId());
     }
 
     @Test
@@ -126,12 +126,13 @@ class WishlistItemServiceTest {
         System.out.println("Created review ID: " + item.getId());
 
         // Delete the item and assert successful deletion
-        boolean deleted = service.delete(item.getId());
-        assertTrue(deleted, "Item should be deleted");
+         service.deleteByWishlistId (wishlist.getId());
+        WishlistItem deleted = service.read(item.getId());
+        assertNull(deleted, "Item should be deleted");
 
         // Check that the item no longer exists
         assertThrows(EntityNotFoundException.class, () -> service.read(item.getId()));
 
-        System.out.println("Deleted review ID: " + item.getId());
+        System.out.println("Deleted wishlist ID: " + item.getId());
     }
 }

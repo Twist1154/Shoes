@@ -34,8 +34,7 @@ class OrderItemFactoryTest {
                 1L,
                 100.0,
                 "PayPal",
-                "Success",
-                LocalDateTime.parse("2024-06-12T12:00:00")
+                "Success"
         );
 
         User user = UserFactory.createUser(

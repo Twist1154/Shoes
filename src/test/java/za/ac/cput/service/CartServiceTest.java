@@ -30,11 +30,11 @@ class CartServiceTest {
 
     @BeforeEach
     void setUp() {
-        user = userService.read(5L);  // Ensure the user is initialized and associated with the cart
+        user = userService.read(2L);
 
         // Create a sample Cart object using the factory method
         cart = CartFactory.createCart(
-                1L,
+                null,
                 user,
                 100.0,
                 LocalDateTime.now(),
@@ -45,7 +45,9 @@ class CartServiceTest {
 
     @AfterEach
     void tearDown() {
-        // Clean up after each test if necessary
+        if(cart.getId() != null) {
+            cartService.delete(cart.getId());
+        }
     }
 
     @Test
@@ -54,7 +56,7 @@ class CartServiceTest {
         Cart createdCart = cartService.create(cart);
         assertNotNull(createdCart);
         assertEquals(cart.getTotal(), createdCart.getTotal());
-        assertNotNull(createdCart.getUser().getId());  // Ensure the lazy-loaded user is initialized
+        assertNotNull(createdCart.getUser().getId());
     }
 
     @Test

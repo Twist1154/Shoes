@@ -189,15 +189,4 @@ public class PaymentDetailsController {
         return ResponseEntity.ok(count);
     }
 
-    /**
-     * Deletes payment details by order details ID.
-     *
-     * @param orderDetailsId the ID of the order details associated with the payment details to delete
-     * @return ResponseEntity containing the number of deleted records
-     */
-    @DeleteMapping("/order-details/{orderDetailsId}")
-    public ResponseEntity<Integer> deletePaymentDetailsByOrderDetailsId(@PathVariable Long orderDetailsId) {
-        int deletedCount = paymentDetailsService.deleteByOrderDetailsId(orderDetailsId);
-        return ResponseEntity.ok(deletedCount);
-    }
 }

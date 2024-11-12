@@ -97,7 +97,7 @@ public class Wishlist {
         }
 
         public Builder setWishlistItems(List<WishlistItem> wishlistItems) {
-            this.wishlistItems = wishlistItems;
+            this.wishlistItems = new ArrayList<>(wishlistItems); // defensive copy
             return this;
         }
 

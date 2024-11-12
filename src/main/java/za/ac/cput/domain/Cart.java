@@ -1,18 +1,20 @@
 package za.ac.cput.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * Represents a cart entry in the system.
  * Each entry is associated with a User.
- *
+ * <p>
  * This entity class is mapped to the "cart" table in the database.
  * Includes necessary mappings for relationships to other entities.
  *
@@ -28,19 +30,22 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Many Carts can belong to one User
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIncludeProperties({"id", "firstName", "lastName", "email"})
     private User user;
 
     private Double total;
+
+    @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @CreationTimestamp
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<CartItem> cartItems;
-
+    private List<CartItem> cartItems = new ArrayList<>();
 
     public Cart() {
     }
@@ -51,6 +56,7 @@ public class Cart {
         this.total = builder.total;
         this.createdAt = builder.createdAt;
         this.updatedAt = builder.updatedAt;
+        this.cartItems.addAll(new ArrayList<>(builder.cartItems));
     }
 
     @Override
@@ -87,6 +93,7 @@ public class Cart {
         private Double total;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
+        private List<CartItem> cartItems = new ArrayList<>();
 
         public Builder setId(Long id) {
             this.id = id;
@@ -113,17 +120,24 @@ public class Cart {
             return this;
         }
 
+        public Builder setCartItems(List<CartItem> cartItems) {
+            this.cartItems = new ArrayList<>(cartItems);  // defensive copy
+            return this;
+        }
+
         public Builder copy(Cart cart) {
             this.id = cart.getId();
             this.user = cart.getUser();
             this.total = cart.getTotal();
             this.createdAt = cart.getCreatedAt();
             this.updatedAt = cart.getUpdatedAt();
+            this.cartItems = new ArrayList<>(cart.getCartItems());
             return this;
         }
 
         public Cart build() {
             return new Cart(this);
         }
+
     }
 }
