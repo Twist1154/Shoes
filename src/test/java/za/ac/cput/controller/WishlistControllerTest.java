@@ -47,7 +47,6 @@ class WishlistControllerTest {
         wishlist = WishlistFactory.createWishlist(
                 null,
                 user,
-                wishListItem,
                 LocalDateTime.now()
         );
     }

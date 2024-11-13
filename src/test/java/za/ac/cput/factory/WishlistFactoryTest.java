@@ -76,7 +76,6 @@ class WishlistFactoryTest {
         wishlist = WishlistFactory.createWishlist(
                 1L,
                 user,
-                wishlistItems,
                 LocalDateTime.now()
         );
 
@@ -94,7 +93,6 @@ class WishlistFactoryTest {
                 () -> WishlistFactory.createWishlist(
                         1L,
                         null,
-                        wishlistItems,
                         LocalDateTime.now())
         );
 
@@ -109,7 +107,6 @@ class WishlistFactoryTest {
                 () -> WishlistFactory.createWishlist(
                         1L,
                         user,
-                        null,
                         LocalDateTime.now()
                 )
         );

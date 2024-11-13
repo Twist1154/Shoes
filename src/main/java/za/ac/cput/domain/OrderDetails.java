@@ -1,11 +1,14 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Table(name = "order_details")
-public class OrderDetails {
+public class OrderDetails implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,8 +37,9 @@ public class OrderDetails {
     @JsonIncludeProperties({"id", "firstName", "lastName", "email"})
     private User user;
 
-    @OneToOne
+    @OneToOne( cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "payment_id", nullable = false)
+    @JsonManagedReference(value = "payment-order")
     private PaymentDetails paymentDetails;
 
     private Double total;
@@ -142,8 +146,6 @@ public class OrderDetails {
             this.user = orderDetails.getUser();
             this.paymentDetails = orderDetails.getPaymentDetails();
             this.total = orderDetails.getTotal();
-            this.createdAt = orderDetails.getCreatedAt();
-            this.updatedAt = orderDetails.getUpdatedAt();
             this.orderItems = new ArrayList<>(orderDetails.getOrderItems());
             return this;
         }

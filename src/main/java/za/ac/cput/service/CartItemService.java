@@ -65,7 +65,6 @@ public class CartItemService implements ICartItem {
         if (existingCartItem != null) {
             CartItem updatedCartItem = new CartItem.Builder()
                     .copy(existingCartItem)
-                    .setCart(cartItem.getCart())
                     .setProduct(cartItem.getProduct())
                     .setProductSku(cartItem.getProductSku())
                     .setQuantity(cartItem.getQuantity())

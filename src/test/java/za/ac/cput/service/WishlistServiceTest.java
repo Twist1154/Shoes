@@ -72,6 +72,7 @@ class WishlistServiceTest {
 
     @AfterEach
     void tearDown() {
+        if (wishlistRepository.existsById(wishlist.getId()) && wishlist.getId() != 1)
         wishlistRepository.delete(wishlist);
     }
 

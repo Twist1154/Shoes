@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import za.ac.cput.domain.*;
 import za.ac.cput.factory.OrderItemFactory;
 import za.ac.cput.repository.OrderItemRepository;
@@ -12,10 +13,12 @@ import za.ac.cput.repository.OrderItemRepository;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS;
 
 @SpringBootTest
+@ActiveProfiles("test") // Use a specific profile for testing if needed
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@DirtiesContext(classMode = AFTER_CLASS)
 class OrderItemServiceTest {
 
     @Autowired

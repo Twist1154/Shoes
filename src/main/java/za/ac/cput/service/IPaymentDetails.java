@@ -58,4 +58,28 @@ public interface IPaymentDetails extends IService<PaymentDetails, Long> {
      */
     long countByStatus(String status);
 
+    /**
+     * Finds all {@link PaymentDetails} by the payment amount.
+     *
+     * @param amount the payment amount
+     * @return a list of {@link PaymentDetails} with the specified amount
+     */
+    List<PaymentDetails> findByAmount(double amount);
+
+    /**
+     * Finds all {@link PaymentDetails} with an amount greater than the specified value.
+     *
+     * @param amount the minimum amount to search for
+     * @return a list of {@link PaymentDetails} with an amount greater than the specified value
+     */
+    List<PaymentDetails> findByAmountGreaterThan(double amount);
+
+    /**
+     * Finds all {@link PaymentDetails} with an amount less than the specified value.
+     *
+     * @param amount the maximum amount to search for
+     * @return a list of {@link PaymentDetails} with an amount less than the specified value
+     */
+    List<PaymentDetails> findByAmountLessThan(double amount);
+
 }

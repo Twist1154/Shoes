@@ -48,7 +48,7 @@ class ProductServiceTest {
     @AfterEach
     void tearDown() {
         // Clean up test data after each test
-        if (product != null && product.getId() != null) {
+        if (product != null && product.getId() != null && product.getId() != 1) {
             productService.delete(product.getId());
         }
     }
