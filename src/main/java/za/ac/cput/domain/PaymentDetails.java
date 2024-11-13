@@ -1,10 +1,12 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -17,7 +19,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Table(name = "payment_details")
-public class PaymentDetails {
+public class PaymentDetails implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +28,11 @@ public class PaymentDetails {
     private Double amount;
     private String provider;
     private String status;
-    @OneToOne(mappedBy = "paymentDetails", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToOne(mappedBy = "paymentDetails", cascade = {CascadeType.MERGE,CascadeType.ALL}, orphanRemoval = true)
+    @JoinColumn
+    @JsonBackReference(value = "payment-order")
+
     private OrderDetails orderDetails;
 
     @CreationTimestamp

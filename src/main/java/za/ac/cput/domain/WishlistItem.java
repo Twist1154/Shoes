@@ -34,7 +34,7 @@ public class WishlistItem {
     private LocalDateTime dateAdded;
 
     @ManyToOne
-    @JoinColumn(name = "wishlist_id")
+    @JoinColumn(name = "wishlist_id", nullable = false)
     private Wishlist wishlist;
 
     public WishlistItem() {

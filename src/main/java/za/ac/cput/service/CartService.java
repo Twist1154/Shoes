@@ -44,9 +44,9 @@ public class CartService implements ICart {
     @Override
     public Cart create(Cart cart) {
         // Calculate the total price
-        Double total = 0.0;
+        double total = 0.0;
         for (CartItem cartItem : cart.getCartItems()) {
-            total += cartItem.getProductSku().getPrice() * cartItem.getProductSku().getQuantity();
+            total += cartItem.getProductSku().getPrice() * cartItem.getQuantity();
         }
 
         Cart totalCart = new Cart.Builder()

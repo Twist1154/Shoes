@@ -39,13 +39,13 @@ class ProductAttributeServiceTest {
     @AfterEach
     void tearDown() {
         // Clean up all test data after each test
-        if (size != null && size.getId() != null) {
+        if (size != null && size.getId() != null && size.getId() != 1) {
             service.delete(size.getId());
         }
-        if (color != null && color.getId() != null) {
+        if (color != null && color.getId() != null && color.getId() != 2) {
             service.delete(color.getId());
         }
-        if (brand != null && brand.getId() != null) {
+        if (brand != null && brand.getId() != null && brand.getId() != 3) {
             service.delete(brand.getId());
         }
     }

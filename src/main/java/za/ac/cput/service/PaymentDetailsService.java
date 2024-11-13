@@ -33,16 +33,19 @@ public class PaymentDetailsService implements IPaymentDetails {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public PaymentDetails create(PaymentDetails paymentDetails) {
         return repository.save(paymentDetails);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PaymentDetails read(Long id) {
         return repository.findById(id).orElse(null);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public PaymentDetails update(PaymentDetails paymentDetails) {
         if (paymentDetails == null || !repository.existsById(paymentDetails.getId())) {
             throw new IllegalArgumentException("PaymentDetails with the given ID does not exist.");
@@ -64,6 +67,8 @@ public class PaymentDetailsService implements IPaymentDetails {
         return null;
     }
 
+    @Override
+    @Transactional(readOnly = false)
     public boolean delete(Long id) {
         if (repository.existsById(id)) {
             repository.deleteById(id);
@@ -75,31 +80,55 @@ public class PaymentDetailsService implements IPaymentDetails {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PaymentDetails> findAll() {
         return repository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<PaymentDetails> findByAmount(double amount) {
+        return repository.findByAmount(amount);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PaymentDetails> findByAmountGreaterThan(double amount) {
+        return repository.findByAmountGreaterThan(amount);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PaymentDetails> findByAmountLessThan(double amount) {
+        return repository.findByAmountLessThan(amount);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<PaymentDetails> findByProvider(String provider) {
         return repository.findByProvider(provider);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PaymentDetails> findByStatus(String status) {
         return repository.findByStatus(status);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PaymentDetails> findByCreatedAtAfter(LocalDateTime createdAt) {
         return repository.findByCreatedAtAfter(createdAt);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PaymentDetails> findByCreatedAtBetween(LocalDateTime startDate, LocalDateTime endDate) {
         return repository.findByCreatedAtBetween(startDate, endDate);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long countByStatus(String status) {
         return repository.countByStatus(status);
     }

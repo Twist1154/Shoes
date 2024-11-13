@@ -122,7 +122,6 @@ class PaymentDetailsServiceTest {
     void findAll() {
         List<PaymentDetails> paymentDetailsList = paymentDetailsService.findAll();
 
-        // Print out the list of all payment details
         System.out.println("All PaymentDetails: " + paymentDetailsList);
 
         assertFalse(paymentDetailsList.isEmpty());

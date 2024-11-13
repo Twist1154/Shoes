@@ -58,7 +58,7 @@ class ProductSkuServiceTest {
 
     @AfterEach
     void tearDown() {
-        if (productSku != null && productSku.getId() != null) {
+        if (productSku != null && productSku.getId() != null && productSku.getId() != 1) {
             productSkuService.delete(productSku.getId());
         }
     }

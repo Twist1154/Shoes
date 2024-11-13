@@ -72,6 +72,7 @@
             <scope>test</scope>
         </dependency>
 
+
         <!-- JSON Web Tokens (JWT) -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

@@ -23,6 +23,9 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 class CartItemServiceTest {
 
     @Autowired
+    private CartItemRepository cartItemRepository;
+
+    @Autowired
     private CartItemService cartItemService;
     @Autowired
     private ProductService productService;
@@ -30,9 +33,8 @@ class CartItemServiceTest {
     private ProductSkuService productSkuService;
     @Autowired
     private CartService cartService;
-
     @Autowired
-    private CartItemRepository cartItemRepository;
+    private UserService userService;
 
     private Cart cart;
     private Product product;
@@ -40,8 +42,6 @@ class CartItemServiceTest {
 
     private User user;
     private CartItem cartItem;
-    @Autowired
-    private UserService userService;
 
     @BeforeEach
     void setUp() {

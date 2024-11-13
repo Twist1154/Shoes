@@ -32,7 +32,7 @@ class PaymentDetailsControllerTest {
 
     private OrderDetails orderDetails;
     private User user;
-    private final String baseUrl = "/payment-details"; // Base URL for the controller
+    private final String baseUrl = "/payment-details";
 
     @BeforeEach
     void setUp() {

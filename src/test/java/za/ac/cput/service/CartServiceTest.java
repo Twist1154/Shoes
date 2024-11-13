@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import za.ac.cput.domain.Cart;
+import za.ac.cput.domain.CartItem;
 import za.ac.cput.domain.User;
 import za.ac.cput.factory.CartFactory;
 
@@ -23,14 +24,19 @@ class CartServiceTest {
     private CartService cartService;
 
     @Autowired
+    private CartItemService cartItemService;
+
+    @Autowired
     private UserService userService;
 
     private Cart cart;
+    private CartItem cartItem;
     private User user;
 
     @BeforeEach
     void setUp() {
         user = userService.read(2L);
+
 
         // Create a sample Cart object using the factory method
         cart = CartFactory.createCart(

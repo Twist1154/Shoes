@@ -23,16 +23,14 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 class AddressServiceTest {
 
     @Autowired
-    private AddressService addressService;
-
-    @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private AddressService addressService;
+    @Autowired
+    private UserService userService;
 
     private Address address;
     private User user;
-
-    @Autowired
-    private UserService userService;
 
     @BeforeEach
     void setup() {
@@ -57,7 +55,7 @@ class AddressServiceTest {
     @AfterEach
     void tearDown() {
         // Ensure that the address is deleted after each test
-        if (address.getId() != null) {
+        if (address.getId() != null &&address.getId() != 1) {
             addressRepository.deleteById(address.getId());
         }
     }
