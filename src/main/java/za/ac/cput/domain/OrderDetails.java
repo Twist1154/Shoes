@@ -66,6 +66,17 @@ public class OrderDetails implements Serializable {
         this.orderItems.addAll(new ArrayList<>(builder.orderItems));
     }
 
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
     @Override
     public String toString() {
         return "\n OrderDetails{" +

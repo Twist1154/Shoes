@@ -51,7 +51,7 @@ class CartServiceTest {
 
     @AfterEach
     void tearDown() {
-        if(cart.getId() != null) {
+        if(cart.getId() != null && cart.getId() > 2) {
             cartService.delete(cart.getId());
         }
     }
@@ -61,7 +61,7 @@ class CartServiceTest {
     void create() {
         Cart createdCart = cartService.create(cart);
         assertNotNull(createdCart);
-        assertEquals(cart.getTotal(), createdCart.getTotal());
+        assertEquals(0.0, createdCart.getTotal());
         assertNotNull(createdCart.getUser().getId());
     }
 

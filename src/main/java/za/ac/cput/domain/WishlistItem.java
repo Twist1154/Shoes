@@ -47,6 +47,12 @@ public class WishlistItem {
         this.wishlist = builder.wishlist;
     }
 
+
+    @PrePersist
+    public void prePersist() {
+        this.dateAdded = LocalDateTime.now();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

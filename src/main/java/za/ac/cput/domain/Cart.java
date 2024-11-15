@@ -59,6 +59,18 @@ public class Cart {
         this.cartItems.addAll(new ArrayList<>(builder.cartItems));
     }
 
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
     @Override
     public String toString() {
         return "\n Cart{" +

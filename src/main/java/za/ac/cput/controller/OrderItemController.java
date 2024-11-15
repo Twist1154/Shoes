@@ -35,7 +35,7 @@ public class OrderItemController {
      * @param orderItem the order item to be created
      * @return ResponseEntity containing the created OrderItem and HTTP status code
      */
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<OrderItem> createOrderItem(@RequestBody OrderItem orderItem) {
         OrderItem createdOrderItem = orderItemService.create(orderItem);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrderItem);
@@ -91,7 +91,7 @@ public class OrderItemController {
      *
      * @return ResponseEntity containing the list of all OrderItems and HTTP status code
      */
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<OrderItem>> getAllOrderItems() {
         List<OrderItem> orderItems = orderItemService.findAll();
         return ResponseEntity.ok(orderItems);

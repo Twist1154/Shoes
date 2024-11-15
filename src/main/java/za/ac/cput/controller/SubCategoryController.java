@@ -35,7 +35,7 @@ public class SubCategoryController {
      * @param subCategory the sub-category to be created
      * @return ResponseEntity containing the created SubCategory and HTTP status code
      */
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<SubCategory> createSubCategory(@RequestBody SubCategory subCategory) {
         SubCategory createdSubCategory = subCategoryService.create(subCategory);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSubCategory);
@@ -91,7 +91,7 @@ public class SubCategoryController {
      *
      * @return ResponseEntity containing the list of all SubCategories and HTTP status code
      */
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<SubCategory>> getAllSubCategories() {
         List<SubCategory> subCategories = subCategoryService.findAll();
         return ResponseEntity.ok(subCategories);

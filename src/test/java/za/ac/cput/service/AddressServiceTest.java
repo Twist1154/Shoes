@@ -55,7 +55,7 @@ class AddressServiceTest {
     @AfterEach
     void tearDown() {
         // Ensure that the address is deleted after each test
-        if (address.getId() != null &&address.getId() != 1) {
+        if (address.getId() != null &&address.getId() >2) {
             addressRepository.deleteById(address.getId());
         }
     }

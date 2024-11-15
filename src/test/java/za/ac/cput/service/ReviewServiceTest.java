@@ -48,7 +48,9 @@ class ReviewServiceTest {
 
     @AfterEach
     void tearDown() {
-        service.delete(review.getId());  // Clean up after each test
+        if (review.getId() != null&& review.getId() > 3){
+        service.delete(review.getId());
+        }
     }
 
     @Test

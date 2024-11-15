@@ -33,13 +33,13 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Address> create(@RequestBody Address address) {
         Address newAddress = addressService.create(address);
         return new ResponseEntity<>(newAddress, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/read/{id}")
     public ResponseEntity<Address> read(@PathVariable Long id) {
         Address address = addressService.read(id);
         if (address != null) {
@@ -61,7 +61,7 @@ public class AddressController {
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         addressService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

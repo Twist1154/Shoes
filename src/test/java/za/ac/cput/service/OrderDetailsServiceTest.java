@@ -38,7 +38,7 @@ class OrderDetailsServiceTest {
     void setUp() {
 
         user = userService.read(2L);
-        paymentDetails = paymentDetailsService.read(2L);
+        paymentDetails = paymentDetailsService.read(1L);
 
         if(paymentDetails == null) {
             paymentDetails = paymentDetailsService.read(3L);
@@ -62,9 +62,9 @@ class OrderDetailsServiceTest {
     @AfterEach
     void tearDown() {
         // Clean up test data by deleting the created order, except for the order with ID 1
-        /*if (orderDetails != null && orderDetails.getId() != null && orderDetails.getId() != 1 ) {
+        if (orderDetails != null && orderDetails.getId() != null && orderDetails.getId() > 2) {
             orderDetailsService.delete(orderDetails.getId());
-        }*/
+        }
     }
 
     @Test

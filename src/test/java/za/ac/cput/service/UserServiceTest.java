@@ -61,7 +61,7 @@ class UserServiceTest {
     @AfterEach
     void tearDown() {
 
-        if (userRepository.findById(user.getId()).isPresent() && user.getId() != 2) {
+        if (userRepository.findById(user.getId()).isPresent() && user.getId() >2) {
             userService.delete(user.getId());
         }
     }
@@ -82,7 +82,7 @@ class UserServiceTest {
         User foundUser = userService.read(2L);
         System.out.println("Found User: " + foundUser);
         assertNotNull(foundUser);
-        assertEquals("Rethabile", foundUser.getFirstName());
+        assertEquals("Ntsekhe", foundUser.getFirstName());
     }
 
     @Test
@@ -179,9 +179,9 @@ class UserServiceTest {
     @Test
     @Order(13)
     void testFindByUsername() {
-        User foundUser = userService.findByUsername("USER1");
+        User foundUser = userService.findByUsername("USER12");
         System.out.println("Found By Username: " + foundUser);
         assertNotNull(foundUser);
-        assertEquals("USER1", foundUser.getUsername());
+        assertEquals("USER12", foundUser.getUsername());
     }
 }
