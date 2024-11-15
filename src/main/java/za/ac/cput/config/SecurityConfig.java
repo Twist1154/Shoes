@@ -17,7 +17,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import za.ac.cput.service.UserService;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -28,7 +27,6 @@ public class SecurityConfig {
     private final PasswordEncoder passwordEncoder;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-
     public SecurityConfig(UserDetailsService userDetailsService, UserService userService, PasswordEncoder passwordEncoder, JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.userDetailsService = userDetailsService;
         this.userService = userService;
@@ -36,17 +34,37 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/auth/login/**", "/auth/register/**").permitAll()
-                        .requestMatchers("/api/products/all/**","/api/products/read/**").permitAll()
-                        .requestMatchers("/api/s3/**","/api/products/delete/","/api/users/**").hasAuthority("ADMIN")
-                        .requestMatchers("/demo/user/**","/authenitcation/read/{id}**").hasAuthority("USER")
-                        .anyRequest()
-                        .authenticated()
+                        // Publicly accessible endpoints
+                        .requestMatchers(
+                                "/auth/login/**",
+                                "/auth/register/**",
+                                "/api/products/all/**",
+                                "/api/products/read/**"
+                        ).permitAll()
+
+                        // ADMIN-specific endpoints
+                        .requestMatchers(
+                                "/api/s3/**",
+                                "/api/products/delete/**",
+                                "/api/users/**",
+                                "/api/order-details/**",
+                                "/api/payment-details/**"
+                        ).hasAuthority("ADMIN")
+
+                        // USER-specific endpoints
+                        .requestMatchers(
+                                "/demo/user/**",
+                                "/authentication/read/{id}**",
+                                "/api/cart/byUser/{userId}",
+                                "/api/wishlist/getByUser/{userId}"
+                        ).hasAuthority("USER")
+
+                        // Other endpoints require authentication
+                        .anyRequest().authenticated()
                 )
                 .userDetailsService(userService)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -65,4 +83,3 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 }
-

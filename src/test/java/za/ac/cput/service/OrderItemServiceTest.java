@@ -7,7 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import za.ac.cput.domain.*;
+import za.ac.cput.factory.OrderDetailsFactory;
 import za.ac.cput.factory.OrderItemFactory;
+import za.ac.cput.factory.PaymentDetailsFactory;
 import za.ac.cput.repository.OrderItemRepository;
 
 import java.util.List;
@@ -26,22 +28,52 @@ class OrderItemServiceTest {
     @Autowired
     private OrderItemService orderItemService;
 
-    private OrderItem orderItem;
-
-    private ProductSku productSku;
-
     @Autowired
     private ProductService productService;
     @Autowired
     private ProductSkuService productSkuService;
     @Autowired
     private OrderDetailsService orderDetailsService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private PaymentDetailsService paymentDetailsService;
+
+
+    private OrderItem orderItem;
+
+    private ProductSku productSku;
+
+    private OrderDetails orderDetails;
+    private User user;
+    private PaymentDetails paymentDetails;
 
     @BeforeEach
     void setUp() {
         Product product = productService.read(1L);
         productSku = productSkuService.read(1L);
-        OrderDetails orderDetails = orderDetailsService.read(1L);
+        user = userService.read(2L);
+
+
+        if (paymentDetails == null) {
+            // Create and save new payment details if it doesn't exist
+            paymentDetails = PaymentDetailsFactory.createPaymentDetails(
+                    null, // ID will be generated upon save
+                    120.0,
+                    "CreditCard",
+                    "Completed"
+            );
+            paymentDetails = paymentDetailsService.create(paymentDetails); // Persist payment details
+            System.out.println("Payment Details created with ID: " + paymentDetails.getId());
+        }
+
+        // Create order details using the newly created or retrieved paymentDetails
+        orderDetails = OrderDetailsFactory.createOrderDetails(
+                null, // ID will be generated upon save
+                user,
+                paymentDetails,
+                1500.0
+        );
 
         // Set up OrderItem
         OrderItem orderItem1 = OrderItemFactory.createOrderItem(
