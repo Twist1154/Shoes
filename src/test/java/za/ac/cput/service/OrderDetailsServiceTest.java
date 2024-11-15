@@ -38,18 +38,22 @@ class OrderDetailsServiceTest {
     void setUp() {
 
         user = userService.read(2L);
-        paymentDetails = paymentDetailsService.read(1L);
 
-        if(paymentDetails == null) {
-            paymentDetails = paymentDetailsService.read(3L);
-            System.out.println("Payment Details: with ID 1 was empty");
-            System.out.println("Payment Details: " + paymentDetails);
-            //paymentDetails = paymentDetailsService.create(paymentDetails);
+        if (paymentDetails == null) {
+            // Create and save new payment details if it doesn't exist
+            paymentDetails = PaymentDetailsFactory.createPaymentDetails(
+                    null, // ID will be generated upon save
+                    120.0,
+                    "CreditCard",
+                    "Completed"
+            );
+            paymentDetails = paymentDetailsService.create(paymentDetails); // Persist payment details
+            System.out.println("Payment Details created with ID: " + paymentDetails.getId());
         }
 
-
+        // Create order details using the newly created or retrieved paymentDetails
         orderDetails = OrderDetailsFactory.createOrderDetails(
-                null,
+                null, // ID will be generated upon save
                 user,
                 paymentDetails,
                 1500.0
@@ -58,6 +62,7 @@ class OrderDetailsServiceTest {
         // Persist the order details
         orderDetails = orderDetailsService.create(orderDetails);
     }
+
 
     @AfterEach
     void tearDown() {
