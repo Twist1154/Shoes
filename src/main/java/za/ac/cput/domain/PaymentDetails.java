@@ -47,6 +47,11 @@ public class PaymentDetails implements Serializable {
         this.status = builder.status;
     }
 
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
     @Override
     public String toString() {
         return "\n PaymentDetails{" +

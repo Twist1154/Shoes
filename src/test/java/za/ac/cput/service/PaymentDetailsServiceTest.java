@@ -49,6 +49,7 @@ class PaymentDetailsServiceTest {
 
     @AfterEach
     void tearDown() {
+        if (paymentDetails != null && paymentDetails.getId() > 3)
          paymentDetailsRepository.deleteById(paymentDetails.getId());
     }
 

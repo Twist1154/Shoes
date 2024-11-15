@@ -72,8 +72,9 @@ class CartItemServiceTest {
 
     @AfterEach
     void tearDown() {
-        // Clean up the created CartItem after each test
-        cartItemRepository.deleteById(cartItem.getId());
+       if (cartItem.getId() != null && cartItem.getId() > 2){
+           cartItemRepository.deleteById(cartItem.getId());
+       }
     }
 
     @Test

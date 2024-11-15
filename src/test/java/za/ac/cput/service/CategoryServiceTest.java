@@ -40,7 +40,9 @@ class CategoryServiceTest {
 
     @AfterEach
     void tearDown() {
-        categoryService.delete(category.getId());
+        if (category.getId() != null && category.getId() > 2) {
+            categoryService.delete(category.getId());
+        }
     }
 
     @Test

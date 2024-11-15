@@ -57,7 +57,9 @@ class OrderItemServiceTest {
 
     @AfterEach
     void tearDown() {
-        itemRepository.deleteById(orderItem.getId());
+        if (orderItem.getId() != null && orderItem.getId() > 3) {
+            itemRepository.deleteById(orderItem.getId());
+        }
     }
 
     @Test

@@ -55,6 +55,19 @@ public class Wishlist {
         this.createdAt = builder.createdAt;
     }
 
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public void addWishlistItem(WishlistItem wishlistItem) {
+        this.wishlistItems.add(wishlistItem);
+    }
+
+    public void removeWishlistItem(WishlistItem wishlistItem) {
+        this.wishlistItems.remove(wishlistItem);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -37,7 +37,7 @@ public class OrderDetailsController {
      * @param orderDetails the order detail to be created
      * @return ResponseEntity containing the created OrderDetails and HTTP status code
      */
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<OrderDetails> createOrderDetails(@RequestBody OrderDetails orderDetails) {
         OrderDetails createdOrderDetails = orderDetailsService.create(orderDetails);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrderDetails);

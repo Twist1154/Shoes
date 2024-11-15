@@ -38,7 +38,7 @@ public class CategoryController {
      * @param category the category to be created
      * @return ResponseEntity containing the created Category and HTTP status code
      */
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
         Category createdCategory = categoryService.create(category);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
@@ -50,7 +50,7 @@ public class CategoryController {
      * @param id the ID of the category to retrieve
      * @return ResponseEntity containing the Category if found, or a 404 Not Found status if not
      */
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
         Category category = categoryService.read(id);
         if (category != null) {
@@ -67,7 +67,7 @@ public class CategoryController {
      * @param category the updated category details
      * @return ResponseEntity containing the updated Category and HTTP status code, or 404 Not Found if not found
      */
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category) {
         Category updatedCategory = categoryService.update(category);
         if (updatedCategory != null) {
@@ -94,7 +94,7 @@ public class CategoryController {
      *
      * @return ResponseEntity containing the list of all Categories and HTTP status code
      */
-    @GetMapping
+    @GetMapping("/getAll")
     public ResponseEntity<List<Category>> getAllCategories() {
         List<Category> categoryList = categoryService.findAll();
         return ResponseEntity.ok(categoryList);

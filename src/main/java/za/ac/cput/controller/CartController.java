@@ -37,7 +37,7 @@ public class CartController {
      * @param cart the cart to be created
      * @return ResponseEntity containing the created Cart and HTTP status code
      */
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Cart> createCart(@RequestBody Cart cart) {
         Cart createdCart = cartService.create(cart);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCart);
@@ -93,7 +93,7 @@ public class CartController {
      *
      * @return ResponseEntity containing the list of all Carts and HTTP status code
      */
-    @GetMapping
+    @GetMapping("/getAll")
     public ResponseEntity<List<Cart>> getAllCarts() {
         List<Cart> cartList = cartService.findAll();
         return ResponseEntity.ok(cartList);
