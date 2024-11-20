@@ -33,7 +33,8 @@ class UserFactoryTest {
                 LocalDate.parse("1990-01-01"),
                 roles,
                 "0123456789",
-                "password123");
+                "password123"
+        );
     }
 
     @Test

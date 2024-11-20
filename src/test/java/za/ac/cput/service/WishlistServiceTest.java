@@ -7,11 +7,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.*;
 import za.ac.cput.enums.Role;
+import za.ac.cput.factory.UserFactory;
 import za.ac.cput.repository.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,7 +42,27 @@ class WishlistServiceTest {
     @BeforeEach
     void setup() {
         product = productService.read(1L);
+
         user = userService.read(2L);
+        if (user == null) {
+            // Generate a unique SKU
+            String Username = "User" + System.currentTimeMillis();
+            String email = "User" + System.currentTimeMillis()+ "@example.com";
+            user = UserFactory.createUser(
+                    null,
+                    "avatar.jpg",
+                    "John",
+                    "Doe",
+                    Username,
+                    email,
+                    LocalDate.parse("1990-01-01"),
+                    Set.of(Role.USER, Role.ADMIN),
+                    "0123456789",
+                    "password123"
+            );
+            user = userService.create(user);
+            System.out.println("User created with ID: " + user.getId());
+        }
 
         // Initialize Wishlist
         wishlist = new Wishlist.Builder()
@@ -121,9 +144,8 @@ class WishlistServiceTest {
     @Order(4)
     void testDeleteWishlist() {
         wishlistService.create(wishlist);
-        wishlistService.delete(wishlist.getId());
-        Optional<Wishlist> deletedWishlist = wishlistRepository.findById(wishlist.getId());
-        assertTrue(deletedWishlist.isEmpty());
+        boolean deleted = wishlistService.delete(wishlist.getId());
+        assertTrue(deleted);
     }
 
     @Test

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.PaymentDetails;
 import za.ac.cput.domain.User;
 import za.ac.cput.factory.PaymentDetailsFactory;
@@ -19,6 +20,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext(classMode = AFTER_CLASS)
+@Transactional
 class PaymentDetailsServiceTest {
 
     @Autowired

@@ -55,14 +55,15 @@ public class SubCategoryService implements ISubCategory {
             return null;
         }
     }
-@Transactional(readOnly = false)
+
+    @Transactional(readOnly = false)
     public boolean delete(Long id) {
-    if (repository.existsById(id)) {
-        repository.deleteById(id);
-        return true;
-    }
-    log.warn("Attempt to delete a non-existent sub-category with ID: {}", id);
-    return false;
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+        log.warn("Attempt to delete a non-existent sub-category with ID: {}", id);
+        return false;
     }
 
     @Override

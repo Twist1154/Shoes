@@ -61,7 +61,7 @@ class UserServiceTest {
     @AfterEach
     void tearDown() {
 
-        if (userRepository.findById(user.getId()).isPresent() && user.getId() >2) {
+        if (userRepository.findById(user.getId()).isPresent() && user.getId() >1) {
             userService.delete(user.getId());
         }
     }
@@ -79,7 +79,7 @@ class UserServiceTest {
     @Test
     @Order(2)
     void testReadUser() {
-        User foundUser = userService.read(2L);
+        User foundUser = userService.read(user.getId());
         System.out.println("Found User: " + foundUser);
         assertNotNull(foundUser);
         assertEquals("Ntsekhe", foundUser.getFirstName());
