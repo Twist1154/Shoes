@@ -93,7 +93,7 @@ public class WishlistService implements iWishlist {
      * @param id the ID of the wishlist to delete
      * @return
      */
-   @Transactional(readOnly = false)
+
     public boolean delete(Long id) {
        if (repository.existsById(id)) {
            repository.deleteById(id);

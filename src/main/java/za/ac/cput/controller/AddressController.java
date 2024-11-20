@@ -68,8 +68,8 @@ public class AddressController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<Optional<Address>> findByUser(@RequestBody Long userId) {
-        Optional<Address> addresses = addressService.findByUserId(userId);
+    public ResponseEntity<List<Address>> findByUser(@RequestBody Long userId) {
+        List<Address> addresses = addressService.findByUserId(userId);
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 

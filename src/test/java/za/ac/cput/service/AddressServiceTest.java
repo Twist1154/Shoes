@@ -4,14 +4,19 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.Application;
 import za.ac.cput.domain.Address;
 import za.ac.cput.domain.User;
+import za.ac.cput.enums.Role;
+import za.ac.cput.factory.UserFactory;
 import za.ac.cput.repository.AddressRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,6 +25,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 @SpringBootTest(classes = Application.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext(classMode = AFTER_CLASS)
+@Transactional
 class AddressServiceTest {
 
     @Autowired
@@ -34,7 +40,26 @@ class AddressServiceTest {
 
     @BeforeEach
     void setup() {
-        user = userService.read(2L);
+        // Ensure the user exists or create a new one
+        user = userService.read(2L); // Assuming user with ID 2 exists, otherwise create
+        if (user == null) {
+            String Username = "User" + System.currentTimeMillis();
+            String email = "User" + System.currentTimeMillis()+ "@example.com";
+            user = UserFactory.createUser(
+                    null,
+                    "avatar.jpg",
+                    "John",
+                    "Doe",
+                    Username,
+                    email,
+                    LocalDate.parse("1990-01-01"),
+                    Set.of(Role.USER, Role.ADMIN),
+                    "0123456789",
+                    "password123"
+            );
+            user = userService.create(user);
+            System.out.println("User created with ID: " + user.getId());
+        }
 
         // Initialize the address object and assign it to the class-level variable
         address = new Address.Builder()
@@ -109,7 +134,7 @@ class AddressServiceTest {
     @Test
     @Order(5)
     void testFindByUser() {
-        Optional<Address> foundAddress = addressService.findByUserId(user.getId());
+        List<Address> foundAddress = addressService.findByUserId(user.getId());
         assertNotNull(foundAddress);
     }
 

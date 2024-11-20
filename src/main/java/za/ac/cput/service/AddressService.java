@@ -63,7 +63,7 @@ public class AddressService implements IAddress{
                     .setPostalCode(address.getPostalCode())
                     .setPhoneNumber(address.getPhoneNumber())
                     .setCreatedAt(address.getCreatedAt())
-                    .setUpdatedAt(address.getUpdatedAt())
+                    .setUpdatedAt(LocalDateTime.now())
                     .build();
             return repository.save(updatedAddress);
         } else {
@@ -89,7 +89,7 @@ public class AddressService implements IAddress{
     }
 
     @Override
-    public Optional<Address> findByUserId(Long userId) {
+    public List<Address> findByUserId(Long userId) {
         return repository.findByUserId(userId);
     }
 

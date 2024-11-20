@@ -4,37 +4,62 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.Product;
 import za.ac.cput.domain.Review;
 import za.ac.cput.domain.User;
+import za.ac.cput.enums.Role;
 import za.ac.cput.factory.ReviewFactory;
+import za.ac.cput.factory.UserFactory;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@Transactional
 class ReviewServiceTest {
     @Autowired
     private ReviewService service;
-
-    private Review review;
-
-    private Product product;
-    private User user;
     @Autowired
     private ProductService productService;
     @Autowired
     private UserService userService;
 
+    private Review review;
+    private Product product;
+    private User user;
+
     @BeforeEach
     void setUp() {
         product = productService.read(1L);
+
+        // Ensure the user exists or create a new one
         user = userService.read(2L);
+        if (user == null) {
+            String Username = "User" + System.currentTimeMillis();
+            String email = "User" + System.currentTimeMillis()+ "@example.com";
+            user = UserFactory.createUser(
+                    null,
+                    "avatar.jpg",
+                    "John",
+                    "Doe",
+                    Username,
+                    email,
+                    LocalDate.parse("1990-01-01"),
+                    Set.of(Role.USER, Role.ADMIN),
+                    "0123456789",
+                    "password123"
+            );
+            user = userService.create(user);
+            System.out.println("User created with ID: " + user.getId());
+        }
 
         review = ReviewFactory.createReviews(
                 null,

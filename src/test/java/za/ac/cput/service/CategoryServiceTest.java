@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.Application;
 import za.ac.cput.domain.Category;
 import za.ac.cput.factory.CategoryFactory;
@@ -20,6 +21,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 @SpringBootTest(classes = Application.class)
 @DirtiesContext(classMode = AFTER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Transactional
 class CategoryServiceTest {
 
     @Autowired

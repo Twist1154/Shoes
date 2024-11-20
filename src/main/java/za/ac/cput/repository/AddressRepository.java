@@ -23,13 +23,14 @@ import java.util.Optional;
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
+
     /**
      * Finds all Addresses associated with a given User.
      *
      * @param id the User entity to search by
      * @return a list of Addresses associated with the given User
      */
-    Optional<Address> findByUserId(Long id);
+    List<Address> findByUserId(Long id);
 
     /**
      * Finds all Addresses with a given title.
@@ -101,4 +102,5 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
      * @return a list of Addresses that have been marked as deleted
      */
     List<Address> findByUpdatedAt(LocalDateTime updatedAt);
+
 }

@@ -2,10 +2,13 @@ package za.ac.cput.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.Cart;
 import za.ac.cput.domain.CartItem;
+import za.ac.cput.domain.OrderDetails;
 import za.ac.cput.factory.CartFactory;
 import za.ac.cput.repository.CartRepository;
 
@@ -77,21 +80,26 @@ public class CartService implements ICart {
      * @param cartDetails the Cart entity to be updated
      * @return the updated Cart entity, or null if the Cart does not exist
      */
-    @Override
-       public Cart update(Cart cartDetails) {
-        if(cartDetails.getId() == null || !repository.existsById(cartDetails.getId())){
-            throw new IllegalArgumentException("Cart with the given ID does not exist.");
-        }
-        Cart existingCartItem = repository.findById(cartDetails.getId()).orElseThrow();
-        Cart updatedCart = CartFactory.createCart(
-                existingCartItem.getId(),
-                cartDetails.getUser(),
-                cartDetails.getTotal(),
-               cartDetails.getCreatedAt(),
-                cartDetails.getUpdatedAt()
-        );
-        return repository.save(updatedCart);
-    }
+   @Override
+   @Transactional(readOnly = false)
+    public Cart update(Cart cartDetails) {
+           if (repository.existsById(cartDetails.getId())) {
+               Cart existingcartDetails = repository.findById(cartDetails.getId()).orElse(null);
+               if (existingcartDetails != null) {
+                   Cart cartDetailsToUpdate = new Cart.Builder()
+                            .copy(existingcartDetails)
+                           .setId(existingcartDetails.getId())
+                           .setUser(existingcartDetails.getUser())
+                           .setTotal(cartDetails.getTotal())
+                           .setCreatedAt(existingcartDetails.getCreatedAt())
+                            .setUpdatedAt(LocalDateTime.now())
+                           .build();
+                   return repository.save(cartDetailsToUpdate);
+               }
+           }
+           return null;
+
+   }
 
     /**
      * Deletes a Cart and cart items by its Cart ID.
@@ -101,14 +109,16 @@ public class CartService implements ICart {
      */
     @Override
     public boolean delete(Long id) {
-        cartItemService.deleteByCartId(id);
-        repository.deleteById(id); // Use deleteById (standard JpaRepository method)
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 
-        // Check if the entity still exists after deletion
-        boolean exists = repository.existsById(id);
 
-        // Return true if it no longer exists (successful deletion), otherwise return false
-        return !exists;
+    public Page<Cart> getPaginatedCarts(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     /**

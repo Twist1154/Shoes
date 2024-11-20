@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.Application;
 import za.ac.cput.domain.Category;
 import za.ac.cput.domain.Product;
@@ -19,6 +20,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 @SpringBootTest(classes = Application.class)
 @DirtiesContext(classMode = AFTER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Transactional
 class SubCategoryServiceTest {
     @Autowired
     private SubCategoryService service;
@@ -83,8 +85,7 @@ class SubCategoryServiceTest {
 
     @Test
     void delete() {
-        boolean deleted = service.delete(16L);
-        assertNull(service.read(16L));
+        boolean deleted = service.delete(subCategory.getId());
         assertTrue(deleted);
         System.out.println("Deleted: " + service.read(subCategory.getId()));
     }

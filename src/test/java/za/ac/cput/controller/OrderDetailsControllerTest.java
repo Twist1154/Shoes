@@ -110,7 +110,7 @@ class OrderDetailsControllerTest {
     void deleteOrderDetails() {
         restTemplate.delete(baseUrl + "/" + orderDetails.getId());
         ResponseEntity<OrderDetails> response = restTemplate.getForEntity(baseUrl + "/" + orderDetails.getId(), OrderDetails.class);
-        assertEquals(404, response.getStatusCodeValue()); // Assuming 404 for not found
+        assertEquals(404, response.getStatusCode()); // Assuming 404 for not found
     }
 
     @Test

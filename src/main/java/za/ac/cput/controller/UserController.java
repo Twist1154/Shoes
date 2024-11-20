@@ -1,91 +1,103 @@
 package za.ac.cput.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.domain.User;
 import za.ac.cput.dto.UserPasswordDTO;
-import za.ac.cput.factory.UserFactory;
 import za.ac.cput.service.UserService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
- * UserController.java
+ * REST controller for managing users.
+ * Provides endpoints for CRUD operations and additional user-specific actions.
  *
- * @author Rethabile Ntsekhe
- * Student Num: 220455430
- * @date 24-Aug-24
+ * <p>
+ * Author: Rethabile Ntsekhe
+ * Date: 20-Nov-24
+ * </p>
  */
-
 @RestController
-@RequestMapping("/users")
-@Validated
+@RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    /**
-     * Handles the creation of a new user.
-     * and returns the created user with a 201 Created status.
-     *
-     * @param user the user data transfer object containing user details.\
-     * @return ResponseEntity containing the created UserDTO and HTTP status code.
-     */
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        User createdUser = userService.create(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    /**
-     * Retrieves a user by their ID.
-     *
-     * This endpoint returns the user with the specified ID if found, or a 404 Not Found status
-     * if the user does not exist.
-     *
-     * @param id the ID of the user to retrieve.
-     * @return ResponseEntity containing the UserDTO if found, or 404 status if not.
-     */
-    @GetMapping("/{id}")
+    @PostMapping("/create")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        User createdUser = userService.create(user);
+        return ResponseEntity.ok(createdUser);
+    }
+
+    @GetMapping("/read/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userService.read(id);
-        if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
+        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+        User updatedUser = userService.update(user);
+        return updatedUser != null ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        boolean deleted = userService.delete(id);
+        if (deleted) {
+            return ResponseEntity.ok("User deleted successfully.");
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().body("User not found or could not be deleted.");
         }
     }
 
-    /**
-     * Retrieves a list of all users.
-     *
-     * This endpoint returns a list of all users in the system.
-     *
-     * @return ResponseEntity containing the list of UserDTOs and an HTTP OK status.
-     */
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.findAll();
         return ResponseEntity.ok(users);
     }
 
-    /**
-     * Updates a user's password.
-     *
-     * This endpoint allows updating the password for a user with the specified ID.
-     * It receives the new password details in the request body and returns a success message.
-     *
-     * @param userPasswordDTO the data transfer object containing the new password details.
-     * @return ResponseEntity containing a success message and HTTP OK status.
-     */
-    @PostMapping("/password")
-    public ResponseEntity<String> updateUserPassword( @RequestBody UserPasswordDTO userPasswordDTO) {
-       User user = UserFactory.createUserForSignIn(userPasswordDTO.getEmail(), userPasswordDTO.getPassword());
-        userService.updatePassword(userPasswordDTO);
-        return ResponseEntity.ok("Password updated successfully");
+    @GetMapping("/email/{email}")
+    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+        return userService.findByEmail(email)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/firstname/{firstName}")
+    public ResponseEntity<List<User>> getUsersByFirstName(@PathVariable String firstName) {
+        List<User> users = userService.findByFirstName(firstName);
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/lastname/{lastName}")
+    public ResponseEntity<List<User>> getUsersByLastName(@PathVariable String lastName) {
+        List<User> users = userService.findByLastName(lastName);
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/birthdate/{birthDate}")
+    public ResponseEntity<List<User>> getUsersByBirthDate(@PathVariable String birthDate) {
+        List<User> users = userService.findByBirthDate(LocalDate.parse(birthDate));
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/phonenumber/{phoneNumber}")
+    public ResponseEntity<List<User>> getUsersByPhoneNumber(@PathVariable String phoneNumber) {
+        List<User> users = userService.findByPhoneNumber(phoneNumber);
+        return ResponseEntity.ok(users);
+    }
+
+    @PostMapping("/update-password")
+    public ResponseEntity<User> updatePassword(@RequestBody UserPasswordDTO userPasswordDTO) {
+        User updatedUser = userService.updatePassword(userPasswordDTO);
+        return ResponseEntity.ok(updatedUser);
     }
 }

@@ -1,5 +1,6 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,8 +23,9 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType. EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIncludeProperties({"id", "firstName", "lastName", "email", "phoneNumber"})
     private User user;
 
     private String title;

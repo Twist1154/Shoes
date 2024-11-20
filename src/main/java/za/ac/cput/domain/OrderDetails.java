@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -34,10 +35,10 @@ public class OrderDetails implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonIncludeProperties({"id", "firstName", "lastName", "email"})
+    @JsonIncludeProperties("id")
     private User user;
 
-    @OneToOne( cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToOne( cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "payment_id", nullable = false)
     @JsonManagedReference(value = "payment-order")
     private PaymentDetails paymentDetails;
@@ -47,10 +48,10 @@ public class OrderDetails implements Serializable {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "orderDetails",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "orderDetails", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<OrderItem> orderItems = new ArrayList<>();
 
@@ -81,7 +82,7 @@ public class OrderDetails implements Serializable {
     public String toString() {
         return "\n OrderDetails{" +
                 "id=" + id +
-                ", user=" + user.getFirstName() + " " + user.getLastName() +
+                ", user=" + user.getId() +
                 ", paymentDetails=" + paymentDetails.getStatus() +
                 ", total=" + total +
                 ", orderItems=" + orderItems +

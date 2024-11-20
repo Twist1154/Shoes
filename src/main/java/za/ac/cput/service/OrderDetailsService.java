@@ -56,7 +56,9 @@ public class OrderDetailsService implements IOrderDetails {
                         .setId(existingOrderDetails.getId())
                         .setUser(updatedOrderDetails.getUser())
                         .setTotal(updatedOrderDetails.getTotal())
+                        .setPaymentDetails(existingOrderDetails.getPaymentDetails())
                         .setCreatedAt(existingOrderDetails.getCreatedAt())
+                        .setUpdatedAt(LocalDateTime.now())
                         .build();
                 return repository.save(orderDetailsToUpdate);
             }

@@ -66,7 +66,7 @@ public class UserService implements UserDetailsService, IUser {
                     .setFirstName(user.getFirstName())
                     .setLastName(user.getLastName())
                     .setBirthDate(user.getBirthDate())
-                    .setPhoneNumber(passwordEncoder.encode(user.getPhoneNumber()))
+                    .setPhoneNumber(user.getPhoneNumber())
                     .setEmail(user.getEmail())
                     .setPassword(passwordEncoder.encode(user.getPassword()))
                     .setRole(user.getRole())

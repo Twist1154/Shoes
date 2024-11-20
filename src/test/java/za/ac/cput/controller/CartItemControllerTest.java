@@ -138,7 +138,7 @@ class CartItemControllerTest {
         restTemplate.delete(baseUrl + "/" + cartItemId);
 
         ResponseEntity<CartItem> deletedCartItemResponse = restTemplate.getForEntity(baseUrl + "/" + cartItemId, CartItem.class);
-        assertEquals(404, deletedCartItemResponse.getStatusCodeValue());  // Assuming 404 for not found
+        assertEquals(404, deletedCartItemResponse.getStatusCode());  // Assuming 404 for not found
     }
 
     @Test

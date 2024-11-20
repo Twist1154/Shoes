@@ -45,26 +45,20 @@ public class SecurityConfig {
                                 "/api/products/all/**",
                                 "/api/products/read/**"
                         ).permitAll()
-
-                        // ADMIN-specific endpoints
                         .requestMatchers(
                                 "/api/s3/**",
                                 "/api/products/delete/**",
                                 "/api/users/**",
                                 "/api/order-details/**",
                                 "/api/payment-details/**"
-                        ).hasAuthority("ADMIN")
-
-                        // USER-specific endpoints
+                        ).hasAuthority("ADMIN")  // ADMIN-specific endpoints
                         .requestMatchers(
-                                "/demo/user/**",
+                                "/",
                                 "/authentication/read/{id}**",
                                 "/api/cart/byUser/{userId}",
                                 "/api/wishlist/getByUser/{userId}"
-                        ).hasAuthority("USER")
-
-                        // Other endpoints require authentication
-                        .anyRequest().authenticated()
+                        ).hasAuthority("USER")// USER-specific endpoints
+                        .anyRequest().authenticated()// Other endpoints require authentication
                 )
                 .userDetailsService(userService)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

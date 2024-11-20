@@ -5,13 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.*;
+import za.ac.cput.enums.Role;
 import za.ac.cput.factory.CartFactory;
 import za.ac.cput.factory.CartItemFactory;
+import za.ac.cput.factory.UserFactory;
 import za.ac.cput.repository.CartItemRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS;
@@ -20,6 +25,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 @ActiveProfiles("test") // Use a specific profile for testing if needed
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext(classMode = AFTER_CLASS)
+@Transactional
 class CartItemServiceTest {
 
     @Autowired
@@ -39,13 +45,31 @@ class CartItemServiceTest {
     private Cart cart;
     private Product product;
     private ProductSku productSku;
-
     private User user;
     private CartItem cartItem;
 
     @BeforeEach
     void setUp() {
-        user = userService.read(2L);
+        // Ensure the user exists or create a new one
+        user = userService.read(2L); // Assuming user with ID 2 exists, otherwise create
+        if (user == null) {
+            String Username = "User" + System.currentTimeMillis();
+            String email = "User" + System.currentTimeMillis()+ "@example.com";
+            user = UserFactory.createUser(
+                    null,
+                    "avatar.jpg",
+                    "John",
+                    "Doe",
+                    Username,
+                    email,
+                    LocalDate.parse("1990-01-01"),
+                    Set.of(Role.USER, Role.ADMIN),
+                    "0123456789",
+                    "password123"
+            );
+            user = userService.create(user);
+            System.out.println("User created with ID: " + user.getId());
+        }
         product = productService.read(1L);
         productSku = productSkuService.read(1L);
 

@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,11 +39,14 @@ public class Wishlist {
     private User user;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "wishlist", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "wishlist",  cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private final List<WishlistItem> wishlistItems = new ArrayList<>();
+
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     public Wishlist() {
     }
@@ -51,7 +54,7 @@ public class Wishlist {
     private Wishlist(Builder builder) {
         this.id = builder.id;
         this.user = builder.user;
-        this.wishlistItems.addAll(builder.wishlistItems);
+        this.wishlistItems.addAll(new ArrayList<>(builder.wishlistItems));
         this.createdAt = builder.createdAt;
     }
 
@@ -60,12 +63,9 @@ public class Wishlist {
         this.createdAt = LocalDateTime.now();
     }
 
-    public void addWishlistItem(WishlistItem wishlistItem) {
-        this.wishlistItems.add(wishlistItem);
-    }
-
-    public void removeWishlistItem(WishlistItem wishlistItem) {
-        this.wishlistItems.remove(wishlistItem);
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
     }
 
     @Override
@@ -110,7 +110,7 @@ public class Wishlist {
         }
 
         public Builder setWishlistItems(List<WishlistItem> wishlistItems) {
-            this.wishlistItems = new ArrayList<>(wishlistItems); // defensive copy
+            this.wishlistItems = new ArrayList<>(wishlistItems);
             return this;
         }
 

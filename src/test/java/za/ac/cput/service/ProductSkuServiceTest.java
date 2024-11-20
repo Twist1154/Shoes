@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.Product;
 import za.ac.cput.domain.ProductAttribute;
 import za.ac.cput.domain.ProductSku;
@@ -16,18 +17,19 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@Transactional
 class ProductSkuServiceTest {
 
     @Autowired
     private ProductSkuService productSkuService;
-
-    private ProductSku productSku;
 
     @Autowired
     private ProductService productService;
 
     @Autowired
     private ProductAttributeService productAttributeService;
+
+    private ProductSku productSku;
 
     @BeforeEach
     void setUp() {

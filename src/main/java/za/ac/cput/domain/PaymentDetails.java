@@ -29,7 +29,7 @@ public class PaymentDetails implements Serializable {
     private String provider;
     private String status;
 
-    @OneToOne(mappedBy = "paymentDetails", cascade = {CascadeType.MERGE,CascadeType.ALL}, orphanRemoval = true)
+    @OneToOne(mappedBy = "paymentDetails", fetch = FetchType.EAGER)
     @JoinColumn
     @JsonBackReference(value = "payment-order")
 

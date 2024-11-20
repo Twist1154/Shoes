@@ -111,7 +111,7 @@ class AddressControllerTest {
     void delete() {
         restTemplate.delete(baseUrl + "/" + address.getId());
         ResponseEntity<Address> response = restTemplate.getForEntity(baseUrl + "/" + address.getId(), Address.class);
-        assertEquals(404, response.getStatusCodeValue()); // Assuming 404 for not found
+        assertEquals(404, response.getStatusCode()); // Assuming 404 for not found
     }
 
     @Test
