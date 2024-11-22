@@ -144,4 +144,16 @@ public class CartItemController {
         List<CartItem> cartItems = cartItemService.findByQuantity(quantity);
         return ResponseEntity.ok(cartItems);
     }
+
+    /**
+     * Deletes all cart items associated with a Cart.
+     *
+     * @param cartId the ID of the Cart to delete items from
+     * @return ResponseEntity with HTTP status code 204 No Content to indicate successful deletion
+     */
+    @DeleteMapping("/deleteByCart/{cartId}")
+    public ResponseEntity<Void> deleteCartItemsByCartId(@PathVariable Long cartId) {
+        cartItemService.deleteByCartId(cartId);
+        return ResponseEntity.noContent().build();
+    }
 }
