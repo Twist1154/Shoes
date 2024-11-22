@@ -21,7 +21,8 @@ This is the backend for a **Shoe Store Application**, built with **Spring Boot**
 
 The following diagram illustrates the structure of the database and relationships between entities:
 
-![ERD](entityManagerFactory(EntityManagerFactoryBuilder,%20PersistenceManagedTypes).png)
+![entityManagerFactory(EntityManagerFactoryBuilder, PersistenceManagedTypes)](https://github.com/user-attachments/assets/0d98da63-2dd4-4a74-a27a-b76aa10d20fe)
+
 
 ---
 
