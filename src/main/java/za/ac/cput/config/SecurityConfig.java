@@ -38,7 +38,6 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                        // Publicly accessible endpoints
                         .requestMatchers(
                                 "/auth/login/**",
                                 "/auth/register/**",

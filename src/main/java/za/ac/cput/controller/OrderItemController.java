@@ -11,10 +11,10 @@ import java.util.List;
 
 /**
  * OrderItemController.java
- *
+ * <p>
  * This class handles HTTP requests related to order items.
  * It provides endpoints for CRUD operations on order items.
- *
+ * <p>
  * Author: Rethabile Ntsekhe
  * Date: 25-Aug-24
  */
@@ -60,12 +60,15 @@ public class OrderItemController {
     /**
      * Updates an existing order item.
      *
-     * @param id the ID of the order item to be updated
+     * @param id        the ID of the order item to be updated
      * @param orderItem the updated order item details
      * @return ResponseEntity containing the updated OrderItem and HTTP status code, or 404 Not Found if not found
      */
     @PutMapping("/{id}")
     public ResponseEntity<OrderItem> updateOrderItem(@PathVariable Long id, @RequestBody OrderItem orderItem) {
+        if (!id.equals(orderItem.getId())) {
+            return ResponseEntity.badRequest().build();
+        }
         OrderItem updatedOrderItem = orderItemService.update(orderItem);
         if (updatedOrderItem != null) {
             return ResponseEntity.ok(updatedOrderItem);
@@ -81,9 +84,15 @@ public class OrderItemController {
      * @return ResponseEntity with HTTP status code indicating success or failure
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrderItem(@PathVariable Long id) {
-        orderItemService.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteOrderItem(@PathVariable Long id) {
+        boolean isDeleted = orderItemService.delete(id);
+        if (isDeleted) {
+            // Return success message if deleted successfully
+            return ResponseEntity.status(HttpStatus.OK).body("Order item with ID " + id + " deleted successfully.");
+        } else {
+            // Return a not found message if the deletion failed
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order item with ID " + id + " not found.");
+        }
     }
 
     /**
@@ -95,5 +104,11 @@ public class OrderItemController {
     public ResponseEntity<List<OrderItem>> getAllOrderItems() {
         List<OrderItem> orderItems = orderItemService.findAll();
         return ResponseEntity.ok(orderItems);
+    }
+
+    @DeleteMapping("/{orderId}/items")
+    public ResponseEntity<Void> deleteOrderItemsByOrderId(@PathVariable Long orderId) {
+        orderItemService.deleteOrderItemByOrderDetails_Id(orderId);
+        return ResponseEntity.noContent().build();
     }
 }

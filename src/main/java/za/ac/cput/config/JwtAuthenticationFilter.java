@@ -54,10 +54,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+            } else {
+                System.out.println("Invalid JWT token for user: " + username);
             }
         }
 
         // Continue with the next filter in the chain
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return path.startsWith("/auth/login") ||
+               path.startsWith("/auth/register") ||
+               path.startsWith("/api/products/all") ||
+               path.startsWith("/api/products/read");
     }
 }

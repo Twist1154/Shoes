@@ -136,8 +136,9 @@ public class OrderDetailsController {
      * @return ResponseEntity containing the list of OrderDetails created after the specified date
      */
     @GetMapping("/created-after/{createdAt}")
-    public ResponseEntity<List<OrderDetails>> getOrderDetailsByCreatedAtAfter(@PathVariable LocalDateTime createdAt) {
-        List<OrderDetails> orderDetailsList = orderDetailsService.findByCreatedAtAfter(createdAt);
+    public ResponseEntity<List<OrderDetails>> getOrderDetailsByCreatedAtAfter(@PathVariable String createdAt) {
+        LocalDateTime createdDateTime = LocalDateTime.parse(createdAt);
+        List<OrderDetails> orderDetailsList = orderDetailsService.findByCreatedAtAfter(createdDateTime);
         if (orderDetailsList.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -151,8 +152,9 @@ public class OrderDetailsController {
      * @return ResponseEntity containing the list of OrderDetails updated before the specified date
      */
     @GetMapping("/updated-before/{updatedAt}")
-    public ResponseEntity<List<OrderDetails>> getOrderDetailsByUpdatedAtBefore(@PathVariable LocalDateTime updatedAt) {
-        List<OrderDetails> orderDetailsList = orderDetailsService.findByUpdatedAtBefore(updatedAt);
+    public ResponseEntity<List<OrderDetails>> getOrderDetailsByUpdatedAtBefore(@PathVariable String updatedAt) {
+        LocalDateTime updatedDateTime = LocalDateTime.parse(updatedAt);
+        List<OrderDetails> orderDetailsList = orderDetailsService.findByUpdatedAtBefore(updatedDateTime);
         if (orderDetailsList.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -180,7 +182,7 @@ public class OrderDetailsController {
      * @param userId the ID of the user
      * @return ResponseEntity containing the list of OrderDetails associated with the user ID, ordered by creation date
      */
-    @GetMapping("/user/{userId}/ordered-by-created-at-desc")
+    @GetMapping("/user/{userId}/recent")
     public ResponseEntity<List<OrderDetails>> getOrderDetailsByUserIdOrderByCreatedAtDesc(@PathVariable Long userId) {
         List<OrderDetails> orderDetailsList = orderDetailsService.findByUserIdOrderByCreatedAtDesc(userId);
         if (orderDetailsList.isEmpty()) {
@@ -188,4 +190,12 @@ public class OrderDetailsController {
         }
         return ResponseEntity.ok(orderDetailsList);
     }
+
+
+
+
+
+
+
+
 }

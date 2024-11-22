@@ -38,17 +38,21 @@ public class OrderItemService implements IOrderItem {
         return repository.findById(id).orElse(null);
     }
 
-    @Override
     public OrderItem update(OrderItem orderItem) {
-     OrderItem   existingOrderItem = repository.findById(orderItem.getId()).orElse(null);
-        if(existingOrderItem != null) {
+        OrderItem existingOrderItem = repository.findById(orderItem.getId()).orElse(null);
+        if (existingOrderItem != null) {
+            if (!existingOrderItem.getId().equals(orderItem.getId())) {
+                log.error("ID mismatch while updating OrderItem. Existing ID: {}, Given ID: {}", existingOrderItem.getId(), orderItem.getId());
+                return null;
+            }
             OrderItem updatedOrderItem = new OrderItem.Builder()
-                    .copy(existingOrderItem) // Copy existing fields
-                    .setOrderDetails(orderItem.getOrderDetails()) // Update new order details
-                    .setProduct(orderItem.getProduct()) // Update new product
-                    .setProductSku(orderItem.getProductSku()) // Update new product SKU
-                    .setQuantity(orderItem.getQuantity()) // Update new quantity
+                    .copy(existingOrderItem)
+                    .setOrderDetails(orderItem.getOrderDetails())
+                    .setProduct(orderItem.getProduct())
+                    .setProductSku(orderItem.getProductSku())
+                    .setQuantity(orderItem.getQuantity())
                     .build();
+            log.info("OrderItem updated successfully. ID: {}", updatedOrderItem.getId());
             return repository.save(updatedOrderItem);
         } else {
             log.warn("Attempt to update a non-existent order item with ID: {}", orderItem.getId());
@@ -59,9 +63,10 @@ public class OrderItemService implements IOrderItem {
     public boolean delete(Long id) {
         if (repository.existsById(id)) {
             repository.deleteById(id);
-            return !repository.existsById(id); // Return true if deleted successfully
+            log.info("OrderItem deleted successfully. ID: {}", id);
+            return true;
         } else {
-            log.warn("Attempt to delete a non-existent Order item with ID: " + id);
+            log.warn("Attempt to delete a non-existent OrderItem with ID: {}", id);
             return false;
         }
     }
