@@ -40,7 +40,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> req
                         .requestMatchers(
                                 "/auth/login/**",
-                                "/auth/register/**",
+                                "/auth/register/**"
+                        ).permitAll()
+                        .requestMatchers(
                                 "/api/products/all/**",
                                 "/api/products/read/**"
                         ).permitAll()
@@ -50,14 +52,14 @@ public class SecurityConfig {
                                 "/api/users/**",
                                 "/api/order-details/**",
                                 "/api/payment-details/**"
-                        ).hasAuthority("ADMIN")  // ADMIN-specific endpoints
+                        ).hasAuthority("ADMIN")
                         .requestMatchers(
                                 "/",
                                 "/authentication/read/{id}**",
                                 "/api/cart/byUser/{userId}",
                                 "/api/wishlist/getByUser/{userId}"
-                        ).hasAuthority("USER")// USER-specific endpoints
-                        .anyRequest().authenticated()// Other endpoints require authentication
+                        ).hasAuthority("USER")
+                        .anyRequest().authenticated()
                 )
                 .userDetailsService(userService)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -75,4 +77,5 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
+
 }
