@@ -4,55 +4,82 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.Product;
 import za.ac.cput.domain.Review;
 import za.ac.cput.domain.User;
+import za.ac.cput.enums.Role;
 import za.ac.cput.factory.ReviewFactory;
+import za.ac.cput.factory.UserFactory;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@Transactional
 class ReviewServiceTest {
     @Autowired
     private ReviewService service;
-
-    private Review review;
-
-    private Product product;
-    private User user;
     @Autowired
     private ProductService productService;
     @Autowired
     private UserService userService;
 
+    private Review review;
+    private Product product;
+    private User user;
+
     @BeforeEach
     void setUp() {
-        product = productService.read(16L);
+        product = productService.read(1L);
+
+        // Ensure the user exists or create a new one
         user = userService.read(2L);
+        if (user == null) {
+            String Username = "User" + System.currentTimeMillis();
+            String email = "User" + System.currentTimeMillis()+ "@example.com";
+            user = UserFactory.createUser(
+                    null,
+                    "avatar.jpg",
+                    "John",
+                    "Doe",
+                    Username,
+                    email,
+                    LocalDate.parse("1990-01-01"),
+                    Set.of(Role.USER, Role.ADMIN),
+                    "0123456789",
+                    "password123"
+            );
+            user = userService.create(user);
+            System.out.println("User created with ID: " + user.getId());
+        }
 
         review = ReviewFactory.createReviews(
                 null,
                 "awesome stuff",
                 5,
                 product,
-                user,
-                LocalDateTime.now()
+                user
         );
         service.create(review);
     }
 
     @AfterEach
     void tearDown() {
-        service.delete(review.getId());  // Clean up after each test
+        if (review.getId() != null&& review.getId() > 3){
+        service.delete(review.getId());
+        }
     }
 
     @Test
+    @Order(1)
     void create() {
         Review created = service.create(review);
         assertEquals(review.getId(), created.getId());
@@ -60,6 +87,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(2)
     void read() {
         Review read = service.read(review.getId());
         assertNotNull(read);
@@ -68,6 +96,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(3)
     void update() {
         Review updated = new Review.Builder()
                 .copy(review)
@@ -79,6 +108,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(4)
     void findAll() {
         List<Review> reviews = service.findAll();
         assertFalse(reviews.isEmpty());
@@ -86,6 +116,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(5)
     void delete() {
         boolean deleted = service.delete(review.getId());
         assertTrue(deleted);
@@ -94,6 +125,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(6)
     void findByProduct_Id() {
         List<Review> reviews = service.findByProduct_Id(product.getId());
         assertFalse(reviews.isEmpty());
@@ -102,6 +134,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(7)
     void findByRating() {
         List<Review> reviews = service.findByRating(5);
         assertFalse(reviews.isEmpty());
@@ -110,6 +143,7 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Order(8)
     void findByRatingGreaterThan() {
         List<Review> reviews = service.findByRatingGreaterThan(3);
         assertFalse(reviews.isEmpty());

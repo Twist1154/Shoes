@@ -1,15 +1,14 @@
 package za.ac.cput.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import za.ac.cput.domain.WishlistItem;
 import za.ac.cput.domain.Wishlist;
 import za.ac.cput.repository.WishlistRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * WishlistService.java
@@ -21,16 +20,17 @@ import java.util.stream.Collectors;
  * Student Num: 220455430
  * @date 25-Aug-24
  */
+@Slf4j
 @Service
 @Transactional
 public class WishlistService implements iWishlist {
 
-    private final WishlistRepository wishlistRepository;
+    private final WishlistRepository repository;
     private final WishlistItemService wishListItemService;
 
     @Autowired
-    public WishlistService(WishlistRepository wishlistRepository, WishlistItemService wishListItemService) {
-        this.wishlistRepository = wishlistRepository;
+    public WishlistService(WishlistRepository repository, WishlistItemService wishListItemService) {
+        this.repository = repository;
         this.wishListItemService = wishListItemService;
     }
 
@@ -41,8 +41,9 @@ public class WishlistService implements iWishlist {
      * @return the saved wishlist
      */
     @Override
+    @Transactional(readOnly = false)
     public Wishlist create(Wishlist wishlist) {
-        return wishlistRepository.save(wishlist);
+        return repository.save(wishlist);
     }
 
     /**
@@ -54,15 +55,12 @@ public class WishlistService implements iWishlist {
      * @throws EntityNotFoundException if the wishlist is not found
      */
     @Override
-    @Transactional(readOnly = true) // Mark this read-only as it doesn't modify the database
+    @Transactional(readOnly = true)
     public Wishlist read(Long id) {
-        Wishlist wishlist = wishlistRepository.findById(id)
+        Wishlist wishlist = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Wishlist not found"));
 
-        // Access to initialize lazy-loaded collections (WishlistItems and their Products' SubCategories)
-        for (WishlistItem item : wishlist.getWishlistItems()) {
-            item.getProduct().getSubCategory().size(); // Ensure subCategory is initialized
-        }
+        wishlist.getWishlistItems().size();
         return wishlist;
     }
 
@@ -74,17 +72,16 @@ public class WishlistService implements iWishlist {
      * @throws IllegalArgumentException if the wishlist with the provided ID does not exist
      */
     @Override
+    @Transactional(readOnly = false)
     public Wishlist update(Wishlist wishlist) {
-        // Check if the wishlist exists in the repository
-        Wishlist existingWishlist = wishlistRepository.findById(wishlist.getId()).orElse(null);
+        Wishlist existingWishlist = repository.findById(wishlist.getId()).orElse(null);
         if (existingWishlist != null) {
-            // Use the Builder pattern to create an updated version of the wishlist
             Wishlist updatedWishlist = new Wishlist.Builder()
                     .copy(existingWishlist)
                     .setUser(wishlist.getUser())
                     .setWishlistItems(wishlist.getWishlistItems())
                     .build();
-            return wishlistRepository.save(updatedWishlist);
+            return repository.save(updatedWishlist);
         } else {
             throw new IllegalArgumentException("Wishlist with ID " + wishlist.getId() + " does not exist");
         }
@@ -96,22 +93,21 @@ public class WishlistService implements iWishlist {
      * @param id the ID of the wishlist to delete
      * @return
      */
+
     public boolean delete(Long id) {
-
-        wishListItemService.deleteByWishlistId(id);
-        wishlistRepository.deleteById(id);
-
-        // Check if the entity still exists after deletion
-        boolean exists = wishlistRepository.existsById(id);
-
-        // Return false if entity was deleted successfully, otherwise return true
-        return !exists;
+       if (repository.existsById(id)) {
+           repository.deleteById(id);
+           return !repository.existsById(id); // Return true if deleted successfully
+       } else {
+           log.warn("Attempt to delete a non-existent Wishlist with ID: " + id);
+           return false;
+       }
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Wishlist> findByUserId(Long userId) {
-        return wishlistRepository.findByUserId(userId);
+        return repository.findByUserId(userId);
     }
 
     /**
@@ -122,9 +118,6 @@ public class WishlistService implements iWishlist {
     @Override
     @Transactional(readOnly = true)
     public List<Wishlist> findAll() {
-        // this method will now ignore rows where deleted at is not null
-        return wishlistRepository.findAll().stream()
-                .filter(wishlist -> wishlist.getDeletedAt() == null)
-                .collect(Collectors.toList());
+        return repository.findAll();
     }
 }

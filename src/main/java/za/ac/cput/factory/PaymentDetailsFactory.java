@@ -19,22 +19,17 @@ public class PaymentDetailsFactory {
      * Creates a {@link PaymentDetails} instance from various inputs.
      *
      * @param id          the ID of the payment details (nullable)
-     * @param orderDetails the {@link OrderDetails} entity associated with the payment details (can be null for initial creation)
      * @param amount      the amount of the payment (cannot be null or empty)
      * @param provider    the payment provider (cannot be null or empty)
      * @param status      the status of the payment (cannot be null or empty)
      * @param createdAt   the date the payment was created (cannot be null)
-     * @param updatedAt   the date the payment was updated (nullable)
      * @return a new {@link PaymentDetails} object with properties set from the input parameters
      * @throws IllegalArgumentException if any required parameters are null or invalid
      */
     public static PaymentDetails createPaymentDetails(Long id,
-                                                      OrderDetails orderDetails,
                                                       Double amount,
                                                       String provider,
-                                                      String status,
-                                                      LocalDateTime createdAt,
-                                                      LocalDateTime updatedAt) {
+                                                      String status) {
         // Define constants for the switch cases
         final int AMOUNT_NULL = 1;
         final int PROVIDER_NULL = 2;
@@ -54,11 +49,8 @@ public class PaymentDetailsFactory {
         if (Helper.isNullOrEmpty(status)) {
             errorFlags |= STATUS_NULL;
         }
-        if (Helper.isNullOrEmpty(createdAt)) {
-            errorFlags |= CREATED_AT_NULL;
-        }
 
-        // Use switch statement to throw exception based on the flags
+
         switch (errorFlags) {
             case AMOUNT_NULL | PROVIDER_NULL | STATUS_NULL | CREATED_AT_NULL:
                 throw new IllegalArgumentException("Amount, provider, status, and created date cannot be null or empty");
@@ -79,19 +71,14 @@ public class PaymentDetailsFactory {
             case CREATED_AT_NULL:
                 throw new IllegalArgumentException("Created date cannot be null");
             default:
-                // No null or empty values
                 break;
         }
 
-        // Use the Builder pattern to create a new PaymentDetails object
         return new PaymentDetails.Builder()
-                .setId(id) // Set the ID of the payment details (nullable)
-                .setOrderDetails(orderDetails) // Set the order details associated with the payment (can be null)
-                .setAmount(amount) // Set the amount of the payment (required)
-                .setProvider(provider) // Set the payment provider (required)
-                .setStatus(status) // Set the status of the payment (required)
-                .setCreatedAt(createdAt) // Set the date the payment was created (required)
-                .setUpdatedAt(updatedAt != null ? updatedAt : LocalDateTime.now()) // Set updatedAt to now if not provided
+                .setId(id)
+                .setAmount(amount)
+                .setProvider(provider)
+                .setStatus(status)
                 .build();
     }
 }

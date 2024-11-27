@@ -2,9 +2,13 @@ package za.ac.cput.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.Cart;
+import za.ac.cput.domain.CartItem;
+import za.ac.cput.domain.OrderDetails;
 import za.ac.cput.factory.CartFactory;
 import za.ac.cput.repository.CartRepository;
 
@@ -18,7 +22,6 @@ import java.util.List;
  * Implements ICartService to provide basic CRUD operations and additional query methods.
  *
  * @autor Rethabile Ntsekhe
- * @date 25-Aug-24
  */
 
 @Slf4j
@@ -26,12 +29,12 @@ import java.util.List;
 @Transactional
 public class CartService implements ICart {
 
-    private final CartRepository cartRepository;
+    private final CartRepository repository;
     private final CartItemService cartItemService;
 
     @Autowired
-    public CartService(CartRepository cartRepository, CartItemService cartItemService) {
-        this.cartRepository = cartRepository;
+    public CartService(CartRepository repository, CartItemService cartItemService) {
+        this.repository = repository;
         this.cartItemService = cartItemService;
     }
 
@@ -43,7 +46,19 @@ public class CartService implements ICart {
      */
     @Override
     public Cart create(Cart cart) {
-        return cartRepository.save(cart);
+        // Calculate the total price
+        double total = 0.0;
+        for (CartItem cartItem : cart.getCartItems()) {
+            total += cartItem.getProductSku().getPrice() * cartItem.getQuantity();
+        }
+
+        Cart totalCart = new Cart.Builder()
+                .copy(cart)
+                .setTotal(total)
+                .build();
+
+        // Save and return the cart
+        return repository.save(totalCart);
     }
 
     /**
@@ -54,7 +69,7 @@ public class CartService implements ICart {
      */
     @Override
     public Cart read(Long id) {
-        return cartRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
 
     }
 
@@ -65,21 +80,26 @@ public class CartService implements ICart {
      * @param cartDetails the Cart entity to be updated
      * @return the updated Cart entity, or null if the Cart does not exist
      */
-    @Override
-       public Cart update(Cart cartDetails) {
-        if(cartDetails.getId() == null || !cartRepository.existsById(cartDetails.getId())){
-            throw new IllegalArgumentException("Cart with the given ID does not exist.");
-        }
-        Cart existingCartItem = cartRepository.findById(cartDetails.getId()).orElseThrow();
-        Cart updatedCart = CartFactory.createCart(
-                existingCartItem.getId(),
-                cartDetails.getUser(),
-                cartDetails.getTotal(),
-               cartDetails.getCreatedAt(),
-                cartDetails.getUpdatedAt()
-        );
-        return cartRepository.save(updatedCart);
-    }
+   @Override
+   @Transactional(readOnly = false)
+    public Cart update(Cart cartDetails) {
+           if (repository.existsById(cartDetails.getId())) {
+               Cart existingcartDetails = repository.findById(cartDetails.getId()).orElse(null);
+               if (existingcartDetails != null) {
+                   Cart cartDetailsToUpdate = new Cart.Builder()
+                            .copy(existingcartDetails)
+                           .setId(existingcartDetails.getId())
+                           .setUser(existingcartDetails.getUser())
+                           .setTotal(cartDetails.getTotal())
+                           .setCreatedAt(existingcartDetails.getCreatedAt())
+                            .setUpdatedAt(LocalDateTime.now())
+                           .build();
+                   return repository.save(cartDetailsToUpdate);
+               }
+           }
+           return null;
+
+   }
 
     /**
      * Deletes a Cart and cart items by its Cart ID.
@@ -89,14 +109,16 @@ public class CartService implements ICart {
      */
     @Override
     public boolean delete(Long id) {
-        cartItemService.deleteByCartId(id);
-        cartRepository.deleteById(id); // Use deleteById (standard JpaRepository method)
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 
-        // Check if the entity still exists after deletion
-        boolean exists = cartRepository.existsById(id);
 
-        // Return true if it no longer exists (successful deletion), otherwise return false
-        return !exists;
+    public Page<Cart> getPaginatedCarts(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     /**
@@ -106,7 +128,7 @@ public class CartService implements ICart {
      */
     @Override
     public List<Cart> findAll() {
-        return cartRepository.findAll();
+        return repository.findAll();
     }
 
     /**
@@ -117,7 +139,7 @@ public class CartService implements ICart {
      */
     @Override
     public List<Cart> findByUserId(Long userId) {
-        return cartRepository.findByUserId(userId);
+        return repository.findByUserId(userId);
     }
 
     /**
@@ -128,7 +150,7 @@ public class CartService implements ICart {
      */
     @Override
     public List<Cart> findByCreatedAtAfter(LocalDateTime createdAt) {
-        return cartRepository.findByCreatedAtAfter(createdAt);
+        return repository.findByCreatedAtAfter(createdAt);
     }
 
     /**
@@ -139,7 +161,7 @@ public class CartService implements ICart {
      */
     @Override
     public List<Cart> findByTotalGreaterThan(Double total) {
-        return cartRepository.findByTotalGreaterThan(total);
+        return repository.findByTotalGreaterThan(total);
     }
 
     /**
@@ -150,7 +172,7 @@ public class CartService implements ICart {
      */
     @Override
     public List<Cart> findByUpdatedAtAfter(LocalDateTime updatedAt) {
-        return cartRepository.findByUpdatedAtAfter(updatedAt);
+        return repository.findByUpdatedAtAfter(updatedAt);
     }
 
     /**
@@ -162,7 +184,7 @@ public class CartService implements ICart {
      */
     @Override
     public List<Cart> findCartsCreatedWithinDateRange(LocalDateTime startDate, LocalDateTime endDate) {
-        return cartRepository.findCartsCreatedWithinDateRange(startDate, endDate);
+        return repository.findCartsCreatedWithinDateRange(startDate, endDate);
     }
 
     /**
@@ -172,7 +194,7 @@ public class CartService implements ICart {
      */
     @Override
     public Cart findCartWithHighestTotal() {
-        return cartRepository.findCartWithHighestTotal();
+        return repository.findCartWithHighestTotal();
     }
 
     /**
@@ -183,7 +205,7 @@ public class CartService implements ICart {
      */
     @Override
     public List<Cart> findCartsWithTotalGreaterThan(Double total) {
-        return cartRepository.findCartsWithTotalGreaterThan(total);
+        return repository.findCartsWithTotalGreaterThan(total);
     }
 
     /**
@@ -195,7 +217,7 @@ public class CartService implements ICart {
      */
     @Override
     public List<Cart> findByUserIdAndCreatedAtAfter(Long userId, LocalDateTime createdAt) {
-        return cartRepository.findByUserIdAndCreatedAtAfter(userId, createdAt);
+        return repository.findByUserIdAndCreatedAtAfter(userId, createdAt);
     }
 
     /**
@@ -207,7 +229,7 @@ public class CartService implements ICart {
      */
     @Override
     public List<Cart> findByUserIdAndUpdatedAtAfter(Long userId, LocalDateTime updatedAt) {
-        return cartRepository.findByUserIdAndUpdatedAtAfter(userId, updatedAt);
+        return repository.findByUserIdAndUpdatedAtAfter(userId, updatedAt);
     }
 
     /**
@@ -218,7 +240,7 @@ public class CartService implements ICart {
      */
     @Override
     public List<Cart> findByCreatedAtBefore(LocalDateTime createdAt) {
-        return cartRepository.findByCreatedAtBefore(createdAt);
+        return repository.findByCreatedAtBefore(createdAt);
     }
 
     /**
@@ -229,7 +251,7 @@ public class CartService implements ICart {
      */
     @Override
     public List<Cart> findByUpdatedAtBefore(LocalDateTime updatedAt) {
-        return cartRepository.findByUpdatedAtBefore(updatedAt);
+        return repository.findByUpdatedAtBefore(updatedAt);
     }
 
     /**
@@ -240,7 +262,7 @@ public class CartService implements ICart {
     @Override
     public List<Cart> findCartsCreatedInLast30Days() {
         LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
-        return cartRepository.findByCreatedAtAfter(thirtyDaysAgo);
+        return repository.findByCreatedAtAfter(thirtyDaysAgo);
     }
 
     /**
@@ -250,9 +272,10 @@ public class CartService implements ICart {
      */
     @Override
     public void deleteByUserId(Long userId) {
-        List<Cart> userCarts = cartRepository.findByUserId(userId);
+        List<Cart> userCarts = repository.findByUserId(userId);
         for (Cart cart : userCarts) {
-            cartRepository.delete(cart);
+            repository.delete(cart);
+
         }
     }
 }

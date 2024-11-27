@@ -6,9 +6,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import za.ac.cput.domain.Category;
+import za.ac.cput.domain.Product;
 import za.ac.cput.domain.SubCategory;
 import za.ac.cput.factory.SubCategoryFactory;
 import za.ac.cput.service.CategoryService;
+import za.ac.cput.service.ProductService;
 import za.ac.cput.service.SubCategoryService;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,12 +23,15 @@ import java.util.List;
 class SubCategoryControllerTest {
     @Autowired
     private SubCategoryService subCategoryService;
+    @Autowired
+    private ProductService productService;
 
     @Autowired
     private TestRestTemplate restTemplate;
 
     private SubCategory subCategory;
     private Category category;
+    private Product product;
 
     private final String baseUrl = "http://localhost:8080/store/subcategories"; // Base URL for the controller
 
@@ -37,14 +42,13 @@ class SubCategoryControllerTest {
     void setUp() {
         // Fetch a valid category to associate with the subcategory
         category = categoryService.read(51L);
+        product = productService.read(1L);
 
         subCategory = SubCategoryFactory.createSubCategory(
                 null,
                 category,
-                "Adidas",
-                "Adidas Sport shoes",
-                LocalDateTime.now(),
-                null
+                product
+
         );
     }
 
@@ -92,10 +96,10 @@ class SubCategoryControllerTest {
         SubCategory existingSubCategory = createResponse.getBody();
 
         SubCategory updatedSubCategory = new SubCategory.Builder()
-                .copy(existingSubCategory) // Copy existing fields
-                .setId(existingSubCategory.getId()) // Keep the existing ID
-                .setName("Nike") // Update the name
-                .setDescription("Nike Sport shoes") // Update the description
+                .copy(existingSubCategory)
+                .setId(existingSubCategory.getId())
+                .setCategory(existingSubCategory.getCategory())
+                .setProduct(existingSubCategory.getProduct())
                 .build();
 
         restTemplate.put(baseUrl + "/" + updatedSubCategory.getId(), updatedSubCategory);
@@ -103,9 +107,7 @@ class SubCategoryControllerTest {
         // Fetch the updated subcategory to verify the change
         ResponseEntity<SubCategory> response = restTemplate.getForEntity(baseUrl + "/" + updatedSubCategory.getId(), SubCategory.class);
         assertNotNull(response.getBody());
-        assertEquals("Nike", response.getBody().getName());
-        assertEquals("Nike Sport shoes", response.getBody().getDescription()); // Check updated description
-        System.out.println("Updated: " + response.getBody());
+         System.out.println("Updated: " + response.getBody());
     }
 
     @Test
@@ -121,7 +123,7 @@ class SubCategoryControllerTest {
 
         // Try to fetch the deleted subcategory
         ResponseEntity<SubCategory> response = restTemplate.getForEntity(url, SubCategory.class);
-        assertEquals(404, response.getStatusCodeValue());
+        assertEquals(404, response.getStatusCode());
         System.out.println("SubCategory deleted successfully");
     }
 

@@ -6,17 +6,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import za.ac.cput.domain.AuthenticationResponse;
+import za.ac.cput.dto.AuthenticationResponse;
 import za.ac.cput.domain.User;
+import za.ac.cput.dto.UserAuth;
 import za.ac.cput.repository.UserRepository;
-import za.ac.cput.util.JwtUtil;
 
 
 @Service
 public class AuthenticationService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
+    private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     /**
@@ -24,16 +24,16 @@ public class AuthenticationService {
      *
      * @param repository             the repository to manage user data
      * @param passwordEncoder        the password encoder to securely encode passwords
-     * @param jwtUtil             the service to handle JWT token operations
+     * @param jwtService             the service to handle JWT token operations
      * @param authenticationManager  the manager responsible for authenticating user credentials
      */
     public AuthenticationService(UserRepository repository,
                                  PasswordEncoder passwordEncoder,
-                                 JwtUtil jwtUtil,
+                                 JwtService jwtService,
                                  AuthenticationManager authenticationManager) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
+        this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
     }
 
@@ -62,9 +62,9 @@ public class AuthenticationService {
         user = repository.save(user);
 
         // Generate JWT token for the registered user
-        String token = jwtUtil.generateToken(user);
+        String token = jwtService.generateToken(user);
 
-        return new AuthenticationResponse(token);
+        return new AuthenticationResponse(user,token);
     }
 
     /**
@@ -73,7 +73,7 @@ public class AuthenticationService {
      * @param request the user credentials provided for authentication
      * @return an {@link AuthenticationResponse} containing the JWT token
      */
-    public AuthenticationResponse authenticate(User request) {
+    public AuthenticationResponse authenticate(UserAuth request) {
         // private static final String logger = Logger.getLogger(AuthenticationService.class.getName());
 
         try {
@@ -89,10 +89,10 @@ public class AuthenticationService {
             User user = repository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-            String token = jwtUtil.generateToken(user);
+            String token = jwtService.generateToken(user);
             System.out.println("Authentication successful for user: " + request.getEmail());
 
-            return new AuthenticationResponse(token);
+            return new AuthenticationResponse(user,token);
         } catch (BadCredentialsException e) {
             System.out.println("Authentication failed for user: " + request.getEmail() + ". Reason: Bad credentials");
             throw new BadCredentialsException("Incorrect username or password");

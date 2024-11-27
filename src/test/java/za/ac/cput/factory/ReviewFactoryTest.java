@@ -37,8 +37,7 @@ class ReviewFactoryTest {
                 "Great product",
                 5,
                 product,
-                user,
-                LocalDateTime.now()
+                user
         );
 
         assertNotNull(review);
@@ -46,7 +45,6 @@ class ReviewFactoryTest {
         assertEquals("Great product", review.getReview());
         assertEquals(5, review.getRating());
         assertEquals(product, review.getProduct());
-        assertEquals(LocalDateTime.now().minusNanos(50), review.getCreatedAt());
     }
 
     @Test
@@ -67,8 +65,7 @@ class ReviewFactoryTest {
                         null,
                         5,
                         product,
-                        user,
-                        LocalDateTime.now()
+                        user
                 )
         );
 
@@ -93,8 +90,7 @@ class ReviewFactoryTest {
                         "Good product",
                         0,
                         product,
-                        user,
-                        LocalDateTime.now()
+                        user
                 )
         );
 
@@ -111,37 +107,11 @@ class ReviewFactoryTest {
                         "Good product",
                         5,
                         null,
-                        user,
-                        LocalDateTime.now()
+                        user
                 )
         );
 
         assertEquals("Product cannot be null", exception.getMessage());
     }
 
-    @Test
-    void createReviewWithNullCreatedAt() {
-        User user = new User();
-        // Create a valid product for the review
-        Product product = new Product.Builder()
-                .setId(1L)
-                .setName("Test Product")
-                .setDescription("Test Description")
-                .setCover("Test Cover")
-                .build();
-
-        // Test null createdAt date
-        Exception exception = assertThrows(IllegalArgumentException.class, () ->
-                ReviewFactory.createReviews(
-                        1L,
-                        "Good product",
-                        5,
-                        product,
-                        user,
-                        null
-                )
-        );
-
-        assertEquals("Created date cannot be null", exception.getMessage());
-    }
 }

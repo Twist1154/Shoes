@@ -35,7 +35,7 @@ public class CartItemController {
      * @param cartItem the CartItem object to be created
      * @return ResponseEntity containing the created CartItem and HTTP status code 201 Created
      */
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<CartItem> createCartItem(@RequestBody CartItem cartItem) {
         CartItem createdCartItem = cartItemService.create(cartItem);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCartItem);
@@ -91,7 +91,7 @@ public class CartItemController {
      *
      * @return ResponseEntity containing a list of all CartItems and HTTP status code 200 OK
      */
-    @GetMapping
+    @GetMapping("/getAll")
     public ResponseEntity<List<CartItem>> getAllCartItems() {
         List<CartItem> cartItemList = cartItemService.findAll();
         return ResponseEntity.ok(cartItemList);
@@ -143,5 +143,17 @@ public class CartItemController {
     public ResponseEntity<List<CartItem>> getCartItemsByQuantity(@PathVariable int quantity) {
         List<CartItem> cartItems = cartItemService.findByQuantity(quantity);
         return ResponseEntity.ok(cartItems);
+    }
+
+    /**
+     * Deletes all cart items associated with a Cart.
+     *
+     * @param cartId the ID of the Cart to delete items from
+     * @return ResponseEntity with HTTP status code 204 No Content to indicate successful deletion
+     */
+    @DeleteMapping("/deleteByCart/{cartId}")
+    public ResponseEntity<Void> deleteCartItemsByCartId(@PathVariable Long cartId) {
+        cartItemService.deleteByCartId(cartId);
+        return ResponseEntity.noContent().build();
     }
 }

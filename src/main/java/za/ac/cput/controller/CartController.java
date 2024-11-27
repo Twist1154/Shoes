@@ -1,27 +1,30 @@
 package za.ac.cput.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.domain.Cart;
 import za.ac.cput.service.CartService;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * CartController.java
+ * REST controller for managing Cart entities.
+ * Provides endpoints for CRUD operations and advanced queries.
  *
- * This class handles HTTP requests related to carts.
- * It provides endpoints for CRUD operations on carts.
- *
- * Author: Rethabile Ntsekhe
- * Date: 25-Aug-24
+ * @author Rethabile Ntsekhe
  */
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/api/cart")
+@Validated
 public class CartController {
 
     private final CartService cartService;
@@ -31,121 +34,131 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    /**
-     * Creates a new cart.
-     *
-     * @param cart the cart to be created
-     * @return ResponseEntity containing the created Cart and HTTP status code
-     */
-    @PostMapping
+    // Create a new cart
+    @PostMapping("/create")
     public ResponseEntity<Cart> createCart(@RequestBody Cart cart) {
-        Cart createdCart = cartService.create(cart);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCart);
+        return ResponseEntity.ok(cartService.create(cart));
     }
 
-    /**
-     * Retrieves a cart by its ID.
-     *
-     * @param id the ID of the cart to retrieve
-     * @return ResponseEntity containing the Cart if found, or a 404 Not Found status if not
-     */
+    // Get a cart by ID
     @GetMapping("/{id}")
     public ResponseEntity<Cart> getCartById(@PathVariable Long id) {
-        Cart cart = cartService.read(id);
-        if (cart != null) {
-            return ResponseEntity.ok(cart);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(cartService.read(id));
     }
 
-    /**
-     * Updates an existing cart.
-     *
-     * @param id   the ID of the cart to be updated
-     * @param cart the updated cart details
-     * @return ResponseEntity containing the updated Cart and HTTP status code, or 404 Not Found if not found
-     */
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Cart> updateCart(@PathVariable Long id, @RequestBody Cart cart) {
-        Cart updatedCart = cartService.update( cart);
-        if (updatedCart != null) {
-            return ResponseEntity.ok(updatedCart);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    // Update a cart
+    @PutMapping("/update")
+    public ResponseEntity<Cart> updateCart(@RequestBody Cart cartDetails) {
+        return ResponseEntity.ok(cartService.update(cartDetails));
     }
 
-    /**
-     * Deletes a cart by its ID.
-     *
-     * @param id the ID of the cart to delete
-     * @return ResponseEntity with HTTP status code indicating success or failure
-     */
+    // Delete a cart by ID
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteCart(@PathVariable Long id) {
-        cartService.delete(id);
-        return ResponseEntity.ok().build();
+        boolean isDeleted = cartService.delete(id);
+        if (isDeleted) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    /**
-     * Retrieves all carts.
-     *
-     * @return ResponseEntity containing the list of all Carts and HTTP status code
-     */
-    @GetMapping
+    // Get all carts
+    @GetMapping("/getAll")
     public ResponseEntity<List<Cart>> getAllCarts() {
-        List<Cart> cartList = cartService.findAll();
-        return ResponseEntity.ok(cartList);
+        return ResponseEntity.ok(cartService.findAll());
     }
 
-    /**
-     * Retrieves all carts associated with a specific user ID.
-     *
-     * @param userId the user ID to search by
-     * @return ResponseEntity containing the list of Carts associated with the given user ID
-     */
+    @GetMapping("/getAllPaginated")
+    public Page<Cart> getCarts(@RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "10") int size,
+                               @RequestParam(defaultValue = "createdAt,desc") String sort) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort.split(",")));
+        return cartService.getPaginatedCarts(pageable);
+    }
+
+
+    // Get all carts by user ID
     @GetMapping("/byUser/{userId}")
     public ResponseEntity<List<Cart>> getCartsByUserId(@PathVariable Long userId) {
-        List<Cart> carts = cartService.findByUserId(userId);
-        return ResponseEntity.ok(carts);
+        return ResponseEntity.ok(cartService.findByUserId(userId));
     }
 
-    /**
-     * Retrieves all carts created after a specific date.
-     *
-     * @param date the date to search by
-     * @return ResponseEntity containing the list of Carts created after the given date
-     */
-    @GetMapping("/created-after/{date}")
-    public ResponseEntity<List<Cart>> getCartsCreatedAfter(@PathVariable String date) {
-        LocalDateTime createdAt = LocalDateTime.parse(date);
-        List<Cart> carts = cartService.findByCreatedAtAfter(createdAt);
-        return ResponseEntity.ok(carts);
+    // Get carts created after a specific date
+    @GetMapping("/created-after/{createdAt}")
+    public ResponseEntity<List<Cart>> getCartsCreatedAfter(@PathVariable String createdAt) {
+        return ResponseEntity.ok(cartService.findByCreatedAtAfter(LocalDateTime.parse(createdAt)));
     }
 
-    /**
-     * Retrieves all carts with a total greater than a specified amount.
-     *
-     * @param total the minimum total value to search by
-     * @return ResponseEntity containing the list of Carts with a total greater than the specified amount
-     */
+    // Get carts with total greater than a specific value
     @GetMapping("/total-greater-than/{total}")
-    public ResponseEntity<List<Cart>> getCartsByTotalGreaterThan(@PathVariable Double total) {
-        List<Cart> carts = cartService.findByTotalGreaterThan(total);
-        return ResponseEntity.ok(carts);
+    public ResponseEntity<List<Cart>> getCartsWithTotalGreaterThan(@PathVariable Double total) {
+        return ResponseEntity.ok(cartService.findByTotalGreaterThan(total));
     }
 
-    /**
-     * Retrieves all carts updated after a specific date.
-     *
-     * @param date the date to search by
-     * @return ResponseEntity containing the list of Carts updated after the given date
-     */
-    @GetMapping("/updated-after/{date}")
-    public ResponseEntity<List<Cart>> getCartsUpdatedAfter(@PathVariable String date) {
-        LocalDateTime updatedAt = LocalDateTime.parse(date);
-        List<Cart> carts = cartService.findByUpdatedAtAfter(updatedAt);
-        return ResponseEntity.ok(carts);
+    // Get carts updated after a specific date
+    @GetMapping("/updated-after/{updatedAt}")
+    public ResponseEntity<List<Cart>> getCartsUpdatedAfter(@PathVariable String updatedAt) {
+        return ResponseEntity.ok(cartService.findByUpdatedAtAfter(LocalDateTime.parse(updatedAt)));
+    }
+
+    // Get carts created within a date range
+    @GetMapping("/created-between/{startDate}/{endDate}")
+    public ResponseEntity<List<Cart>> getCartsCreatedWithinDateRange(
+            @PathVariable String startDate, @PathVariable String endDate) {
+        return ResponseEntity.ok(cartService.findCartsCreatedWithinDateRange(
+                LocalDateTime.parse(startDate), LocalDateTime.parse(endDate)));
+    }
+
+    // Get cart with the highest total
+    @GetMapping("/highest-total")
+    public ResponseEntity<Cart> getCartWithHighestTotal() {
+        return ResponseEntity.ok(cartService.findCartWithHighestTotal());
+    }
+
+    // Get carts with a total greater than a value using a native query
+    @GetMapping("/native/total-greater-than/{total}")
+    public ResponseEntity<List<Cart>> getCartsWithTotalGreaterThanNative(@PathVariable Double total) {
+        return ResponseEntity.ok(cartService.findCartsWithTotalGreaterThan(total));
+    }
+
+    // Get carts by user ID and created after a specific date
+    @GetMapping("/by-user/{userId}/created-after/{createdAt}")
+    public ResponseEntity<List<Cart>> getCartsByUserIdAndCreatedAtAfter(
+            @PathVariable Long userId, @PathVariable String createdAt) {
+        return ResponseEntity.ok(cartService.findByUserIdAndCreatedAtAfter(
+                userId, LocalDateTime.parse(createdAt)));
+    }
+
+    // Get carts by user ID and updated after a specific date
+    @GetMapping("/by-user/{userId}/updated-after/{updatedAt}")
+    public ResponseEntity<List<Cart>> getCartsByUserIdAndUpdatedAtAfter(
+            @PathVariable Long userId, @PathVariable String updatedAt) {
+        return ResponseEntity.ok(cartService.findByUserIdAndUpdatedAtAfter(
+                userId, LocalDateTime.parse(updatedAt)));
+    }
+
+    // Get carts created before a specific date
+    @GetMapping("/created-before/{createdAt}")
+    public ResponseEntity<List<Cart>> getCartsCreatedBefore(@PathVariable String createdAt) {
+        return ResponseEntity.ok(cartService.findByCreatedAtBefore(LocalDateTime.parse(createdAt)));
+    }
+
+    // Get carts updated before a specific date
+    @GetMapping("/updated-before/{updatedAt}")
+    public ResponseEntity<List<Cart>> getCartsUpdatedBefore(@PathVariable String updatedAt) {
+        return ResponseEntity.ok(cartService.findByUpdatedAtBefore(LocalDateTime.parse(updatedAt)));
+    }
+
+    // Get carts created in the last 30 days
+    @GetMapping("/created-last-30-days")
+    public ResponseEntity<List<Cart>> getCartsCreatedInLast30Days() {
+        return ResponseEntity.ok(cartService.findCartsCreatedInLast30Days());
+    }
+
+    // Delete all carts by user ID
+    @DeleteMapping("/delete/by-user/{userId}")
+    public ResponseEntity<Void> deleteCartsByUserId(@PathVariable Long userId) {
+        cartService.deleteByUserId(userId);
+        return ResponseEntity.noContent().build();
     }
 }

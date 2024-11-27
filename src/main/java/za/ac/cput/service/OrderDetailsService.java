@@ -1,12 +1,13 @@
 package za.ac.cput.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.OrderDetails;
+import za.ac.cput.domain.PaymentDetails;
 import za.ac.cput.factory.OrderDetailsFactory;
 import za.ac.cput.repository.OrderDetailsRepository;
-import za.ac.cput.repository.OrderItemRepository;
 import za.ac.cput.repository.PaymentDetailsRepository;
 
 import java.time.LocalDateTime;
@@ -19,93 +20,101 @@ import java.util.List;
  * Student Num: 220455430
  * @date 25-Aug-24
  */
-
+@Slf4j
 @Service
 @Transactional
 public class OrderDetailsService implements IOrderDetails {
 
-    private final OrderDetailsRepository orderDetailsRepository;
-    private final OrderItemRepository orderItemRepository;
-    private final PaymentDetailsRepository paymentDetailsRepository;
+    private final OrderDetailsRepository repository;
 
     @Autowired
-    public OrderDetailsService(OrderDetailsRepository orderDetailsRepository, OrderItemRepository orderItemRepository, PaymentDetailsRepository paymentDetailsRepository) {
-        this.orderDetailsRepository = orderDetailsRepository;
-        this.orderItemRepository = orderItemRepository;
-        this.paymentDetailsRepository = paymentDetailsRepository;
+    public OrderDetailsService(OrderDetailsRepository repository) {
+        this.repository = repository;
     }
 
     @Override
+    @Transactional
     public OrderDetails create(OrderDetails orderDetails) {
-        return orderDetailsRepository.save(orderDetails);
+        return repository.save(orderDetails);
+
     }
 
     @Override
+    @Transactional
     public OrderDetails read(Long id) {
-        return orderDetailsRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     @Override
+    @Transactional
     public OrderDetails update(OrderDetails updatedOrderDetails) {
-        if (orderDetailsRepository.existsById(updatedOrderDetails.getId())) {
-            OrderDetails existingOrderDetails = orderDetailsRepository.findById(updatedOrderDetails.getId()).orElse(null);
+        if (repository.existsById(updatedOrderDetails.getId())) {
+            OrderDetails existingOrderDetails = repository.findById(updatedOrderDetails.getId()).orElse(null);
             if (existingOrderDetails != null) {
-                OrderDetails orderDetailsToUpdate = OrderDetailsFactory.createOrderDetails(
-                        updatedOrderDetails.getId(),
-                        updatedOrderDetails.getUser(),
-                        updatedOrderDetails.getPaymentDetails(),
-                        updatedOrderDetails.getTotal(),
-                        existingOrderDetails.getCreatedAt(), // Retain the original creation date
-                        LocalDateTime.now() // Update the updatedAt field to current date
-                );
-                return orderDetailsRepository.save(orderDetailsToUpdate);
+                OrderDetails orderDetailsToUpdate = new OrderDetails.Builder()
+                        .copy(existingOrderDetails)
+                        .setId(existingOrderDetails.getId())
+                        .setUser(updatedOrderDetails.getUser())
+                        .setTotal(updatedOrderDetails.getTotal())
+                        .setPaymentDetails(existingOrderDetails.getPaymentDetails())
+                        .setCreatedAt(existingOrderDetails.getCreatedAt())
+                        .setUpdatedAt(LocalDateTime.now())
+                        .build();
+                return repository.save(orderDetailsToUpdate);
             }
         }
         return null;
     }
 
     public boolean delete(Long id) {
-        orderDetailsRepository.deleteById(id);
-
-        // Check if the entity still exists after deletion
-        boolean exists = orderDetailsRepository.existsById(id);
-
-        // Return false if entity was deleted successfully, otherwise return true
-        return !exists;
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return !repository.existsById(id); // Return true if deleted successfully
+        } else {
+            log.warn("Attempt to delete a non-existent Order with ID: " + id);
+            return false;
+        }
     }
 
     @Override
+    @Transactional
     public List<OrderDetails> findAll() {
-        return orderDetailsRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
+    @Transactional
     public List<OrderDetails> findByUserId(Long userId) {
-        return orderDetailsRepository.findByUserId(userId);
+        return repository.findByUserId(userId);
     }
 
     @Override
+    @Transactional
     public List<OrderDetails> findByTotalGreaterThanEqual(Double total) {
-        return orderDetailsRepository.findByTotalGreaterThanEqual(total);
+        return repository.findByTotalGreaterThanEqual(total);
     }
 
     @Override
+    @Transactional
     public List<OrderDetails> findByCreatedAtAfter(LocalDateTime createdAt) {
-        return orderDetailsRepository.findByCreatedAtAfter(createdAt);
+        return repository.findByCreatedAtAfter(createdAt);
     }
 
     @Override
+    @Transactional
     public List<OrderDetails> findByUpdatedAtBefore(LocalDateTime updatedAt) {
-        return orderDetailsRepository.findByUpdatedAtBefore(updatedAt);
+        return repository.findByUpdatedAtBefore(updatedAt);
     }
 
     @Override
+    @Transactional
     public List<OrderDetails> findByPaymentId(Long paymentId) {
-        return orderDetailsRepository.findByPaymentDetails_Id(paymentId);
+        return repository.findByPaymentDetails_Id(paymentId);
     }
 
     @Override
+    @Transactional
     public List<OrderDetails> findByUserIdOrderByCreatedAtDesc(Long userId) {
-        return orderDetailsRepository.findByUserIdOrderByCreatedAtDesc(userId);
+        return repository.findByUserIdOrderByCreatedAtDesc(userId);
     }
 }

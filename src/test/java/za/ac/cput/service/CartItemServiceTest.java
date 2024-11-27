@@ -5,13 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.*;
+import za.ac.cput.enums.Role;
 import za.ac.cput.factory.CartFactory;
 import za.ac.cput.factory.CartItemFactory;
+import za.ac.cput.factory.UserFactory;
 import za.ac.cput.repository.CartItemRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS;
@@ -20,7 +25,11 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 @ActiveProfiles("test") // Use a specific profile for testing if needed
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext(classMode = AFTER_CLASS)
+@Transactional
 class CartItemServiceTest {
+
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
     @Autowired
     private CartItemService cartItemService;
@@ -30,24 +39,38 @@ class CartItemServiceTest {
     private ProductSkuService productSkuService;
     @Autowired
     private CartService cartService;
-
-    @Autowired
-    private CartItemRepository cartItemRepository;
-
-    private Cart cart;
-    private Product product;
-    private za.ac.cput.domain.ProductSku productSku;
-
-    private User user;
-    private CartItem cartItem;
     @Autowired
     private UserService userService;
 
+    private Cart cart;
+    private Product product;
+    private ProductSku productSku;
+    private User user;
+    private CartItem cartItem;
+
     @BeforeEach
     void setUp() {
-
-        user = userService.read(2L);
-        product = productService.read(16L);
+        // Ensure the user exists or create a new one
+        user = userService.read(2L); // Assuming user with ID 2 exists, otherwise create
+        if (user == null) {
+            String Username = "User" + System.currentTimeMillis();
+            String email = "User" + System.currentTimeMillis()+ "@example.com";
+            user = UserFactory.createUser(
+                    null,
+                    "avatar.jpg",
+                    "John",
+                    "Doe",
+                    Username,
+                    email,
+                    LocalDate.parse("1990-01-01"),
+                    Set.of(Role.USER, Role.ADMIN),
+                    "0123456789",
+                    "password123"
+            );
+            user = userService.create(user);
+            System.out.println("User created with ID: " + user.getId());
+        }
+        product = productService.read(1L);
         productSku = productSkuService.read(1L);
 
         cart = CartFactory.createCart(
@@ -60,6 +83,7 @@ class CartItemServiceTest {
 
         cart = cartService.create(cart);
         Cart carts = cartService.read(cart.getId());
+
         // Create a CartItem
         cartItem = CartItemFactory.createCartItem(
                 null,
@@ -72,13 +96,16 @@ class CartItemServiceTest {
 
     @AfterEach
     void tearDown() {
-        //   cartItemRepository.deleteAll();
+       if (cartItem.getId() != null && cartItem.getId() > 2){
+           cartItemRepository.deleteById(cartItem.getId());
+       }
     }
 
     @Test
     @Order(1)
     void create() {
         CartItem createdItem = cartItemService.create(cartItem);
+        System.out.println("Created Item: " + createdItem);
         assertNotNull(createdItem);
         assertEquals(cartItem.getQuantity(), createdItem.getQuantity());
     }
@@ -88,6 +115,7 @@ class CartItemServiceTest {
     void read() {
         CartItem createdItem = cartItemService.create(cartItem);
         CartItem readItem = cartItemService.read(createdItem.getId());
+        System.out.println("Read Item: " + readItem);
         assertNotNull(readItem);
         assertEquals(createdItem.getId(), readItem.getId());
     }
@@ -122,8 +150,9 @@ class CartItemServiceTest {
     @Order(4)
     void delete() {
         CartItem createdItem = cartItemService.create(cartItem);
+        System.out.println("Created Item: " + createdItem);
         cartItemService.delete(createdItem.getId());
-        assertNull(cartItemService.read(createdItem.getId()));
+        assertNull(cartItemService.read(createdItem.getId())); // Ensure deletion is successful
     }
 
     @Test
@@ -131,6 +160,7 @@ class CartItemServiceTest {
     void findAll() {
         cartItemService.create(cartItem);
         List<CartItem> cartItems = cartItemService.findAll();
+        System.out.println("Cart Items: " + cartItems);
         assertFalse(cartItems.isEmpty());
     }
 
@@ -139,6 +169,7 @@ class CartItemServiceTest {
     void findByCartId() {
         cartItemService.create(cartItem);
         List<CartItem> items = cartItemService.findByCartId(cart.getId());
+        System.out.println("Items found by Cart Id: " + items);
         assertFalse(items.isEmpty());
         assertEquals(cart.getId(), items.get(0).getCart().getId());
     }
@@ -148,6 +179,7 @@ class CartItemServiceTest {
     void findByProductId() {
         cartItemService.create(cartItem);
         List<CartItem> items = cartItemService.findByProductId(product.getId());
+        System.out.println("Items found by Product Id: " + items);
         assertFalse(items.isEmpty());
         assertEquals(product.getId(), items.get(0).getProduct().getId());
     }
@@ -157,6 +189,7 @@ class CartItemServiceTest {
     void findByProductSkuId() {
         cartItemService.create(cartItem);
         List<CartItem> items = cartItemService.findByProductSkuId(productSku.getId());
+        System.out.println("Items found by Product Sku Id: " + items);
         assertFalse(items.isEmpty());
         assertEquals(productSku.getId(), items.get(0).getProductSku().getId());
     }
@@ -166,6 +199,7 @@ class CartItemServiceTest {
     void findByQuantity() {
         cartItemService.create(cartItem);
         List<CartItem> items = cartItemService.findByQuantity(cartItem.getQuantity());
+        System.out.println("Items found by Quantity: " + items);
         assertFalse(items.isEmpty());
         assertEquals(cartItem.getQuantity(), items.get(0).getQuantity());
     }

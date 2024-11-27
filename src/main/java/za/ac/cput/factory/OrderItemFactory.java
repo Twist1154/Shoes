@@ -28,11 +28,13 @@ public class OrderItemFactory {
      * @param product      the ID of the {@link Product} entity associated with the order item
      * @param productSku   the ID of the {@link ProductSku} entity associated with the order item
      * @param quantity       the quantity of the order item
-     * @param createdAt      the date the order item was created
-     * @param updatedAt      the date the order item was updated (if applicable)
-     * @return a new {@link OrderItem} object with properties set from the input parameters
+    * @return a new {@link OrderItem} object with properties set from the input parameters
      */
-    public static OrderItem createOrderItem(Long id, OrderDetails orderDetails, Product product, ProductSku productSku, Integer quantity, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public static OrderItem createOrderItem(Long id,
+                                            OrderDetails orderDetails,
+                                            Product product,
+                                            ProductSku productSku,
+                                            Integer quantity) {
         // Define constants for the switch cases
         final int ORDER_DETAILS_NULL = 1;
         final int PRODUCT_NULL = 2;
@@ -97,8 +99,6 @@ public class OrderItemFactory {
                 .setProduct(product)
                 .setProductSku(productSku)
                 .setQuantity(quantity)
-                .setCreatedAt(createdAt)
-                .setUpdatedAt(LocalDateTime.now())
                 .build();
     }
 }

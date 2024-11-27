@@ -1,107 +1,90 @@
 package za.ac.cput.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.Category;
 import za.ac.cput.repository.CategoryRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * CategoryService.java
+ * This service handles operations for managing Category entities.
+ * It includes methods for creating, reading, updating, and deleting Categories.
+ * */
+@Slf4j
 @Service
 @Transactional
 public class CategoryService implements ICategory {
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryRepository repository;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public CategoryService(CategoryRepository repository) {
+        this.repository = repository;
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Category create(Category category) {
-        return categoryRepository.save(category);
+        return repository.save(category);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Category read(Long id) {
-        return categoryRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
+
+
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Category update(Category category) {
-        if (category.getId() == null || !categoryRepository.existsById(category.getId())) {
+        if (category.getId() == null || !repository.existsById(category.getId())) {
             throw new IllegalArgumentException("Category with the given ID does not exist.");
         }
-        // Using Builder pattern directly for updating the entity
+
         Category updatedCategory = new Category.Builder()
                 .setId(category.getId())  // Reusing the existing ID
                 .setName(category.getName())
-                .setDescription(category.getDescription())
-                .setCreatedAt(category.getCreatedAt())
-                .setDeletedAt(category.getDeletedAt())
                 .build();
 
-        return categoryRepository.save(updatedCategory);
+        return repository.save(updatedCategory);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public boolean delete(Long id) {
-        categoryRepository.deleteById(id); // Use deleteById (standard JpaRepository method)
-
-        // Check if the entity still exists after deletion
-        boolean exists = categoryRepository.existsById(id);
-
-        // Return true if it no longer exists (successful deletion), otherwise return false
-        return !exists;
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return !repository.existsById(id); // Return true if deleted successfully
+        } else {
+            log.warn("Attempt to delete a non-existent Wishlist with ID: " + id);
+            return false;
+        }
     }
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<Category> findAll() {
-        return categoryRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Category> findByName(String name) {
-        return categoryRepository.findByName(name);
+        return repository.findByName(name);
     }
 
-    @Override
-    public List<Category> findByCreatedAtAfter(LocalDateTime createdAt) {
-        return categoryRepository.findByCreatedAtAfter(createdAt);
-    }
 
     @Override
-    public List<Category> findByDeletedAt(LocalDateTime deletedAt) {
-        return categoryRepository.findByDeletedAt(deletedAt);
-    }
-
-    @Override
+    @Transactional(readOnly = true)
     public List<Category> findByNameContaining(String keyword) {
-        return categoryRepository.findByNameContaining(keyword);
+        return repository.findByNameContaining(keyword);
     }
 
-    @Override
-    public List<Category> findByDescriptionContaining(String keyword) {
-        return categoryRepository.findByDescriptionContaining(keyword);
-    }
-
-    @Override
-    public List<Category> findCategoriesCreatedWithinDateRange(LocalDateTime startDate, LocalDateTime endDate) {
-        return categoryRepository.findCategoriesCreatedWithinDateRange(startDate, endDate);
-    }
-
-    @Override
-    public Category findMostRecentlyCreatedCategory() {
-        return categoryRepository.findMostRecentlyCreatedCategory();
-    }
-
-    @Override
-    public Optional<Category> findByDeletedAtIsNotNull() {
-        return categoryRepository.findByDeletedAtIsNotNull();
-    }
 }

@@ -21,15 +21,11 @@ public class ProductAttributeFactory {
      * @param id          the ID of the product attribute (nullable)
      * @param type        the {@link ProductAttributeType} of the product attribute (e.g., color, size)
      * @param value       the value of the product attribute (cannot be null or empty)
-     * @param createdAt   the creation date (cannot be null)
-     * @param updatedAt   the update date (nullable)
-     * @return a new {@link ProductAttribute} object with properties set from the input parameters
+    * @return a new {@link ProductAttribute} object with properties set from the input parameters
      */
     public static ProductAttribute createProductAttribute(Long id,
                                                           ProductAttributeType type,
-                                                          String value,
-                                                          LocalDateTime createdAt,
-                                                          LocalDateTime updatedAt) {
+                                                          String value) {
         // Define constants for validation checks
         final int VALUE_NULL = 1;
         final int TYPE_NULL = 2;
@@ -62,8 +58,6 @@ public class ProductAttributeFactory {
                 .setId(id)
                 .setType(type)
                 .setValue(value)
-                .setCreatedAt(createdAt)
-                .setUpdatedAt(updatedAt)
                 .build();
     }
 }

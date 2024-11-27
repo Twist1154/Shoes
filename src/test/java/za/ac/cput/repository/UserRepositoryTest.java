@@ -37,6 +37,7 @@ public class UserRepositoryTest {
                 "imageURl ",
                 "Rethabible",
                 "Ntsekhe",
+                "firstUser1",
                 "email@repoTests.com",
                 LocalDate.now(),
                 roles,

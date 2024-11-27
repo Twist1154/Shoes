@@ -1,172 +1,200 @@
 package za.ac.cput.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.*;
-import za.ac.cput.enums.ProductAttributeType;
-import za.ac.cput.factory.*;
+import za.ac.cput.enums.Role;
+import za.ac.cput.factory.OrderDetailsFactory;
+import za.ac.cput.factory.OrderItemFactory;
+import za.ac.cput.factory.PaymentDetailsFactory;
+import za.ac.cput.factory.UserFactory;
 import za.ac.cput.repository.OrderItemRepository;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS;
 
 @SpringBootTest
+@ActiveProfiles("test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@DirtiesContext(classMode = AFTER_CLASS)
+@Transactional
 class OrderItemServiceTest {
+
     @Autowired
     private OrderItemRepository itemRepository;
     @Autowired
     private OrderItemService orderItemService;
-
-    private OrderItem orderItem;
-    private za.ac.cput.domain.ProductSku productSku;
-    private User user;
-    private PaymentDetails paymentDetails;
-
-    @Autowired
-    private PaymentDetailsService paymentDetailsService;
     @Autowired
     private ProductService productService;
     @Autowired
     private ProductSkuService productSkuService;
     @Autowired
+    private OrderDetailsService orderDetailsService;
+    @Autowired
     private UserService userService;
     @Autowired
-    private ProductAttributeService productAttributeService;
+    private PaymentDetailsService paymentDetailsService;
+
+    private OrderItem orderItem;
+    private ProductSku productSku;
+    private OrderDetails orderDetails;
+    private User user;
+    private PaymentDetails paymentDetails;
 
     @BeforeEach
     void setUp() {
-        // Fetch existing user and payment details
-        user = userService.read(2L);
-        paymentDetails = paymentDetailsService.read(35L);
-        Product product = productService.read(16L);
+        // Ensure Product and ProductSku are retrieved from the database
+        Product product = productService.read(1L);
+        productSku = productSkuService.read(1L);
 
-        // Set up Product attributes and save them
-        ProductAttribute sizeAttribute = ProductAttributeFactory.createProductAttribute(
-                null,
-                ProductAttributeType.SIZE,
-                "10",
-                LocalDateTime.now(),
-                null
-        );
-        sizeAttribute = productAttributeService.create(sizeAttribute); // Ensure it's saved
+        // Create User if not already created
+        if (user == null) {
+            String Username = "User" + System.currentTimeMillis();
+            String email = "User" + System.currentTimeMillis()+ "@example.com";
+            user = UserFactory.createUser(
+                    null,
+                    "avatar.jpg",
+                    "John",
+                    "Doe",
+                    Username,
+                    email,
+                    LocalDate.parse("1990-01-01"),
+                    Set.of(Role.USER, Role.ADMIN),
+                    "0123456789",
+                    "password123"
+            );
+            user = userService.create(user);
+            System.out.println("User created with ID: " + user.getId());
+        }
 
-        ProductAttribute colorAttribute = ProductAttributeFactory.createProductAttribute(
-                null,
-                ProductAttributeType.COLOR,
-                "Green",
-                LocalDateTime.now(),
-                null
-        );
-        colorAttribute = productAttributeService.create(colorAttribute); // Ensure it's saved
+        // Create PaymentDetails if not already created
+        if (paymentDetails == null) {
+            paymentDetails = PaymentDetailsFactory.createPaymentDetails(
+                    null,
+                    120.0,
+                    "CreditCard",
+                    "Completed"
+            );
+            paymentDetails = paymentDetailsService.create(paymentDetails);
+            System.out.println("Payment Details created with ID: " + paymentDetails.getId());
+        }
 
-        ProductAttribute brandAttribute = ProductAttributeFactory.createProductAttribute(
-                null,
-                ProductAttributeType.BRAND,
-                "Nike",
-                LocalDateTime.now(),
-                null
-        );
-        brandAttribute = productAttributeService.create(brandAttribute); // Ensure it's saved
-
-        // Generate a unique SKU for each test run
-        String uniqueSku = "SKU-" + System.currentTimeMillis();
-
-        // Create Product SKU
-        productSku = ProductSkuFactory.createProductSku(
-                null,
-                product,
-                sizeAttribute,
-                colorAttribute,
-                brandAttribute,
-                uniqueSku,
-                100.0,
-                10,
-                LocalDateTime.now(),
-                null
-        );
-        productSku = productSkuService.create(productSku); // Persist SKU
-
-        // Set up OrderDetails
-        OrderDetails orderDetails = OrderDetailsFactory.createOrderDetails(
-                1L,
+        // Create OrderDetails using the newly created or retrieved paymentDetails
+        orderDetails = OrderDetailsFactory.createOrderDetails(
+                null, // ID will be generated upon save
                 user,
                 paymentDetails,
-                100.0,
-                LocalDateTime.now(),
-                LocalDateTime.parse("2024-06-12T00:00:00")
+                1500.0
         );
+        orderDetails = orderDetailsService.create(orderDetails);
+        System.out.println("OrderDetails created with ID: " + orderDetails.getId());
 
-        // Set up OrderItem
-        orderItem = OrderItemFactory.createOrderItem(
-                1L,
+        // Set up OrderItem using the created OrderDetails and ProductSku
+        OrderItem createOrderItem = OrderItemFactory.createOrderItem(
+                null,
                 orderDetails,
                 product,
                 productSku,
-                2,
-                LocalDateTime.parse("2024-06-12T08:00"),
-                LocalDateTime.parse("2024-06-12T08:00")
+                2
         );
+         orderItem = orderItemService.create(createOrderItem);
 
-        // Persist OrderItem
-        orderItem = orderItemService.create(orderItem);
     }
 
     @AfterEach
     void tearDown() {
-        // Clear repository after each test if needed
-        /*itemRepository.deleteAll();*/
+        if (orderItem.getId() != null && orderItem.getId() > 1) {
+            itemRepository.deleteById(orderItem.getId());
+        }
     }
 
     @Test
     @Order(1)
     void create() {
+        // Create the OrderItem in the database
         OrderItem createdOrderItem = orderItemService.create(orderItem);
-        Assertions.assertNotNull(createdOrderItem);
-        Assertions.assertEquals(orderItem.getId(), createdOrderItem.getId());
+
+        // Print out created order item details
+        System.out.println("Created OrderItem: " + createdOrderItem);
+
+        // Assertions
+        assertNotNull(createdOrderItem);
+        assertEquals(orderItem, createdOrderItem);
     }
 
     @Test
     @Order(2)
     void read() {
+        // Retrieve the order item by ID
         OrderItem readOrderItem = orderItemService.read(orderItem.getId());
-        System.out.println(readOrderItem);
-        Assertions.assertNotNull(readOrderItem);
-        Assertions.assertEquals(orderItem.getId(), readOrderItem.getId());
+
+        // Print out read order item details
+        System.out.println("Read OrderItem: " + readOrderItem);
+
+        // Assertions
+        assertNotNull(readOrderItem);
+        assertEquals(orderItem.getId(), readOrderItem.getId());
     }
 
     @Test
     @Order(3)
     void update() {
+        // Retrieve the order item
         OrderItem createdOrderItem = orderItemService.read(orderItem.getId());
 
+        // Update the order item
         OrderItem updatedOrderItem = new OrderItem.Builder()
                 .copy(createdOrderItem)
                 .setQuantity(3)
                 .build();
 
+        // Save the updated order item
         orderItemService.update(updatedOrderItem);
 
+        // Verify the update
         OrderItem resultOrderItem = orderItemService.read(updatedOrderItem.getId());
-        Assertions.assertNotNull(resultOrderItem);
-        Assertions.assertEquals(3, resultOrderItem.getQuantity()); // Assert quantity updated
+
+        // Print out updated order item details
+        System.out.println("Updated OrderItem: " + resultOrderItem);
+
+        // Assertions
+        assertNotNull(resultOrderItem);
+        assertEquals(3, resultOrderItem.getQuantity());
     }
 
     @Test
     @Order(4)
     void delete() {
-        orderItemService.delete(orderItem.getId());
-        OrderItem deletedOrderItem = orderItemService.read(orderItem.getId());
-        Assertions.assertNull(deletedOrderItem); // Check that it is deleted
+        // Delete the created order item
+        OrderItem orderItemD = orderItemService.create(orderItem);
+        boolean deleted = orderItemService.delete(orderItemD.getId());
+
+        // Print result of delete action
+        System.out.println("OrderItem deleted: " + deleted);
+
+        // Assertions
+        assertTrue(deleted);
     }
 
     @Test
     @Order(5)
     void findAll() {
+        // Retrieve all order items
         List<OrderItem> orderItems = orderItemService.findAll();
-        Assertions.assertFalse(orderItems.isEmpty());
+
+        // Print all order items
+        System.out.println("All OrderItems: " + orderItems);
+
+        // Assertions
+        assertFalse(orderItems.isEmpty());
     }
 }

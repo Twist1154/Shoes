@@ -1,7 +1,10 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,8 +23,9 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType. EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIncludeProperties({"id", "firstName", "lastName", "email", "phoneNumber"})
     private User user;
 
     private String title;
@@ -31,13 +35,15 @@ public class Address {
     private String country;
     private String postalCode;
     private String phoneNumber;
+    @CreationTimestamp
     private LocalDateTime createdAt;
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
 
     public Address() {}
 
-    // Builder pattern constructor
+
     private Address(Builder builder) {
         this.id = builder.id;
         this.user = builder.user;

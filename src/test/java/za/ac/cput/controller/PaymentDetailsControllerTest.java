@@ -32,7 +32,7 @@ class PaymentDetailsControllerTest {
 
     private OrderDetails orderDetails;
     private User user;
-    private final String baseUrl = "/payment-details"; // Base URL for the controller
+    private final String baseUrl = "/payment-details";
 
     @BeforeEach
     void setUp() {
@@ -40,12 +40,9 @@ class PaymentDetailsControllerTest {
         // Create initial payment details
         paymentDetails = PaymentDetailsFactory.createPaymentDetails(
                 null, // ID will be auto-generated
-                orderDetails, // OrderDetails ID
                 1000.00, // Amount
                 "PayPal", // Provider
-                "Paid", // Status
-                LocalDateTime.now(), // CreatedAt
-                null // UpdatedAt
+                "Paid"
         );
         // Post initial payment details to create it in the database
         restTemplate.postForEntity(baseUrl, paymentDetails, PaymentDetails.class);
@@ -56,12 +53,9 @@ class PaymentDetailsControllerTest {
     void createPaymentDetails() {
         PaymentDetails newPaymentDetails = PaymentDetailsFactory.createPaymentDetails(
                 null,
-                orderDetails,
                 1500.00,
                 "Credit Card",
-                "Pending",
-                LocalDateTime.now(),
-                null
+                "Pending"
         );
         ResponseEntity<PaymentDetails> response = restTemplate.postForEntity(baseUrl, newPaymentDetails, PaymentDetails.class);
         assertNotNull(response.getBody());

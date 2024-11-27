@@ -21,26 +21,26 @@ import java.util.List;
 @Service
 public class ProductService implements IProduct {
 
-    private final ProductRepository productRepository;
+    private final ProductRepository repository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductService(ProductRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public Product create(Product product) {
-        return productRepository.save(product);
+        return repository.save(product);
     }
 
     @Override
     public Product read(Long id) {
-        return productRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     @Override
     public Product update(Product product) {
-        Product existingProduct = productRepository.findById(product.getId()).orElse(null);
+        Product existingProduct = repository.findById(product.getId()).orElse(null);
         if (existingProduct != null) {
             Product updatedProduct = new Product.Builder()
                     .copy(existingProduct)
@@ -52,9 +52,8 @@ public class ProductService implements IProduct {
                     .setImageUrls(product.getImageUrls())
                     .setSubCategory(product.getSubCategory())
                     .setCreatedAt(product.getCreatedAt())
-                    .setDeletedAt(product.getDeletedAt())
                     .build();
-            return productRepository.save(updatedProduct);
+            return repository.save(updatedProduct);
         } else {
             log.warn("Attempt to update a non-existent order item with ID: {}", product.getId());
 
@@ -63,17 +62,17 @@ public class ProductService implements IProduct {
     }
 
     public boolean delete(Long id) {
-        productRepository.deleteById(id);
-
-        // Check if the entity still exists after deletion
-        boolean exists = productRepository.existsById(id);
-
-        // Return false if entity was deleted successfully, otherwise return true
-        return !exists;
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return !repository.existsById(id); // Return true if deleted successfully
+        } else {
+            log.warn("Attempt to delete a non-existent product with ID: " + id);
+            return false;
+        }
     }
 
     @Override
     public List<Product> findAll() {
-        return productRepository.findAll();
+        return repository.findAll();
     }
 }

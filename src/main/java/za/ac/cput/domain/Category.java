@@ -1,59 +1,37 @@
 package za.ac.cput.domain;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Represents a categories entry in the system.
- *
- * This entity class is mapped to the "categories" table in the database.
- *
- * @author Rethabile Ntsekhe
- * @date 25-Aug-24
- */
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Entity
+
 @Getter
-@Table(name = "categories")
-public class Category {
-
+@Entity
+public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-    private String description;
-    private LocalDateTime createdAt;
-    private LocalDateTime deletedAt;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SubCategory> subCategories;
+    @OneToMany(mappedBy = "category",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("categoryReference")
+    @JsonIgnore
+    private List<SubCategory> subCategories = new ArrayList<>();
 
-    public Category() {}
+    public Category() {
+    }
 
-    private Category(Builder builder) {
+    public Category(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
-        this.description = builder.description;
-        this.createdAt = builder.createdAt;
-        this.deletedAt = builder.deletedAt;
-        this.subCategories = builder.subCategories;
-    }
-    @Override
-    public String toString() {
-        return "\n Category{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", createdAt=" + createdAt +
-                ", deletedAt=" + deletedAt +
-                ", subCategories=" + subCategories.get(0).getName() +
-                "}\n ";
+        this.subCategories = builder.subCategories != null ? builder.subCategories : new ArrayList<>();
     }
 
     @Override
@@ -63,24 +41,27 @@ public class Category {
         Category category = (Category) o;
         return Objects.equals(id, category.id) &&
                 Objects.equals(name, category.name) &&
-                Objects.equals(description, category.description) &&
-                Objects.equals(createdAt, category.createdAt) &&
-                Objects.equals(deletedAt, category.deletedAt) &&
                 Objects.equals(subCategories, category.subCategories);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, createdAt, deletedAt, subCategories);
+        return Objects.hash(id, name, subCategories);
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "Category ID: " + id +
+                ", NAME: '" + name + '\'' +
+                ", Sub Categories: " + (subCategories != null ? subCategories : "null") +
+                '}';
     }
 
     public static class Builder {
         private Long id;
         private String name;
-        private String description;
-        private LocalDateTime createdAt;
-        private LocalDateTime deletedAt;
-        private List<SubCategory> subCategories;
+        private List<SubCategory> subCategories = new ArrayList<>();
 
         public Builder setId(Long id) {
             this.id = id;
@@ -92,21 +73,6 @@ public class Category {
             return this;
         }
 
-        public Builder setDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder setCreatedAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public Builder setDeletedAt(LocalDateTime deletedAt) {
-            this.deletedAt = deletedAt;
-            return this;
-        }
-
         public Builder setSubCategories(List<SubCategory> subCategories) {
             this.subCategories = subCategories;
             return this;
@@ -115,9 +81,6 @@ public class Category {
         public Builder copy(Category category) {
             this.id = category.getId();
             this.name = category.getName();
-            this.description = category.getDescription();
-            this.createdAt = category.getCreatedAt();
-            this.deletedAt = category.getDeletedAt();
             this.subCategories = category.getSubCategories();
             return this;
         }

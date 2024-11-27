@@ -1,5 +1,6 @@
 package za.ac.cput.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.List;
  * Student Num: 220455430
  * @date 22-Sep-24
  */
+@Slf4j
 @Service
 @Transactional
 public class WishlistItemService implements IWishlistItems {
@@ -30,16 +32,19 @@ public class WishlistItemService implements IWishlistItems {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public WishlistItem create(WishlistItem wishListItem) {
         return repository.save(wishListItem);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public WishlistItem read(Long id) {
         return repository.findById(id).orElse(null);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public WishlistItem update(WishlistItem wishListItem) {
         WishlistItem existingWishlistItem = repository.findById(wishListItem.getId()).orElse(null);
 
@@ -47,8 +52,8 @@ public class WishlistItemService implements IWishlistItems {
             // Build the updated item
             WishlistItem updatedItem = new WishlistItem.Builder()
                     .copy(wishListItem)
-                    .setId(existingWishlistItem.getId()) // Preserve the ID
-                    .setProduct(wishListItem.getProduct())  // Update other fields
+                    .setId(existingWishlistItem.getId())
+                    .setProduct(wishListItem.getProduct())
                     .setDateAdded(wishListItem.getDateAdded())
                     .setWishlist(wishListItem.getWishlist())
                     .build();
@@ -60,27 +65,29 @@ public class WishlistItemService implements IWishlistItems {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<WishlistItem> findAll() {
         return repository.findAll();
     }
 
     @Override
     public boolean delete(Long id) {
-        repository.deleteById(id);
-
-        // Check if the entity still exists after deletion
-        boolean exists = repository.existsById(id);
-
-        // Return false if entity was deleted successfully, otherwise return true
-        return !exists;
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+        log.warn("Attempt to delete a non-existent wishlist item with ID: ", id);
+        return false;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<WishlistItem> findByWishlist_Id(Long wishlistId) {
         return repository.findByWishlist_Id(wishlistId);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void deleteByWishlistId(Long wishlistId) {
         repository.deleteByWishlistId(wishlistId);
 

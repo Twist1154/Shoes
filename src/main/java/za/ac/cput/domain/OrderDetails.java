@@ -1,23 +1,33 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
- * Represents an order details entry in the system.
- * Each entry provides details about an order, including the user_id who placed the order,
- * payment details, and the total amount. This entity is mapped to the "order_details" table in the database.
+ * Represents an order entry in the system.
+ * Each entry is associated with a User, PaymentDetails, and contains multiple OrderItems.
+ * <p>
+ * This entity class is mapped to the "order_details" table in the database.
  *
- * Author: Rethabile Ntsekhe
- * Date: 25-Aug-24
+ * @author Rethabile Ntsekhe
+ * @date 25-Aug-24
  */
 @Entity
 @Getter
 @Table(name = "order_details")
-public class OrderDetails {
+public class OrderDetails implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,16 +35,25 @@ public class OrderDetails {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIncludeProperties("id")
     private User user;
 
-    @ManyToOne
+    @OneToOne( cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "payment_id", nullable = false)
+    @JsonManagedReference(value = "payment-order")
     private PaymentDetails paymentDetails;
 
     private Double total;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "orderDetails", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     public OrderDetails() {}
 
@@ -45,18 +64,31 @@ public class OrderDetails {
         this.total = builder.total;
         this.createdAt = builder.createdAt;
         this.updatedAt = builder.updatedAt;
+        this.orderItems.addAll(new ArrayList<>(builder.orderItems));
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
     }
 
     @Override
     public String toString() {
         return "\n OrderDetails{" +
                 "id=" + id +
-                ", user=" + user.getFirstName() +user.getLastName() +
+                ", user=" + user.getId() +
                 ", paymentDetails=" + paymentDetails.getStatus() +
                 ", total=" + total +
+                ", orderItems=" + orderItems +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                "}\n ";
+                "}\n";
     }
 
     @Override
@@ -84,6 +116,7 @@ public class OrderDetails {
         private Double total;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
+        private List<OrderItem> orderItems = new ArrayList<>();
 
         public Builder setId(Long id) {
             this.id = id;
@@ -115,13 +148,17 @@ public class OrderDetails {
             return this;
         }
 
+        public Builder setOrderItems(List<OrderItem> orderItems) {
+            this.orderItems = new ArrayList<>(orderItems);
+            return this;
+        }
+
         public Builder copy(OrderDetails orderDetails) {
             this.id = orderDetails.getId();
             this.user = orderDetails.getUser();
             this.paymentDetails = orderDetails.getPaymentDetails();
             this.total = orderDetails.getTotal();
-            this.createdAt = orderDetails.getCreatedAt();
-            this.updatedAt = orderDetails.getUpdatedAt();
+            this.orderItems = new ArrayList<>(orderDetails.getOrderItems());
             return this;
         }
 

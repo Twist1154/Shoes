@@ -20,13 +20,6 @@ class ProductFactoryTest {
 
     @Test
     void testCreateProduct() {
-        // Create a sample Category object using the factory method
-        category = CategoryFactory.createCategory(
-                1L,
-                "Sneakers",
-                "Sneakers",
-                LocalDateTime.now(),
-                null);
 
         // Create a sample ImageUrls object using the factory method
         imageUrls = ImageUrlsFactory.createImageUrls(
@@ -36,25 +29,6 @@ class ProductFactoryTest {
                 "image4.jpg"
         );
 
-        // Create sample SubCategory objects using the factory method
-        SubCategory subCategory1 = SubCategoryFactory.createSubCategory(
-                1L,
-                category,
-                "High Tops",
-                "High Top Sneakers",
-                LocalDateTime.now(),
-                null);
-
-        SubCategory subCategory2 = SubCategoryFactory.createSubCategory(
-                2L,
-                category,
-                "Low Tops",
-                "Low Top Sneakers",
-                LocalDateTime.now(),
-                null);
-
-        subCategory = List.of(subCategory1, subCategory2);
-
         // Create a sample Product object using the factory method
         product = ProductFactory.createProduct(
                 1L,
@@ -63,9 +37,8 @@ class ProductFactoryTest {
                 "Product Summary",
                 "Product Cover",
                 imageUrls,
-                subCategory,
-                LocalDateTime.now(),
-                null);
+                LocalDateTime.now()
+        );
 
         // Verify that the Product object is not null
         assertNotNull(product);
@@ -84,9 +57,8 @@ class ProductFactoryTest {
                 "Product Summary",
                 "Product Cover",
                 imageUrls,
-                subCategory,
-                LocalDateTime.now(),
-                null));
+                LocalDateTime.now()
+        ));
 
         System.out.println("Expected IllegalArgumentException thrown when creating Product with null name");
         System.out.println("Created Product with null name: " + product);    }
@@ -101,9 +73,8 @@ class ProductFactoryTest {
                 "Product Summary",
                 "Product Cover",
                 imageUrls,
-                subCategory,
-                LocalDateTime.now(),
-                null));
+                LocalDateTime.now()
+        ));
 
         System.out.println("Expected IllegalArgumentException thrown when creating Product with null description");
         System.out.println("Created Product with null Description: " + product);
@@ -119,9 +90,9 @@ class ProductFactoryTest {
                 null,
                 "Product Cover",
                 imageUrls,
-                subCategory,
-                LocalDateTime.now(),
-                null));
+                LocalDateTime.now()
+                )
+        );
 
         System.out.println("Expected IllegalArgumentException thrown when creating Product with null summary");
         System.out.println("Created Product with null Summary: " + product);
@@ -137,28 +108,10 @@ class ProductFactoryTest {
                 "Product Summary",
                 null,
                 imageUrls,
-                subCategory,
-                LocalDateTime.now(),
-                null));
+                LocalDateTime.now()));
 
         System.out.println("Expected IllegalArgumentException thrown when creating Product with null cover");
         System.out.println("Created Product with null Cover: " + product);
     }
 
-    @Test
-    void testCreateProduct_WithNullCategory_ThrowsIllegalArgumentException() {
-        // Try to create a Product object with a null category
-        assertThrows(IllegalArgumentException.class, () -> ProductFactory.createProduct(
-                1L,
-                "Product Name",
-                "Product Description",
-                "Product Summary",
-                "Product Cover",
-                imageUrls,
-                null,
-                LocalDateTime.now(),
-                null));
-
-        System.out.println("Expected IllegalArgumentException thrown when creating Product with null category");
-    }
 }

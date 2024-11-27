@@ -38,7 +38,7 @@ public class CategoryController {
      * @param category the category to be created
      * @return ResponseEntity containing the created Category and HTTP status code
      */
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
         Category createdCategory = categoryService.create(category);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
@@ -50,7 +50,7 @@ public class CategoryController {
      * @param id the ID of the category to retrieve
      * @return ResponseEntity containing the Category if found, or a 404 Not Found status if not
      */
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
         Category category = categoryService.read(id);
         if (category != null) {
@@ -67,7 +67,7 @@ public class CategoryController {
      * @param category the updated category details
      * @return ResponseEntity containing the updated Category and HTTP status code, or 404 Not Found if not found
      */
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category) {
         Category updatedCategory = categoryService.update(category);
         if (updatedCategory != null) {
@@ -94,7 +94,7 @@ public class CategoryController {
      *
      * @return ResponseEntity containing the list of all Categories and HTTP status code
      */
-    @GetMapping
+    @GetMapping("/getAll")
     public ResponseEntity<List<Category>> getAllCategories() {
         List<Category> categoryList = categoryService.findAll();
         return ResponseEntity.ok(categoryList);
@@ -114,28 +114,7 @@ public class CategoryController {
         return ResponseEntity.ok(categories);
     }
 
-    /**
-     * Retrieves categories created after a specified date.
-     *
-     * @param date the date to search for categories created after
-     * @return ResponseEntity containing the list of Categories and HTTP status code
-     */
-    @GetMapping("/search/created-after/{date}")
-    public ResponseEntity<List<Category>> findByCreatedAtAfter(@PathVariable LocalDateTime date) {
-        List<Category> categories = categoryService.findByCreatedAtAfter(date);
-        return ResponseEntity.ok(categories);
-    }
 
-    /**
-     * Retrieves categories that were deleted.
-     *
-     * @return ResponseEntity containing the list of deleted Categories and HTTP status code
-     */
-    @GetMapping("/deleted")
-    public ResponseEntity<Optional<Category>> findAllDeletedCategories() {
-        Optional<Category> categories = categoryService.findByDeletedAtIsNotNull();
-        return ResponseEntity.ok(categories);
-    }
 
     /**
      * Retrieves categories whose names contain a specific string.
@@ -149,41 +128,7 @@ public class CategoryController {
         return ResponseEntity.ok(categories);
     }
 
-    /**
-     * Retrieves categories whose descriptions contain a specific string.
-     *
-     * @param keyword the keyword to search for in category descriptions
-     * @return ResponseEntity containing the list of matching Categories and HTTP status code
-     */
-    @GetMapping("/search/description-contains/{keyword}")
-    public ResponseEntity<List<Category>> findByDescriptionContaining(@PathVariable String keyword) {
-        List<Category> categories = categoryService.findByDescriptionContaining(keyword);
-        return ResponseEntity.ok(categories);
-    }
 
-    /**
-     * Retrieves categories created within a specific date range.
-     *
-     * @param startDate the start date of the range
-     * @param endDate the end date of the range
-     * @return ResponseEntity containing the list of Categories created within the date range and HTTP status code
-     */
-    @GetMapping("/search/created-between")
-    public ResponseEntity<List<Category>> findCategoriesCreatedWithinDateRange(
-            @RequestParam("start") LocalDateTime startDate,
-            @RequestParam("end") LocalDateTime endDate) {
-        List<Category> categories = categoryService.findCategoriesCreatedWithinDateRange(startDate, endDate);
-        return ResponseEntity.ok(categories);
-    }
 
-    /**
-     * Retrieves the most recently created category.
-     *
-     * @return ResponseEntity containing the most recently created Category and HTTP status code
-     */
-    @GetMapping("/recent")
-    public ResponseEntity<Category> findMostRecentlyCreatedCategory() {
-        Category category = categoryService.findMostRecentlyCreatedCategory();
-        return ResponseEntity.ok(category);
-    }
+
 }

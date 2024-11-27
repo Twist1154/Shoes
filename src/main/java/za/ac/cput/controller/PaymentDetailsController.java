@@ -52,8 +52,8 @@ public class PaymentDetailsController {
      * @param id the ID of the payment detail to retrieve
      * @return ResponseEntity containing the PaymentDetails if found, or a 404 Not Found status if not
      */
-    @GetMapping("/getby/{id}")
-    public ResponseEntity<PaymentDetails> getPaymentDetailsById(@PathVariable Long id) {
+    @GetMapping("/read/{id}")
+    public ResponseEntity<PaymentDetails> read(@PathVariable Long id) {
         if (id == null) {
             return ResponseEntity.badRequest().build(); // Return 400 Bad Request if ID is null
         }
@@ -73,7 +73,7 @@ public class PaymentDetailsController {
      * @return ResponseEntity containing the updated PaymentDetails and HTTP status code, or 404 Not Found if not found
      */
     @PutMapping("/update/{id}")
-    public ResponseEntity<PaymentDetails> updatePaymentDetails(@PathVariable Long id, @RequestBody PaymentDetails paymentDetails) {
+    public ResponseEntity<PaymentDetails> update(@PathVariable Long id, @RequestBody PaymentDetails paymentDetails) {
         if (id == null || paymentDetails == null) {
             return ResponseEntity.badRequest().build(); // Return 400 Bad Request if ID or paymentDetails are null
         }
@@ -92,7 +92,7 @@ public class PaymentDetailsController {
      * @return ResponseEntity with HTTP status code indicating success or failure
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePaymentDetails(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         if (id == null) {
             return ResponseEntity.badRequest().build(); // Return 400 Bad Request if ID is null
         }
@@ -105,8 +105,8 @@ public class PaymentDetailsController {
      *
      * @return ResponseEntity containing the list of all PaymentDetails and HTTP status code
      */
-    @GetMapping
-    public ResponseEntity<List<PaymentDetails>> getAllPaymentDetails() {
+    @GetMapping("/all")
+    public ResponseEntity<List<PaymentDetails>> getAll() {
         List<PaymentDetails> paymentDetailsList = paymentDetailsService.findAll();
         if (paymentDetailsList.isEmpty()) {
             return ResponseEntity.noContent().build(); // Return 204 No Content if the list is empty
@@ -121,7 +121,7 @@ public class PaymentDetailsController {
      * @return ResponseEntity containing the list of PaymentDetails with the specified provider
      */
     @GetMapping("/provider/{provider}")
-    public ResponseEntity<List<PaymentDetails>> getPaymentDetailsByProvider(@PathVariable String provider) {
+    public ResponseEntity<List<PaymentDetails>> getByProvider(@PathVariable String provider) {
         List<PaymentDetails> paymentDetailsList = paymentDetailsService.findByProvider(provider);
         if (paymentDetailsList.isEmpty()) {
             return ResponseEntity.noContent().build(); // Return 204 No Content if no records found
@@ -136,7 +136,7 @@ public class PaymentDetailsController {
      * @return ResponseEntity containing the list of PaymentDetails with the specified status
      */
     @GetMapping("/status/{status}")
-    public ResponseEntity<List<PaymentDetails>> getPaymentDetailsByStatus(@PathVariable String status) {
+    public ResponseEntity<List<PaymentDetails>> getByStatus(@PathVariable String status) {
         List<PaymentDetails> paymentDetailsList = paymentDetailsService.findByStatus(status);
         if (paymentDetailsList.isEmpty()) {
             return ResponseEntity.noContent().build(); // Return 204 No Content if no records found
@@ -151,7 +151,7 @@ public class PaymentDetailsController {
      * @return ResponseEntity containing the list of PaymentDetails created after the specified date
      */
     @GetMapping("/created-after")
-    public ResponseEntity<List<PaymentDetails>> getPaymentDetailsCreatedAfter(@RequestParam LocalDateTime createdAt) {
+    public ResponseEntity<List<PaymentDetails>> getCreatedAfter(@RequestParam LocalDateTime createdAt) {
         List<PaymentDetails> paymentDetailsList = paymentDetailsService.findByCreatedAtAfter(createdAt);
         if (paymentDetailsList.isEmpty()) {
             return ResponseEntity.noContent().build(); // Return 204 No Content if no records found
@@ -167,7 +167,7 @@ public class PaymentDetailsController {
      * @return ResponseEntity containing the list of PaymentDetails created between the specified dates
      */
     @GetMapping("/created-between")
-    public ResponseEntity<List<PaymentDetails>> getPaymentDetailsCreatedBetween(
+    public ResponseEntity<List<PaymentDetails>> getCreatedBetween(
             @RequestParam LocalDateTime startDate,
             @RequestParam LocalDateTime endDate) {
         List<PaymentDetails> paymentDetailsList = paymentDetailsService.findByCreatedAtBetween(startDate, endDate);
@@ -184,20 +184,9 @@ public class PaymentDetailsController {
      * @return ResponseEntity containing the count of PaymentDetails with the specified status
      */
     @GetMapping("/count-by-status")
-    public ResponseEntity<Long> countPaymentDetailsByStatus(@RequestParam String status) {
+    public ResponseEntity<Long> countByStatus(@RequestParam String status) {
         long count = paymentDetailsService.countByStatus(status);
         return ResponseEntity.ok(count);
     }
 
-    /**
-     * Deletes payment details by order details ID.
-     *
-     * @param orderDetailsId the ID of the order details associated with the payment details to delete
-     * @return ResponseEntity containing the number of deleted records
-     */
-    @DeleteMapping("/order-details/{orderDetailsId}")
-    public ResponseEntity<Integer> deletePaymentDetailsByOrderDetailsId(@PathVariable Long orderDetailsId) {
-        int deletedCount = paymentDetailsService.deleteByOrderDetailsId(orderDetailsId);
-        return ResponseEntity.ok(deletedCount);
-    }
 }

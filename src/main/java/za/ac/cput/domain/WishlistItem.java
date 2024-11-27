@@ -1,7 +1,9 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -25,12 +27,14 @@ public class WishlistItem {
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonIncludeProperties({"id", "name", "description", "summary", "cover"})
     private Product product;
 
+    @CreationTimestamp
     private LocalDateTime dateAdded;
 
     @ManyToOne
-    @JoinColumn(name = "wishlist_id")
+    @JoinColumn(name = "wishlist_id", nullable = false)
     private Wishlist wishlist;
 
     public WishlistItem() {
@@ -41,6 +45,12 @@ public class WishlistItem {
         this.product = builder.product;
         this.dateAdded = builder.dateAdded;
         this.wishlist = builder.wishlist;
+    }
+
+
+    @PrePersist
+    public void prePersist() {
+        this.dateAdded = LocalDateTime.now();
     }
 
     @Override

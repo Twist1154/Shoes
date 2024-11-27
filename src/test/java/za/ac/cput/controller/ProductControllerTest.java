@@ -48,25 +48,6 @@ class ProductControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Ensure a category exists for the subcategory
-        category = categoryService.read(1L);  // Assuming category ID 1 exists
-        if (category == null) {
-            category = new Category.Builder()
-                    .setName("Sample Category")
-                    .setDescription("Category Description")
-                    .setCreatedAt(LocalDateTime.now())
-                    .build();
-            category = categoryService.create(category);  // Create and save the category
-        }
-
-        // Create a subcategory linked to the category if it doesn't exist
-        subCategory = new SubCategory.Builder()
-                .setCategory(category)
-                .setName("Test SubCategory")
-                .setDescription("SubCategory for testing")
-                .build();
-        subCategory = subCategoryService.create(subCategory);  // Create and save subcategory
-
         // Create image URLs for the product
         image = ImageUrlsFactory.createImageUrls(
                 "null",
@@ -83,9 +64,7 @@ class ProductControllerTest {
                 "Product Controller summary",
                 "cover image url",
                 image,
-                Collections.singletonList(subCategory),
-                LocalDateTime.now(),
-                null
+                LocalDateTime.now()
         );
     }
 

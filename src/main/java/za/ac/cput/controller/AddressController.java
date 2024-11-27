@@ -23,7 +23,7 @@ import java.util.Optional;
  * @date 28-Aug-24
  */
 @RestController
-@RequestMapping("/api/address")
+@RequestMapping("/address")
 public class AddressController {
 
     private final AddressService addressService;
@@ -33,13 +33,13 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Address> create(@RequestBody Address address) {
         Address newAddress = addressService.create(address);
         return new ResponseEntity<>(newAddress, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/read/{id}")
     public ResponseEntity<Address> read(@PathVariable Long id) {
         Address address = addressService.read(id);
         if (address != null) {
@@ -61,15 +61,15 @@ public class AddressController {
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         addressService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/user")
-    public ResponseEntity<Optional<Address>> findByUser(@RequestBody Long userId) {
-        Optional<Address> addresses = addressService.findByUserId(userId);
+    public ResponseEntity<List<Address>> findByUser(@RequestBody Long userId) {
+        List<Address> addresses = addressService.findByUserId(userId);
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 

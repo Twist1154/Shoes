@@ -3,18 +3,13 @@ package za.ac.cput.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
  * Represents a SKU (Stock Keeping Unit) for a product.
  * This entity class is mapped to the "products_skus" table in the database.
  * It is immutable and uses the builder pattern for construction.
- *
- * Corrected the field assignment in the builder and constructor.
- *
- * @author Rethabile
- * @date 25-Aug-24
+
  */
 @Entity
 @Getter
@@ -25,15 +20,15 @@ public class ProductSku {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "size_attribute_id", nullable = false)
     private ProductAttribute sizeAttribute;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "color_attribute_id", nullable = false)
     private ProductAttribute colorAttribute;
 
@@ -50,15 +45,8 @@ public class ProductSku {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
-
     public ProductSku() {}
 
-    // Private constructor to enforce immutability
     private ProductSku(Builder builder) {
         this.id = builder.id;
         this.product = builder.product;
@@ -68,13 +56,11 @@ public class ProductSku {
         this.sku = builder.sku;
         this.price = builder.price;
         this.quantity = builder.quantity;
-        this.createdAt = builder.createdAt;
-        this.deletedAt = builder.deletedAt;
     }
 
     @Override
     public String toString() {
-        return "\n ProductSkuService{" +
+        return "\n ProductSku{" +  // Fixed toString naming
                 "id=" + id +
                 ", product=" + product +
                 ", sizeAttribute=" + sizeAttribute +
@@ -83,8 +69,6 @@ public class ProductSku {
                 ", sku='" + sku + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
-                ", createdAt=" + createdAt +
-                ", deletedAt=" + deletedAt +
                 "}\n ";
     }
 
@@ -100,14 +84,12 @@ public class ProductSku {
                 Objects.equals(brandAttribute, that.brandAttribute) &&
                 Objects.equals(sku, that.sku) &&
                 Objects.equals(price, that.price) &&
-                Objects.equals(quantity, that.quantity) &&
-                Objects.equals(createdAt, that.createdAt) &&
-                Objects.equals(deletedAt, that.deletedAt);
+                Objects.equals(quantity, that.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, product, sizeAttribute, colorAttribute, brandAttribute, sku, price, quantity, createdAt, deletedAt);
+        return Objects.hash(id, product, sizeAttribute, colorAttribute, brandAttribute, sku, price, quantity);
     }
 
     public static class Builder {
@@ -119,8 +101,6 @@ public class ProductSku {
         private String sku;
         private Double price;
         private Integer quantity;
-        private LocalDateTime createdAt;
-        private LocalDateTime deletedAt;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -162,16 +142,6 @@ public class ProductSku {
             return this;
         }
 
-        public Builder setCreatedAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public Builder setDeletedAt(LocalDateTime deletedAt) {
-            this.deletedAt = deletedAt;
-            return this;
-        }
-
         public Builder copy(ProductSku productSku) {
             this.id = productSku.getId();
             this.product = productSku.getProduct();
@@ -181,8 +151,6 @@ public class ProductSku {
             this.sku = productSku.getSku();
             this.price = productSku.getPrice();
             this.quantity = productSku.getQuantity();
-            this.createdAt = productSku.getCreatedAt();
-            this.deletedAt = productSku.getDeletedAt();
             return this;
         }
 

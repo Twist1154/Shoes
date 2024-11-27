@@ -22,19 +22,19 @@ class UserFactoryTest {
     void setup() {
          roles = new HashSet<>(Set.of(Role.USER, Role.ADMIN));
 
-
-
         // Set up a sample User object using the factory method
         user = UserFactory.createUser(
                 null,
                 "avatar.jpg",
                 "John",
                 "Doe",
+                "user1",
                 "johndoe@example.com",
                 LocalDate.parse("1990-01-01"),
                 roles,
                 "0123456789",
-                "password123");
+                "password123"
+        );
     }
 
     @Test
@@ -55,6 +55,7 @@ class UserFactoryTest {
                         "avatar.jpg",
                         null,
                         "Doe",
+                        "user2",
                         "johndoe@example.com",
                         LocalDate.parse("1990-01-01"),
                         roles,
@@ -74,6 +75,7 @@ class UserFactoryTest {
                         "avatar.jpg",
                         "John",
                         null,
+                        "user3",
                         "johndoe@example.com",
                         LocalDate.parse("1990-01-01"),
                         roles,
@@ -94,6 +96,7 @@ class UserFactoryTest {
                         "John",
                         "Doe",
                         null,
+                        "user5",
                         LocalDate.parse("1990-01-01"),
                         roles,
                         "0123456789",
@@ -112,6 +115,7 @@ class UserFactoryTest {
                         "avatar.jpg",
                         "John",
                         "Doe",
+                        "user6",
                         "johndoe@example.com",
                         LocalDate.parse("1990-01-01"),
                         roles,

@@ -20,62 +20,37 @@ class ProductServiceTest {
 
     @Autowired
     private ProductService productService;
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private SubCategoryService subCategoryService;
 
     private Product product;
 
     @BeforeEach
     void setUp() {
-        // Create Category and SubCategory
-        Category category = CategoryFactory.createCategory(
-                null, // ID should be generated
-                "Sneakers",
-                "Sneakers",
-                LocalDateTime.now(),
-                null
-        );
-        category = categoryService.create(category);
-
-        SubCategory subCategory = SubCategoryFactory.createSubCategory(
-                null, // ID should be generated
-                category,
-                "High Tops",
-                "High Top Sneakers",
-                LocalDateTime.now(),
-                null
-        );
-        subCategory = subCategoryService.create(subCategory);
 
         // Set up the Product
         ImageUrls imageUrls = ImageUrlsFactory.createImageUrls(
-                "image1.jpg",
-                "image2.jpg",
-                "image3.jpg",
-                "image4.jpg"
+                "https://african-arts-and-crafts-bucket.s3.eu-north-1.amazonaws.com/NIKE%2BAIR%2BFORCE%2B1%2B'07%2BNN+(1).jpeg",
+                "https://african-arts-and-crafts-bucket.s3.eu-north-1.amazonaws.com/NIKE%2BAIR%2BFORCE%2B1%2B'07%2BNN+(1).png",
+                "https://african-arts-and-crafts-bucket.s3.eu-north-1.amazonaws.com/NIKE%2BAIR%2BFORCE%2B1%2B'07%2BNN.jpeg",
+                "https://african-arts-and-crafts-bucket.s3.eu-north-1.amazonaws.com/NIKE%2BAIR%2BFORCE%2B1%2B'07%2BNN.png"
         );
 
         product = ProductFactory.createProduct(
-                null, // ID should be generated
+                null,
                 "AirForce 1",
                 "All White AirForce 1",
                 "Nike AirForce 1",
-                "cover img url",
+                "https://african-arts-and-crafts-bucket.s3.eu-north-1.amazonaws.com/NIKE%2BAIR%2BFORCE%2B1%2B'07%2BNN+(2).png",
                 imageUrls,
-                List.of(subCategory),
-                LocalDateTime.now(),
-                null
+                LocalDateTime.now()
         );
     }
 
     @AfterEach
     void tearDown() {
-        // Check if the product exists before deleting to avoid exceptions
-        /*if (product != null && product.getId() != null) {
+        // Clean up test data after each test
+        if (product != null && product.getId() != null && product.getId() != 1) {
             productService.delete(product.getId());
-        }*/
+        }
     }
 
     @Test
@@ -83,7 +58,7 @@ class ProductServiceTest {
     void create() {
         Product createdProduct = productService.create(product);
         assertNotNull(createdProduct);
-        assertNotNull(createdProduct.getId()); // Ensure ID was generated
+        assertNotNull(createdProduct.getId());
         assertEquals(product.getName(), createdProduct.getName());
     }
 
@@ -113,9 +88,10 @@ class ProductServiceTest {
     @Order(4)
     void delete() {
         Product createdProduct = productService.create(product);
-        productService.delete(createdProduct.getId());
+        boolean delete  = productService.delete(createdProduct.getId());
         Product deletedProduct = productService.read(createdProduct.getId());
-        assertNull(deletedProduct);  // Ensure product was deleted, should return null
+        assertNull(deletedProduct);
+        assertTrue(delete);
     }
 
     @Test

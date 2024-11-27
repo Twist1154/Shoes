@@ -1,7 +1,10 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -23,13 +26,18 @@ public class Review {
     private int rating;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "products_id")
+    @JsonManagedReference("productReviewReference")
+    @JsonIncludeProperties("id")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "users_id")
+    @JsonManagedReference("userReviewReference")
+    @JsonIncludeProperties({"id", "firstName", "lastName", "avatar"})
     private User user;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     public Review() {
@@ -44,6 +52,11 @@ public class Review {
         this.createdAt = builder.createdAt;
     }
 
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
     @Override
     public String toString() {
         return "Review{" +
@@ -51,7 +64,7 @@ public class Review {
                 ", review='" + review + '\'' +
                 ", rating=" + rating +
                 ", product=" + product.getName() +
-                ", User=" + user.getFirstName() +
+                ", User=" + user.getId() +
                 ", createdAt='" + createdAt + '\'' +
                 '}';
     }

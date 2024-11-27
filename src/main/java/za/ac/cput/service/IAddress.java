@@ -21,7 +21,7 @@ public interface IAddress extends IService<Address, Long> {
      * @param userId the User entity to search by
      * @return a list of Addresses associated with the given User
      */
-    Optional<Address> findByUserId(Long userId);
+    List<Address> findByUserId(Long userId);
 
     /**
      * Finds all Addresses with a given title.

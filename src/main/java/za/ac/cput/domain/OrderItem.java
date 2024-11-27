@@ -39,10 +39,6 @@ public class OrderItem {
 
     private int quantity;
 
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
-
     public OrderItem() {
     }
 
@@ -53,8 +49,6 @@ public class OrderItem {
         this.product = builder.product;
         this.productSku = builder.productSku;
         this.quantity = builder.quantity;
-        this.createdAt = builder.createdAt;
-        this.updatedAt = builder.updatedAt;
     }
 
 
@@ -63,12 +57,10 @@ public class OrderItem {
     public String toString() {
         return "\n OrderItem{" +
                 "id=" + id +
-                ", orderDetails=" + orderDetails +  (orderDetails != null ? orderDetails.getTotal() : 0) +
+                //", orderDetails=" + orderDetails +  (orderDetails != null ? orderDetails.getTotal() : 0) +
                 ", product=" + product + (product != null ? product.getName() : 0) +
                 ", productSku=" + productSku + (productSku != null ? productSku.getSku() : 0) +
                 ", quantity=" + quantity +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
                 "}\n ";
     }
 
@@ -81,14 +73,12 @@ public class OrderItem {
                 Objects.equals(id, that.id) &&
                 Objects.equals(orderDetails, that.orderDetails) &&
                 Objects.equals(product, that.product) &&
-                Objects.equals(productSku, that.productSku) &&
-                Objects.equals(createdAt, that.createdAt) &&
-                Objects.equals(updatedAt, that.updatedAt);
+                Objects.equals(productSku, that.productSku);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, orderDetails, product, productSku, quantity, createdAt, updatedAt);
+        return Objects.hash(id, orderDetails, product, productSku, quantity);
     }
 
     public static class Builder {
@@ -97,8 +87,6 @@ public class OrderItem {
         private Product product;
         private ProductSku productSku;
         private int quantity;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -125,24 +113,12 @@ public class OrderItem {
             return this;
         }
 
-        public Builder setCreatedAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public Builder setUpdatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
         public Builder copy(OrderItem orderItem) {
             this.id = orderItem.getId();
             this.orderDetails = orderItem.getOrderDetails();
             this.product = orderItem.getProduct();
             this.productSku = orderItem.getProductSku();
             this.quantity = orderItem.getQuantity();
-            this.createdAt = orderItem.getCreatedAt();
-            this.updatedAt = orderItem.getUpdatedAt();
             return this;
         }
 

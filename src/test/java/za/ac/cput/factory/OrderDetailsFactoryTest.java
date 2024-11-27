@@ -5,8 +5,12 @@ import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.OrderDetails;
 import za.ac.cput.domain.PaymentDetails;
 import za.ac.cput.domain.User;
+import za.ac.cput.enums.Role;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -16,21 +20,40 @@ class OrderDetailsFactoryTest {
     private OrderDetails orderDetails;
     private User user;
     private PaymentDetails paymentDetails;
+    private Set<Role> roles;
+
 
     @BeforeEach
     void setup() {
-        // Set up sample User and PaymentDetails objects
-        user = new User(); // Initialize a sample User object
-        paymentDetails = new PaymentDetails(); // Initialize a sample PaymentDetails object
+        roles = new HashSet<>(Set.of(Role.USER, Role.ADMIN));
+
+        // Set up a sample User object using the factory method
+        user = UserFactory.createUser(
+                1L,
+                "avatar.jpg",
+                "John",
+                "Doe",
+                "user1",
+                "johndoe@example.com",
+                LocalDate.parse("1990-01-01"),
+                roles,
+                "0123456789",
+                "password123");
+
+        paymentDetails = PaymentDetailsFactory.createPaymentDetails(
+                1L,
+                100.0,
+                "PayPal",
+                "Success"
+        );
 
         // Set up a sample OrderDetails object using the factory method
         orderDetails = OrderDetailsFactory.createOrderDetails(
                 1L,
                 user,
                 paymentDetails,
-                100.0,
-                LocalDateTime.parse("2024-06-12T00:00:00"),
-                LocalDateTime.parse("2024-06-12T00:00:00"));
+                100.0
+        );
     }
 
     @Test
@@ -50,9 +73,9 @@ class OrderDetailsFactoryTest {
                         1L,
                         null,
                         paymentDetails,
-                        100.0,
-                        LocalDateTime.parse("2024-06-12T00:00:00"),
-                        LocalDateTime.parse("2024-06-12T00:00:00")));
+                        100.0
+                )
+        );
 
         // Print a message to the terminal indicating that an exception was thrown
         System.out.println("Expected IllegalArgumentException thrown when creating OrderDetails with null User");
@@ -66,9 +89,9 @@ class OrderDetailsFactoryTest {
                         1L,
                         user,
                         null,
-                        100.0,
-                        LocalDateTime.parse("2024-06-12T00:00:00"),
-                        LocalDateTime.parse("2024-06-12T00:00:00")));
+                        100.0
+                )
+        );
 
         // Print a message to the terminal indicating that an exception was thrown
         System.out.println("Expected IllegalArgumentException thrown when creating OrderDetails with null PaymentDetails");
@@ -82,9 +105,9 @@ class OrderDetailsFactoryTest {
                         1L,
                         user,
                         paymentDetails,
-                        null,
-                        LocalDateTime.parse("2024-06-12T07:00:00"),
-                        LocalDateTime.parse("2024-06-12T07:00:00")));
+                        null
+                )
+        );
 
         // Print a message to the terminal indicating that an exception was thrown
         System.out.println("Expected IllegalArgumentException thrown when creating OrderDetails with null total");

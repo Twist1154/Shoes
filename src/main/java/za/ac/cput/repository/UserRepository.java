@@ -65,8 +65,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     /**
      * Finds all Users by their role.
      *
-     * @param role the role to search for
-     * @return a List of Users with the specified role
+     * @param username the role to search for
+     * @return a List of Users with the specified username
      */
-    List<User> findByRole(String role);
+   User findByUsername(String username);
+
 }

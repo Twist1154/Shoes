@@ -22,29 +22,29 @@ import java.util.List;
 @Transactional // Default to transactional for write operations
 public class ProductSkuService implements IProductSku {
 
-    private final ProductSkuRepository productSkuRepository;
+    private final ProductSkuRepository repository;
 
     @Autowired
-    public ProductSkuService(ProductSkuRepository productSkuRepository) {
-        this.productSkuRepository = productSkuRepository;
+    public ProductSkuService(ProductSkuRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     @Transactional(readOnly = false) // Ensure session is active for create
     public ProductSku create(ProductSku productSku) {
-        return productSkuRepository.save(productSku);
+        return repository.save(productSku);
     }
 
     @Override
     @Transactional(readOnly = true) // Read operations should not require a write session
     public ProductSku read(Long id) {
-        return productSkuRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     @Override
     @Transactional(readOnly = false) // Write operations should require a transactional session
     public ProductSku update(ProductSku productSku) {
-        ProductSku existingProductSku = productSkuRepository.findById(productSku.getId()).orElse(null);
+        ProductSku existingProductSku = repository.findById(productSku.getId()).orElse(null);
 
         if (existingProductSku != null) {
             ProductSku updatedProductSku = new ProductSku.Builder()
@@ -57,10 +57,8 @@ public class ProductSkuService implements IProductSku {
                     .setSku(productSku.getSku())
                     .setPrice(productSku.getPrice())
                     .setQuantity(productSku.getQuantity())
-                    .setCreatedAt(productSku.getCreatedAt())
-                    .setDeletedAt(productSku.getDeletedAt())
                     .build();
-            return productSkuRepository.save(updatedProductSku);
+            return repository.save(updatedProductSku);
         } else {
             log.warn("Attempt to update a non-existent product SKU with ID: " + productSku.getId());
             return null;
@@ -70,9 +68,9 @@ public class ProductSkuService implements IProductSku {
     @Override
     @Transactional // Transactions are needed for delete operations
     public boolean delete(Long id) {
-        if (productSkuRepository.existsById(id)) {
-            productSkuRepository.deleteById(id);
-            return !productSkuRepository.existsById(id); // Return true if deleted successfully
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return !repository.existsById(id); // Return true if deleted successfully
         } else {
             log.warn("Attempt to delete a non-existent product SKU with ID: " + id);
             return false;
@@ -82,6 +80,6 @@ public class ProductSkuService implements IProductSku {
     @Override
     @Transactional(readOnly = true) // Read-only for list operations
     public List<ProductSku> findAll() {
-        return productSkuRepository.findAll();
+        return repository.findAll();
     }
 }

@@ -34,6 +34,7 @@ public class UserFactory {
                                   String avatar,
                                   String firstName,
                                   String lastName,
+                                  String username,
                                   String email,
                                   LocalDate birthDate,
                                   Set<Role> role,
@@ -41,7 +42,11 @@ public class UserFactory {
                                   String password
     ) {
         // Validation checks
-        if (Helper.isNullOrEmpty(firstName) || Helper.isNullOrEmpty(lastName) || Helper.isNullOrEmpty(email) || Helper.isNullOrEmpty(password)) {
+        if (Helper.isNullOrEmpty(firstName) ||
+                Helper.isNullOrEmpty(lastName) ||
+                Helper.isNullOrEmpty(username) ||
+                Helper.isNullOrEmpty(email) ||
+                Helper.isNullOrEmpty(password)) {
             throw new IllegalArgumentException("First name, last name, email, and password cannot be null or empty");
         }
 
@@ -51,6 +56,7 @@ public class UserFactory {
                 .setAvatar(avatar)
                 .setFirstName(firstName)
                 .setLastName(lastName)
+                .setUsername(username)
                 .setEmail(email)
                 .setBirthDate(birthDate)
                 .setRole(role)
@@ -60,21 +66,21 @@ public class UserFactory {
     }
 
     /**
-     * Creates a {@link User} instance for sign-in with only email and password.
+     * Creates a {@link User} instance for sign-in with only username and password.
      *
-     * @param email       the email address of the user
+     * @param username       the username address of the user
      * @param password    the password of the user
      * @return a new {@link User} object with properties set from the input parameters
      */
-    public static User createUserForSignIn(String email, String password) {
+    public static User createUserForSignIn(String username, String password) {
         // Validation checks
-        if (Helper.isNullOrEmpty(email) || Helper.isNullOrEmpty(password)) {
+        if (Helper.isNullOrEmpty(username) || Helper.isNullOrEmpty(password)) {
             throw new IllegalArgumentException("Email and password cannot be null or empty");
         }
 
         // Create a new User object using the Builder pattern with default or null values for other fields
         return new User.Builder()
-                .setEmail(email)
+                .setUsername(username)
                 .setPassword(password)
                 .build();
     }
