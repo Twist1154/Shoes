@@ -11,6 +11,9 @@
       <change afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/dto/Exception/ValidationExceptionResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/config/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/config/JwtAuthenticationFilter.java" afterDir="false" />
+    </list>
+    <list default="true" id="ef58de28-6174-419a-8626-436ead673cf8" name="Changes" comment="edited  .properties files">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/dto/Auth.java" beforeDir="false" />
     </list>
@@ -18,6 +21,11 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseLocalColorSettings">
+    <colors>
+      <entry key="daac2efd-58e1-4fa4-8ccc-733b7310e22c" value="Violet" />
+    </colors>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -35,7 +43,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -72,8 +79,7 @@
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Twist1154/Shoes.git&quot;,
     &quot;accountId&quot;: &quot;0638dc44-97cf-4c3f-b762-18e11f47632b&quot;
-  },
-  &quot;reviewCommentPreferred&quot;: false
+  }
 }</component>
   <component name="JvmLoggingSettingsStorage">
     <option name="loggerId" value="Lombok Slf4j" />
@@ -95,25 +101,11 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;HTTP Request.generated-requests | #1.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #10.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #11.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #12.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #13.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #16.executor&quot;: &quot;Run&quot;,
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
     &quot;HTTP Request.generated-requests | #2.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #22.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #23.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.generated-requests | #24.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #25.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.generated-requests | #26.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #27.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #28.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #29.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.generated-requests | #3.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #30.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #31.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #32.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.generated-requests | #35.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.generated-requests | #36.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.generated-requests | #37.executor&quot;: &quot;Run&quot;,
@@ -123,44 +115,30 @@
     &quot;HTTP Request.generated-requests | #40.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.generated-requests | #42.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.generated-requests | #5.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #6.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #7.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #8.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.generated-requests | #9.executor&quot;: &quot;Run&quot;,
     &quot;JPA.DatabaseSchemaImportDialog&quot;: &quot;830fc46b-7b67-4a92-a409-d058e5ec1c1a&quot;,
     &quot;JUnit.AddressServiceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.AddressServiceTest.testCreateAddress.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AddressServiceTest.testFindByUser.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.AddressServiceTest.testUpdateAddress.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CartItemFactoryTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CartItemServiceTest.create.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CartItemServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CartItemServiceTest.findAll.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CartItemServiceTest.update.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CartServiceTest.create.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CartServiceTest.delete.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CartServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CategoryFactoryTest.testCreateCategory_WithNullId_ThrowsIllegalArgumentException.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CategoryServiceTest.create.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CategoryServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.OrderDetailsServiceTest and 1 more.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.OrderDetailsServiceTest.create.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.OrderDetailsServiceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.OrderDetailsServiceTest.findByUpdatedAtBefore.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.OrderDetailsServiceTest.findByUserIdOrderByCreatedAtDesc.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.OrderItemControllerTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.OrderItemServiceTest.create.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.OrderItemServiceTest.delete.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.OrderItemServiceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.OrderItemServiceTest.read.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.OrderedTestSuite.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.PaymentDetailsControllerTest and 4 more.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.PaymentDetailsControllerTest.createPaymentDetails.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.PaymentDetailsControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentDetailsControllerTest.getAllPaymentDetails.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.PaymentDetailsControllerTest.getPaymentDetailsByStatus.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.PaymentDetailsServiceTest.create.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentDetailsServiceTest.delete.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.PaymentDetailsServiceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ProductAttributeControllerTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ProductAttributeFactoryTest and 2 more.executor&quot;: &quot;Run&quot;,
@@ -168,7 +146,6 @@
     &quot;JUnit.ProductControllerTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ProductFactoryTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ProductServiceTest and 2 more.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProductServiceTest.create.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ProductServiceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ProductSkuControllerTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ProductSkuControllerTest.getProductSkuById.executor&quot;: &quot;Run&quot;,
@@ -176,11 +153,9 @@
     &quot;JUnit.ProductSkuServiceTest.create.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ProductSkuServiceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ProductSkuServiceTest.read.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReviewServiceTest.create.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ReviewServiceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ReviewsFactoryTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.SubCategoryControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SubCategoryServiceTest.delete.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.SubCategoryServiceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.UserRepositoryTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.UserServiceTest.executor&quot;: &quot;Run&quot;,
@@ -190,15 +165,9 @@
     &quot;JUnit.WishListItemServiceTest,findAll and 1 more.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.WishListItemServiceTest.delete.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.WishListItemServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WishlistControllerTest.createWishlist.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.WishlistControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WishlistItemServiceTest.delete.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WishlistItemServiceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.WishlistServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WishlistServiceTest.testCreateWishlist.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WishlistServiceTest.testDeleteWishlist.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.WishlistServiceTest.testFindAllWishlists.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.cput in Shoe_Store.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.factory in Shoe_Store.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.service in Shoe_Store.executor&quot;: &quot;Run&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
@@ -212,14 +181,13 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers&quot;: &quot;true&quot;,
-    &quot;database.data.extractors.current.export.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
+    &quot;database.data.extractors.current.export.id&quot;: &quot;Pretty-Groovy.txt.groovy&quot;,
     &quot;database.data.extractors.current.id&quot;: &quot;Pretty-Groovy.txt.groovy&quot;,
-    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;#3 on main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;errors&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;C:/Users/retha/Documents/JetBrains Academy/Shoe_Store/src/main/java/za/ac/cput&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Capaciti/Documents&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/retha/Documents/JetBrains Academy/Shoe_Store/src/test/java&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -228,17 +196,14 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
-    ]
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Capaciti\IdeaProjects\Shoes\src\main\java\za\ac\cput\service" />
+      <recent name="C:\Users\Capaciti\IdeaProjects\Shoes\src\main\java\za\ac\cput\config" />
       <recent name="C:\Users\retha\Documents\JetBrains Academy\Shoe_Store\src\test\java" />
       <recent name="C:\Users\retha\Documents\JetBrains Academy\Shoe_Store\src\main\resources" />
       <recent name="C:\Users\retha\Documents\JetBrains Academy\Shoe_Store\src\main\java" />
@@ -255,7 +220,7 @@
       <recent name="za.ac.cput" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="za.ac.cput.dto" />
+      <recent name="za.ac.cput.enums" />
       <recent name="za.ac.cput.domain" />
       <recent name="za.ac.cput.service" />
       <recent name="za.ac.cput.controller" />
@@ -273,14 +238,73 @@
     <configuration name="generated-requests | #12" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="12" requestIdentifier="#12" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="generated-requests | #22" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="22" requestIdentifier="#22" runType="Run single request">
-      <method v="2" />
+  </component>
+  <component name="RunManager" selected="Spring Boot.Application">
+    <configuration name="ProductSkuControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Shoe_Store" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="za.ac.cput.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="za.ac.cput.controller" />
+      <option name="MAIN_CLASS_NAME" value="za.ac.cput.controller.ProductSkuControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
-    <configuration name="generated-requests | #23" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="23" requestIdentifier="#23" runType="Run single request">
+    <configuration name="generated-requests | #22" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="22" requestIdentifier="#22" runType="Run single request"/>
       <method v="2" />
+    <configuration name="ReviewFactoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Shoe_Store" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="za.ac.cput.factory.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="za.ac.cput.factory" />
+      <option name="MAIN_CLASS_NAME" value="za.ac.cput.factory.ReviewFactoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
-    <configuration name="generated-requests | #24" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="24" requestIdentifier="#24" runType="Run single request">
+    <configuration name="generated-requests | #23" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="23" requestIdentifier="#23" runType="Run single request" />
       <method v="2" />
+    <configuration name="ReviewServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Shoe_Store" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="za.ac.cput.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="za.ac.cput.service" />
+      <option name="MAIN_CLASS_NAME" value="za.ac.cput.service.ReviewServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="generated-requests | #24" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="24" requestIdentifier="#24" runType="Run single request"/>
+      <method v="2" />
+    <configuration name="WishlistControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Shoe_Store" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="za.ac.cput.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="za.ac.cput.controller" />
+      <option name="MAIN_CLASS_NAME" value="za.ac.cput.controller.WishlistControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="Shoe_Store" />
@@ -297,19 +321,19 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.generated-requests | #24" />
         <item itemvalue="Spring Boot.Application" />
-        <item itemvalue="HTTP Request.generated-requests | #23" />
-        <item itemvalue="HTTP Request.generated-requests | #22" />
-        <item itemvalue="HTTP Request.generated-requests | #12" />
+        <item itemvalue="JUnit.ProductSkuControllerTest" />
+        <item itemvalue="JUnit.WishlistControllerTest" />
+        <item itemvalue="JUnit.ReviewServiceTest" />
+        <item itemvalue="JUnit.ReviewFactoryTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
       </set>
     </attachedChunks>
   </component>
@@ -343,20 +367,6 @@
       <workItem from="1727115263238" duration="19832000" />
       <workItem from="1727177295562" duration="2368000" />
       <workItem from="1727181512140" duration="45759000" />
-      <workItem from="1730819868760" duration="6370000" />
-      <workItem from="1730983088192" duration="20647000" />
-      <workItem from="1731069363523" duration="6507000" />
-      <workItem from="1731244755405" duration="1974000" />
-      <workItem from="1731254762073" duration="15613000" />
-      <workItem from="1731395369992" duration="15739000" />
-      <workItem from="1731411417539" duration="8529000" />
-      <workItem from="1731481829806" duration="22221000" />
-      <workItem from="1731653596947" duration="653000" />
-      <workItem from="1731655156082" duration="13019000" />
-      <workItem from="1732000099266" duration="2302000" />
-      <workItem from="1732086173251" duration="21866000" />
-      <workItem from="1732172999968" duration="6421000" />
-      <workItem from="1732259321494" duration="10196000" />
     </task>
     <task id="LOCAL-00001" summary="intitial commit">
       <option name="closed" value="true" />
@@ -559,6 +569,23 @@
       <updated>1732261111593</updated>
     </task>
     <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00014" summary="edited  .properties files">
+      <option name="closed" value="true" />
+      <created>1732698317943</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1732698317943</updated>
+    </task>
+    <task id="LOCAL-00015" summary="edited  .properties files">
+      <option name="closed" value="true" />
+      <created>1732700575971</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1732700575971</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -598,7 +625,8 @@
     <MESSAGE value="friday before modify spring security filter chain and using workbench server" />
     <MESSAGE value="security chain updated and added review Controller" />
     <MESSAGE value="all 105 Service tests passed except the wishlist delete" />
-    <option name="LAST_COMMIT_MESSAGE" value="all 105 Service tests passed except the wishlist delete" />
+     <MESSAGE value="edited  .properties files" />
+    <option name="LAST_COMMIT_MESSAGE" value="edited  .properties files" />
   </component>
   <component name="WfRunsListSearchHistory">{
   &quot;history&quot;: [
@@ -623,20 +651,11 @@
           <properties class="org.hibernate.PropertyValueException" package="org.hibernate" />
           <option name="timeStamp" value="2" />
         </breakpoint>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="org.junit.platform.commons.JUnitException" package="org.junit.platform.commons" />
-          <option name="timeStamp" value="3" />
-        </breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint enabled="true" log-message="true" log-stack="true" suspend="THREAD" type="java-exception" />
       </default-breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="JUnit">
-        <watch expression="package za.ac.cput.service;&#10;&#10;import org.junit.jupiter.api.*;&#10;import org.springframework.beans.factory.annotation.Autowired;&#10;import org.springframework.boot.test.context.SpringBootTest;&#10;import za.ac.cput.domain.Product;&#10;import za.ac.cput.domain.WishlistItem;&#10;import za.ac.cput.domain.Wishlist;&#10;import za.ac.cput.repository.WishlistItemRepository;&#10;&#10;import java.time.LocalDateTime;&#10;import java.util.List;&#10;&#10;import static org.junit.jupiter.api.Assertions.*;&#10;&#10;@SpringBootTest&#10;@TestMethodOrder(MethodOrderer.OrderAnnotation.class)&#10;class WishlistItemServiceTest {&#10;&#10;    @Autowired&#10;    private WishlistItemService service;&#10;&#10;    @Autowired&#10;    private WishlistItemRepository repository;&#10;&#10;    private Product product;&#10;    private Wishlist wishlist;&#10;    private List&lt;WishlistItem&gt; wishlistItems;&#10;&#10;    @Autowired&#10;    private ProductService productService;&#10;&#10;    @Autowired&#10;    private WishlistService wishlistService;&#10;&#10;    @BeforeEach&#10;    void setUp() {&#10;        product = productService.read(1L);&#10;        wishlist = wishlistService.read(2L);&#10;&#10;        // Create WishListItems&#10;        WishlistItem item1 = new WishlistItem.Builder()&#10;                .setProduct(product)&#10;                .setDateAdded(LocalDateTime.now())&#10;                .setWishlist(wishlist)&#10;                .build();&#10;&#10;        WishlistItem item2 = new WishlistItem.Builder()&#10;                .setProduct(product)&#10;                .setDateAdded(LocalDateTime.now())&#10;                .setWishlist(wishlist)&#10;                .build();&#10;&#10;        wishlistItems = List.of(item1, item2);&#10;&#10;        wishlist = new Wishlist.Builder()&#10;                .copy(wishlist)&#10;                .setWishlistItems(wishlistItems)&#10;                .build();&#10;    }&#10;&#10;    @AfterEach&#10;    void tearDown() {&#10;        repository.deleteById(wishlistItems.get(0).getId());&#10;    }&#10;&#10;    @Test&#10;    @Order(1)&#10;    void create() {&#10;        // Test creating a new wishlist item&#10;        WishlistItem createdItem = service.create(wishlistItems.get(0));&#10;        assertNotNull(createdItem);&#10;        assertEquals(wishlistItems.get(0).getProduct().getId(), createdItem.getProduct().getId());&#10;        assertEquals(wishlistItems.get(0).getWishlist().getId(), createdItem.getWishlist().getId());&#10;        assertEquals(wishlistItems.get(0).getDateAdded(), createdItem.getDateAdded());&#10;    }&#10;&#10;    @Test&#10;    @Order(2)&#10;    void read() {&#10;        // Test reading a wishlist item by ID&#10;        WishlistItem createdItem = service.create(wishlistItems.get(0));&#10;        WishlistItem readItem = service.read(createdItem.getId());&#10;        assertNotNull(readItem);&#10;        assertEquals(createdItem.getId(), readItem.getId());&#10;    }&#10;&#10;    @Test&#10;    @Order(3)&#10;    void update() {&#10;        // Test updating a wishlist item&#10;        WishlistItem createdItem = service.create(wishlistItems.get(0));&#10;        WishlistItem updatedItem = new WishlistItem.Builder()&#10;                .copy(createdItem)&#10;                .setDateAdded(LocalDateTime.now().plusDays(1)) // Update the date&#10;                .build();&#10;&#10;        WishlistItem result = service.update(updatedItem);&#10;        assertNotNull(result);&#10;        assertEquals(updatedItem.getDateAdded(), result.getDateAdded());&#10;    }&#10;&#10;    @Test&#10;    @Order(4)&#10;    void findAll() {&#10;        // Test finding all wishlist items&#10;        service.create(wishlistItems.get(0));&#10;        service.create(wishlistItems.get(1));&#10;        List&lt;WishlistItem&gt; items = service.findAll();&#10;        assertFalse(items.isEmpty());&#10;    }&#10;&#10;    @Test&#10;    @Order(5)&#10;    void delete() {&#10;        WishlistItem item = new WishlistItem.Builder()&#10;                .setProduct(product)&#10;                .setDateAdded(LocalDateTime.now())&#10;                .setWishlist(wishlist)&#10;                .build();&#10;         service.create(item);&#10;        System.out.println(&quot;Created review ID: &quot; + item.getId());&#10;&#10;        boolean deleted = service.delete(item.getId());&#10;&#10;        assertFalse(deleted);&#10;        assertNull(service.read(item.getId()));&#10;&#10;        System.out.println(&quot;Deleted review ID: &quot; + item.getId());&#10;&#10;    }&#10;}&#10;" language="JAVA" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
