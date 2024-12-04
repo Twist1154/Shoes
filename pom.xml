@@ -108,5 +108,10 @@
             <version>1.18.32</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 </project>
