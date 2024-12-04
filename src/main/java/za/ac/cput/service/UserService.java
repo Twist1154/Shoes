@@ -1,57 +1,52 @@
-/*
 package za.ac.cput.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetailsService;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.User;
 import za.ac.cput.enums.Role;
 import za.ac.cput.repository.UserRepository;
 import za.ac.cput.util.Helper;
-import za.ac.cput.util.JwtUtil;
+//import za.ac.cput.util.JwtUtil;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-*/
 /**
  * Service class for handling user-related operations.
- * Implements {@link UserDetailsService} for user authentication.
+// * Implements {@link //UserDetailsService} for user authentication.
  * Implements {@link IUser} for user CRUD operations.
  * <p>
  * Author: Rethabile Ntsekhe
  * Date: 24-Aug-24
  * </p>
- *//*
-
+ */
 @Service
 @Transactional
-public class UserService implements UserDetailsService, IUser {
+public class UserService implements /*UserDetailsService,*/ IUser {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+   /* private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-
-    */
-/**
+*/
+    /**
      * Constructs a UserService with the specified UserRepository, PasswordEncoder, and UserMapper.
      *
      * @param userRepository   the UserRepository for interacting with the database
-     * @param passwordEncoder  the PasswordEncoder for encoding passwords
-     *//*
-
+     * @param //passwordEncoder  the PasswordEncoder for encoding passwords
+     */
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+    public UserService(UserRepository userRepository/*, PasswordEncoder passwordEncoder, JwtUtil jwtUtil*/) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
+        /*this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;*/
     }
 
 
@@ -76,7 +71,7 @@ public class UserService implements UserDetailsService, IUser {
                     .setBirthDate(user.getBirthDate())
                     .setPhoneNumber(user.getPhoneNumber())
                     .setEmail(user.getEmail())
-                    .setPassword(passwordEncoder.encode(user.getPassword()))
+                    .setPassword(user.getPassword())
                     .setRole(user.getRole())
                     .build();
             return userRepository.save(updatedUser);
@@ -99,16 +94,14 @@ public class UserService implements UserDetailsService, IUser {
         return userRepository.findAll();
     }
 
-    */
-/**
+    /**
      * Loads user-specific data by username.
      *
-     * @param username the username of the user
+     * @param //username the username of the user
      * @return the UserDetails object containing user data
-     * @throws UsernameNotFoundException if no user is found with the given username
-     *//*
-
-    @Override
+     * @throws //UsernameNotFoundException if no user is found with the given username
+     */
+   /* @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
@@ -124,7 +117,7 @@ public class UserService implements UserDetailsService, IUser {
                 user.getPassword(),
                 authorities
         );
-    }
+    }*/
 
 
     @Override
@@ -157,7 +150,7 @@ public class UserService implements UserDetailsService, IUser {
         return userRepository.findByRole(role);
     }
 
-    public String generateToken(User user) {
+    /*public String generateToken(User user) {
         return jwtUtil.generateToken(user);
     }
 
@@ -176,5 +169,5 @@ public class UserService implements UserDetailsService, IUser {
         } else {
             return null;
         }
-    }
-}*/
+    }*/
+}

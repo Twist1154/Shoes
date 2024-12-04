@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef58de28-6174-419a-8626-436ead673cf8" name="Changes" comment="edited  .properties files">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/config/EncoderConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/config/EncoderConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/config/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/config/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/controller/CartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/repository/CartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/repository/CartRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/CartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/ICart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/ICart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/IUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/IUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/JwtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/za/ac/cput/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="ef58de28-6174-419a-8626-436ead673cf8" name="Changes" comment="added implements Serializable to all the models" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -232,22 +215,7 @@
       <recent name="za.ac.cput.config" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.Application">
-    <configuration name="ProductSkuControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Shoe_Store" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="za.ac.cput.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="za.ac.cput.controller" />
-      <option name="MAIN_CLASS_NAME" value="za.ac.cput.controller.ProductSkuControllerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.service in Shoe_Store">
     <configuration name="ReviewFactoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Shoe_Store" />
       <extension name="coverage">
@@ -293,6 +261,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="service in Shoe_Store" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Shoe_Store" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java/za/ac/cput/service" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="Shoe_Store" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="za.ac.cput.Application" />
@@ -308,11 +284,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.service in Shoe_Store" />
         <item itemvalue="Spring Boot.Application" />
         <item itemvalue="JUnit.WishlistControllerTest" />
         <item itemvalue="JUnit.ReviewServiceTest" />
         <item itemvalue="JUnit.ReviewFactoryTest" />
-        <item itemvalue="JUnit.ProductSkuControllerTest" />
       </list>
     </recent_temporary>
   </component>
@@ -467,7 +443,23 @@
       <option name="project" value="LOCAL" />
       <updated>1732698317943</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="everything works Just removed the security">
+      <option name="closed" value="true" />
+      <created>1733314308886</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1733314308887</updated>
+    </task>
+    <task id="LOCAL-00016" summary="added implements Serializable to all the models">
+      <option name="closed" value="true" />
+      <created>1733314353137</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1733314353137</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -496,7 +488,9 @@
     <MESSAGE value="ProductControllerTest 2 out of 3 methods works" />
     <MESSAGE value="errors help debug" />
     <MESSAGE value="edited  .properties files" />
-    <option name="LAST_COMMIT_MESSAGE" value="edited  .properties files" />
+    <MESSAGE value="everything works Just removed the security" />
+    <MESSAGE value="added implements Serializable to all the models" />
+    <option name="LAST_COMMIT_MESSAGE" value="added implements Serializable to all the models" />
   </component>
   <component name="WfRunsListSearchHistory">{
   &quot;history&quot;: [
