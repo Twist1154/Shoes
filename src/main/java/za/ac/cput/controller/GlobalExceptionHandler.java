@@ -2,12 +2,15 @@ package za.ac.cput.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
+//import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import za.ac.cput.dto.Exception.ExceptionResponse;
 import za.ac.cput.dto.Exception.ValidationExceptionResponse;
+
+import java.nio.file.AccessDeniedException;
+
 
 import java.time.LocalDateTime;
 import java.util.HashMap;

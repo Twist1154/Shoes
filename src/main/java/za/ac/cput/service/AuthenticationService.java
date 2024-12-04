@@ -1,3 +1,4 @@
+/*
 package za.ac.cput.service;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,14 +20,16 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    /**
+    */
+/**
      * Constructs a new {@code AuthenticationService} with the provided dependencies.
      *
      * @param repository             the repository to manage user data
      * @param passwordEncoder        the password encoder to securely encode passwords
      * @param jwtService             the service to handle JWT token operations
      * @param authenticationManager  the manager responsible for authenticating user credentials
-     */
+     *//*
+
     public AuthenticationService(UserRepository repository,
                                  PasswordEncoder passwordEncoder,
                                  JwtService jwtService,
@@ -37,13 +40,15 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    /**
+    */
+/**
      * Registers a new user by encoding the password, saving the user in the repository,
      * and generating a JWT token for the user.
      *
      * @param request the user data provided during registration
      * @return an {@link AuthenticationResponse} containing the JWT token
-     */
+     *//*
+
     public AuthenticationResponse register(User request) {
         User user = new User.Builder().copy(request)
                 .setId(request.getId())
@@ -67,12 +72,14 @@ public class AuthenticationService {
         return new AuthenticationResponse(user,token);
     }
 
-    /**
+    */
+/**
      * Authenticates a user by verifying their username and password, and generates a JWT token if valid.
      *
      * @param request the user credentials provided for authentication
      * @return an {@link AuthenticationResponse} containing the JWT token
-     */
+     *//*
+
     public AuthenticationResponse authenticate(UserAuth request) {
         // private static final String logger = Logger.getLogger(AuthenticationService.class.getName());
 
@@ -106,3 +113,4 @@ public class AuthenticationService {
     }
 
 }
+*/

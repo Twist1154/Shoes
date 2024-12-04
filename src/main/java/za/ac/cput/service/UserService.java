@@ -1,3 +1,4 @@
+/*
 package za.ac.cput.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.domain.User;
+import za.ac.cput.enums.Role;
 import za.ac.cput.repository.UserRepository;
 import za.ac.cput.util.Helper;
 import za.ac.cput.util.JwtUtil;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+*/
 /**
  * Service class for handling user-related operations.
  * Implements {@link UserDetailsService} for user authentication.
@@ -26,7 +29,8 @@ import java.util.stream.Collectors;
  * Author: Rethabile Ntsekhe
  * Date: 24-Aug-24
  * </p>
- */
+ *//*
+
 @Service
 @Transactional
 public class UserService implements UserDetailsService, IUser {
@@ -35,12 +39,14 @@ public class UserService implements UserDetailsService, IUser {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    /**
+    */
+/**
      * Constructs a UserService with the specified UserRepository, PasswordEncoder, and UserMapper.
      *
      * @param userRepository   the UserRepository for interacting with the database
      * @param passwordEncoder  the PasswordEncoder for encoding passwords
-     */
+     *//*
+
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
@@ -93,13 +99,15 @@ public class UserService implements UserDetailsService, IUser {
         return userRepository.findAll();
     }
 
-    /**
+    */
+/**
      * Loads user-specific data by username.
      *
      * @param username the username of the user
      * @return the UserDetails object containing user data
      * @throws UsernameNotFoundException if no user is found with the given username
-     */
+     *//*
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(username)
@@ -145,7 +153,7 @@ public class UserService implements UserDetailsService, IUser {
     }
 
     @Override
-    public List<User> findByRole(String role) {
+    public List<User> findByRole(Role role) {
         return userRepository.findByRole(role);
     }
 
@@ -154,6 +162,19 @@ public class UserService implements UserDetailsService, IUser {
     }
 
     public boolean validateToken(String token, User user) {
-        return jwtUtil.validateToken(token, user);
+        return jwtUtil.isValid(token, user);
     }
-}
+
+    public User updatePassword(Long id,User user) {
+        User existingUser = userRepository.findById(user.getId()).orElse(null);
+        if (existingUser != null) {
+            User updatedUser = new User.Builder()
+                    .copy(existingUser)
+                    .setPassword(passwordEncoder.encode(user.getPassword()))
+                    .build();
+            return userRepository.save(updatedUser);
+        } else {
+            return null;
+        }
+    }
+}*/

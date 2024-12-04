@@ -3,6 +3,7 @@ package za.ac.cput.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.User;
+import za.ac.cput.enums.Role;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -69,5 +70,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return a List of Users with the specified username
      */
    User findByUsername(String username);
+
+   List<User> findByRole(Role role);
 
 }

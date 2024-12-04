@@ -1,6 +1,7 @@
 package za.ac.cput.service;
 
 import za.ac.cput.domain.User;
+import za.ac.cput.enums.Role;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,5 +27,5 @@ public interface IUser extends IService<User, Long>{
 
     List<User> findByPhoneNumber(String phoneNumber);
 
-    User findByUsername(String role);
+    List<User> findByRole(Role role);
 }

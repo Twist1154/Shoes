@@ -1,12 +1,13 @@
+/*
 package za.ac.cput.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import za.ac.cput.domain.User;
+//import za.ac.cput.domain.User;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -64,3 +65,4 @@ public class JwtUtil {
     }
 
 }
+*/

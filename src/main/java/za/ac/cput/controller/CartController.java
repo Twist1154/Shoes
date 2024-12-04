@@ -118,7 +118,7 @@ public class CartController {
     // Get carts with a total greater than a value using a native query
     @GetMapping("/native/total-greater-than/{total}")
     public ResponseEntity<List<Cart>> getCartsWithTotalGreaterThanNative(@PathVariable Double total) {
-        return ResponseEntity.ok(cartService.findCartsWithTotalGreaterThan(total));
+        return ResponseEntity.ok(cartService.findByTotalGreaterThan(total));
     }
 
     // Get carts by user ID and created after a specific date

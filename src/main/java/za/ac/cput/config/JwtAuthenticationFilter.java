@@ -1,3 +1,4 @@
+/*
 package za.ac.cput.config;
 
 import jakarta.servlet.FilterChain;
@@ -72,3 +73,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 path.startsWith("/api/products/read");
     }
 }
+*/

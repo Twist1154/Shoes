@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.domain.Address;
 import za.ac.cput.domain.Cart;
-import za.ac.cput.domain.User;
+//import za.ac.cput.domain.User;
 import za.ac.cput.service.AddressService;
-import za.ac.cput.service.UserService;
+//import za.ac.cput.service.UserService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

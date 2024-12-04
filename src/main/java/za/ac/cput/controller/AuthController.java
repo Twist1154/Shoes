@@ -1,3 +1,4 @@
+/*
 package za.ac.cput.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +33,10 @@ public class AuthController {
         try {
             // Authenticate user
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userAuth.getUsername(), userAuth.getPassword()));
+                    new UsernamePasswordAuthenticationToken(userAuth.getEmail(), userAuth.getPassword()));
 
             // Load user details
-            UserDetails userDetails = userDetailsService.loadUserByUsername(userAuth.getUsername());
+            UserDetails userDetails = userDetailsService.loadUserByUsername(userAuth.getEmail());
 
             // Generate JWT Token
             final String jwt = jwtUtil.generateToken((User) userDetails);
@@ -53,4 +54,4 @@ public class AuthController {
                     .body(Auth.builder().status("Invalid email or password").build());
         }
     }
-}
+}*/

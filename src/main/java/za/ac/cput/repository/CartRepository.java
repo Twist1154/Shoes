@@ -59,7 +59,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
      * Finds all Carts created within a specific date range using JPQL.
      *
      * @param startDate the start date of the range
-     * @param endDate the end date of the range
+     * @param endDate   the end date of the range
      * @return a list of Carts created within the date range
      */
     @Query("SELECT c FROM Cart c WHERE c.createdAt BETWEEN :startDate AND :endDate")
@@ -71,22 +71,13 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
      *
      * @return the Cart with the highest total
      */
-    @Query("SELECT c FROM Cart c WHERE c.total = (SELECT MAX(c2.total) FROM Cart c2)")
+    @Query("SELECT c FROM Cart c WHERE c.total = (SELECT MAX(c2.total) FROM Cart c2 WHERE c2.total IS NOT NULL)")
     Cart findCartWithHighestTotal();
-
-    /**
-     * Finds all Carts with a total greater than a specified amount using a native query.
-     *
-     * @param total the minimum total value to search by
-     * @return a list of Carts with a total greater than the specified amount
-     */
-
-    List<Cart> findCartsWithTotalGreaterThan(@Param("total") Double total);
 
     /**
      * Finds all Carts associated with a user and created after a certain date.
      *
-     * @param userId the ID of the user to search by
+     * @param userId    the ID of the user to search by
      * @param createdAt the date to search by
      * @return a list of Carts associated with the given userId and created after the given date
      */
@@ -95,7 +86,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     /**
      * Finds all Carts associated with a user and updated after a certain date.
      *
-     * @param userId the ID of the user to search by
+     * @param userId    the ID of the user to search by
      * @param updatedAt the date to search by
      * @return a list of Carts associated with the given userId and updated after the given date
      */
@@ -120,6 +111,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     /**
      * Finds all Carts created within the last 30 days.
      *
+     * @param thirtyDaysAgo the date to search from (30 days ago)
      * @return a list of Carts created within the last 30 days
      */
     @Query("SELECT c FROM Cart c WHERE c.createdAt >= :thirtyDaysAgo")

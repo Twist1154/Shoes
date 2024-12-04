@@ -1,19 +1,19 @@
 package za.ac.cput.service;
 
-import org.springframework.data.repository.query.Param;
 import za.ac.cput.domain.Cart;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * ICartService.java
+ * ICart.java
  *
  * Service interface for managing Cart entities.
  * Extends IService to provide basic CRUD operations.
  * Additional methods are added to reflect the custom repository queries.
  *
- * @autor Rethabile Ntsekhe
+ * @author
+ * Rethabile Ntsekhe
  * @date 25-Aug-24
  */
 public interface ICart extends IService<Cart, Long> {
@@ -54,7 +54,7 @@ public interface ICart extends IService<Cart, Long> {
      * Finds all Carts created within a specific date range.
      *
      * @param startDate the start date of the range
-     * @param endDate the end date of the range
+     * @param endDate   the end date of the range
      * @return a list of Carts created within the date range
      */
     List<Cart> findCartsCreatedWithinDateRange(LocalDateTime startDate, LocalDateTime endDate);
@@ -67,17 +67,9 @@ public interface ICart extends IService<Cart, Long> {
     Cart findCartWithHighestTotal();
 
     /**
-     * Finds all Carts with a total greater than a specified amount using a native query.
-     *
-     * @param total the minimum total value to search by
-     * @return a list of Carts with a total greater than the specified amount
-     */
-    List<Cart> findCartsWithTotalGreaterThan(Double total);
-
-    /**
      * Finds all Carts associated with a user and created after a certain date.
      *
-     * @param userId the ID of the user to search by
+     * @param userId    the ID of the user to search by
      * @param createdAt the date to search by
      * @return a list of Carts associated with the given userId and created after the given date
      */
@@ -86,7 +78,7 @@ public interface ICart extends IService<Cart, Long> {
     /**
      * Finds all Carts associated with a user and updated after a certain date.
      *
-     * @param userId the ID of the user to search by
+     * @param userId    the ID of the user to search by
      * @param updatedAt the date to search by
      * @return a list of Carts associated with the given userId and updated after the given date
      */
@@ -111,9 +103,10 @@ public interface ICart extends IService<Cart, Long> {
     /**
      * Finds all Carts created within the last 30 days.
      *
+     * @param thirtyDaysAgo the date representing 30 days ago
      * @return a list of Carts created within the last 30 days
      */
-    List<Cart> findCartsCreatedInLast30Days();
+    List<Cart> findCartsCreatedInLast30Days(LocalDateTime thirtyDaysAgo);
 
     /**
      * Deletes all Carts associated with a specific userId.
