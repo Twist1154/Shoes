@@ -3,6 +3,7 @@ package za.ac.cput.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Table(name = "order_item")
-public class OrderItem {
+public class OrderItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

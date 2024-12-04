@@ -5,10 +5,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import za.ac.cput.enums.Role;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -16,7 +17,7 @@ import java.util.*;
 @Getter
 @Setter
 @Table(name = "users")
-public class User implements UserDetails {
+public class User implements Serializable /*UserDetails*/ {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,7 +89,7 @@ public class User implements UserDetails {
         this.enabled = builder.enabled;
     }
 
-    @Override
+    /*@Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -116,7 +117,7 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return this.enabled;
-    }
+    }*/
 
     @Override
     public String toString() {

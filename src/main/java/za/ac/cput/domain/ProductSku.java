@@ -3,6 +3,7 @@ package za.ac.cput.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Table(name = "products_skus")
-public class ProductSku {
+public class ProductSku implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

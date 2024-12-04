@@ -8,6 +8,7 @@ import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Table(name = "wishlist")
-public class Wishlist {
+public class Wishlist implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Table(name = "wish_list_items")
-public class WishlistItem {
+public class WishlistItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import za.ac.cput.enums.ProductAttributeType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Table(name = "product_attributes")
-public class ProductAttribute {
+public class ProductAttribute implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
